@@ -1,12 +1,26 @@
-# Binaries for programs and plugins
+#  -----------------------------------------------------------------------------
+#  (c) balarabe@protonmail.com                                      License: MIT
+# :v: 2019-01-13 18:05:20 2E2006                          /go-delta/[.gitignore]
+#  -----------------------------------------------------------------------------
+
+# scripts, shortcuts, zip archives
+*.bat
+*.lnk
+*.sh
+*.zip
+
+# log and debugging files
+*.log
+*.out
+
+# drafts and temporary files
+*.GO`*
+*`*
+_*
+tmp.*
+
+# executable files
 *.exe
 *.exe~
-*.dll
-*.so
-*.dylib
 
-# Test binary, build with `go test -c`
-*.test
-
-# Output of the go coverage tool, specifically when used with LiteIDE
-*.out
+#eof

@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-14 19:12:50 63C331                        go-delta/[func_test.go]
+// :v: 2019-01-14 18:08:48 6630FC                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -57,5 +57,14 @@ func Test1(t *testing.T) {
 		}
 	}
 } //                                                                       Test1
+
+// go test --run Test2
+func Test2(t *testing.T) {
+	var a = readData("test1.file")
+	var b = readData("test2.file")
+	PL("loaded data")
+	MakeDiff(a, b)
+	PL("finished")
+} //                                                                       Test2
 
 //end

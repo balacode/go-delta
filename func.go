@@ -1,9 +1,15 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-13 18:12:48 B32132                             go-delta/[func.go]
+// :v: 2019-01-14 19:12:50 FD2B5A                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
+
+import (
+	"fmt"
+)
+
+var PL = fmt.Println
 
 type Diff []byte
 

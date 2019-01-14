@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-14 17:48:53 ED39AD                        go-delta/[func_test.go]
+// :v: 2019-01-14 19:12:50 63C331                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -15,12 +15,9 @@ to generate a test coverage report for the whole module use:
 */
 
 import (
-	"fmt"
 	"io/ioutil"
 	"testing"
 )
-
-var PL = fmt.Println
 
 // readData reads 'filename' and returns its contents as an array of bytes
 func readData(filename string) []byte {

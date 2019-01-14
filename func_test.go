@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-13 18:14:55 74EE90                        go-delta/[func_test.go]
+// :v: 2019-01-14 17:48:53 ED39AD                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -22,33 +22,26 @@ import (
 
 var PL = fmt.Println
 
+// readData reads 'filename' and returns its contents as an array of bytes
+func readData(filename string) []byte {
+	ret, err := ioutil.ReadFile(filename)
+	if err != nil {
+		PL("File reading error:", err)
+		return []byte{}
+	}
+	return ret
+} //                                                                    readData
+
 // go test --run Test1
 func Test1(t *testing.T) {
 	PL("Test1 ################################################################")
-	var m1 map[[8]byte][]int
-	{
-		// data, err := ioutil.ReadFile("lorem_ipsum.txt")
-		data, err := ioutil.ReadFile("test1.zip")
-		if err != nil {
-			PL("ERROR:", err)
-			return
-		}
-		m1 = MakeMap(data)
-	}
-	PL("Created m1 ###########################################################")
-	PL("len(m1):", len(m1))
 	//
-	var m2 map[[8]byte][]int
-	{
-		data, err := ioutil.ReadFile("test2.zip")
-		if err != nil {
-			PL("ERROR:", err)
-			return
-		}
-		m2 = MakeMap(data)
-	}
-	PL("Created m2 ###########################################################")
-	PL("len(m2):", len(m2))
+	var m1 = MakeMap(readData("test1.zip"))
+	PL("Created m1. len(m1):", len(m1))
+	//
+	var m2 = MakeMap(readData("test2.zip"))
+	PL("Created m2. len(m2):", len(m2))
+	//
 	if false {
 		const MaxLines = 0
 		var i = 1
@@ -66,6 +59,6 @@ func Test1(t *testing.T) {
 			PL("key:", k, "val:", v, "exist:", exist)
 		}
 	}
-}
+} //                                                                       Test1
 
 //end

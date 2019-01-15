@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-15 23:20:03 7B83FD                             go-delta/[func.go]
+// :v: 2019-01-15 23:28:03 FA4A5E                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -27,21 +27,22 @@ func ApplyDiff(source []byte, diff Diff) []byte {
 // You can then use ApplyDiff() to generate 'b' from 'a' the Diff.
 func MakeDiff(a, b []byte) Diff {
 	var ret = Diff{targetHash: makeHash(b)}
-	if len(b) < ChunkSize {
-		ret.parts = []diffPart{{sourceLoc: Direct, size: len(b), data: b}}
+	var lenB = len(b)
+	if lenB < ChunkSize {
+		ret.parts = []diffPart{{sourceLoc: Direct, size: lenB, data: b}}
 		return ret
 	}
 	var m = makeMap(a)
 	var chunk [ChunkSize]byte
-	for i, end := 0, len(b); i < end; {
-		if end-i < ChunkSize {
-			ret.appendPart(Direct, end-i, b[i:])
+	for i := 0; i < lenB; {
+		if lenB-i < ChunkSize {
+			ret.appendPart(Direct, lenB-i, b[i:])
 			ret.newCount++
 			break
 		}
 		var locs []int
 		var found = false
-		if end-i >= ChunkSize {
+		if lenB-i >= ChunkSize {
 			copy(chunk[:], b[i:])
 			locs, found = m[chunk]
 		}

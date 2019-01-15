@@ -1,25 +1,37 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-15 20:06:41 D6BF78                             go-delta/[diff.go]
+// :v: 2019-01-15 20:13:21 CBF531                             go-delta/[diff.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
 
-// Diff __
+// Diff stores the binary delta difference between two byte arrays
 type Diff struct {
 	sourceHash []byte
+	// hash of the source byte array
+	//
 	targetHash []byte
-	parts      []diffPart
+	// expected hash of result after this Diff is applied to source
+	//
+	parts []diffPart
+	// array of referring to chunks in source array, or new bytes to append
 } //                                                                        Diff
 
-// diffPart __
+// diffPart stores references to chunks in the source array,
+// or specifies bytes to append to result array directly
 type diffPart struct {
 	sourceLoc int
-	size      int
-	data      []byte
+	// byte position of the chunk in source array,
+	// or -1 when the bytes should be picked from 'data'
+	//
+	size int
+	// size of the chunk in bytes
+	//
+	data []byte
+	// optional bytes (only when sourceLoc is -1)
 } //                                                                    diffPart
 
-// writePart __
+// writePart appends binary difference data
 func (ob *Diff) writePart(sourceLoc, size int, data []byte) {
 	PL("WP",
 		"sourceLoc:", sourceLoc,

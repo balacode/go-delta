@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-15 20:27:06 8EB5BC                             go-delta/[func.go]
+// :v: 2019-01-15 23:18:20 F01335                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -32,10 +32,6 @@ func MakeDiff(a, b []byte) Diff {
 		return ret
 	}
 	var m = makeMap(a)
-	var step = 1024
-	if step > len(b) {
-		step = 1
-	}
 	var chunk [ChunkSize]byte
 	for i, end := 0, len(b); i < end; {
 		if end-i < ChunkSize {
@@ -79,7 +75,8 @@ func longestMatch(a []byte, aLocs []int, b []byte, bLoc int) (loc, size int) {
 		return -1, -1
 	}
 	var aEnd = len(a) - 1
-	var retLoc, retSize = -1, -1
+	var retLoc = -1
+	var retSize = -1
 	for _, aLoc := range aLocs {
 		var n = ChunkSize
 		if !bytes.Equal(a[aLoc:aLoc+n], b[bLoc:bLoc+n]) {
@@ -104,7 +101,7 @@ func makeHash(data []byte) []byte {
 	return ret[:]
 } //                                                                    makeHash
 
-// makeMap create a map of unique chunks in 'data'.
+// makeMap creates a map of unique chunks in 'data'.
 // The key specifies the unique chunk of bytes, while the
 // values array returns the positions of the chunk in 'data'.
 func makeMap(data []byte) (ret map[[ChunkSize]byte][]int) {

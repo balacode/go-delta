@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-15 18:58:56 94BCA1                             go-delta/[func.go]
+// :v: 2019-01-15 19:42:15 B6E44E                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -72,16 +72,6 @@ func MakeDiff(a, b []byte) Diff {
 // -----------------------------------------------------------------------------
 // # Helper Functions
 
-// hashOfBytes returns the SHA-512 hash of a byte slice.
-// It also requires a 'salt' argument.
-func hashOfBytes(ar []byte, salt []byte) []byte {
-	var input []byte
-	input = append(input, salt[:]...)
-	input = append(input, ar...)
-	var hash = sha512.Sum512(input)
-	return hash[:]
-} //                                                                 hashOfBytes
-
 // longestMatch __
 func longestMatch(a []byte, aLocs []int, b []byte, bLoc int) (loc, size int) {
 	if len(aLocs) < 1 {
@@ -112,6 +102,12 @@ func longestMatch(a []byte, aLocs []int, b []byte, bLoc int) (loc, size int) {
 	}
 	return retLoc, retSize
 } //                                                                longestMatch
+
+// makeHash returns the SHA-512 hash of byte slice 'data'.
+func makeHash(data []byte) []byte {
+	var ret = sha512.Sum512(data)
+	return ret[:]
+} //                                                                    makeHash
 
 // makeMap create a map of unique chunks in 'data'.
 // The key specifies the unique chunk of bytes, while the

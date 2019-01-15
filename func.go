@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-15 23:28:03 FA4A5E                             go-delta/[func.go]
+// :v: 2019-01-16 00:01:01 187AA6                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -13,7 +13,6 @@ import (
 )
 
 const ChunkSize = 8
-const Direct = -1
 
 var PL = fmt.Println
 
@@ -29,14 +28,14 @@ func MakeDiff(a, b []byte) Diff {
 	var ret = Diff{targetHash: makeHash(b)}
 	var lenB = len(b)
 	if lenB < ChunkSize {
-		ret.parts = []diffPart{{sourceLoc: Direct, size: lenB, data: b}}
+		ret.parts = []diffPart{{sourceLoc: -1, size: lenB, data: b}}
 		return ret
 	}
 	var m = makeMap(a)
 	var chunk [ChunkSize]byte
 	for i := 0; i < lenB; {
 		if lenB-i < ChunkSize {
-			ret.appendPart(Direct, lenB-i, b[i:])
+			ret.appendPart(-1, lenB-i, b[i:])
 			ret.newCount++
 			break
 		}
@@ -53,7 +52,7 @@ func MakeDiff(a, b []byte) Diff {
 			ret.oldCount++
 			continue
 		}
-		ret.appendPart(Direct, ChunkSize, chunk[:])
+		ret.appendPart(-1, ChunkSize, chunk[:])
 		i += ChunkSize
 		ret.newCount++
 	}

@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-15 20:06:41 635985                             go-delta/[func.go]
+// :v: 2019-01-15 20:19:32 3607E6                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -26,13 +26,11 @@ func ApplyDiff(source []byte, diff Diff) []byte {
 // delta difference between the two arrays and returns it as a Diff.
 // You can then use ApplyDiff() to generate 'b' from 'a' the Diff.
 func MakeDiff(a, b []byte) Diff {
+	var ret = Diff{targetHash: makeHash(b)}
 	if len(b) < ChunkSize {
-		return Diff{
-			targetHash: makeHash(b),
-			parts:      []diffPart{{sourceLoc: Direct, size: len(b), data: b}},
-		}
+		ret.parts = []diffPart{{sourceLoc: Direct, size: len(b), data: b}}
+		return ret
 	}
-	var ret = Diff{}
 	var m = makeMap(a)
 	var nmatch = 0
 	var nmiss = 0
@@ -40,10 +38,8 @@ func MakeDiff(a, b []byte) Diff {
 	if step > len(b) {
 		step = 1
 	}
-	var i = 0
-	var end = len(b)
 	var chunk [ChunkSize]byte
-	for i < end {
+	for i, end := 0, len(b); i < end; {
 		if end-i < ChunkSize {
 			ret.writePart(Direct, end-i, b[i:])
 			nmiss++
@@ -68,6 +64,7 @@ func MakeDiff(a, b []byte) Diff {
 	}
 	PL("nmatch:", nmatch)
 	PL("nmiss:", nmiss)
+	ret.sourceHash = makeHash(a)
 	return ret
 } //                                                                    MakeDiff
 

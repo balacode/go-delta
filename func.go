@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-14 19:18:48 E18215                             go-delta/[func.go]
+// :v: 2019-01-15 11:55:50 457CCB                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -42,23 +42,25 @@ func MakeDiff(a, b []byte) Diff {
 	return Diff{}
 } //                                                                    MakeDiff
 
-// MakeMap __
-func MakeMap(ar []byte) (m map[[ChunkSize]byte][]int) {
-	m = make(map[[ChunkSize]byte][]int, 0)
-	if len(ar) < ChunkSize {
-		return
+// MakeMap create a map of unique chunks in 'data'.
+// The key specifies the unique chunk of bytes, while the
+// values array returns the positions of the chunks in 'data'.
+func MakeMap(data []byte) (ret map[[ChunkSize]byte][]int) {
+	ret = make(map[[ChunkSize]byte][]int, 0)
+	if len(data) < ChunkSize {
+		return ret
 	}
-	var k [ChunkSize]byte
-	for i := 0; i < len(ar)-ChunkSize; i++ {
-		copy(k[:], ar[i:])
-		var _, exist = m[k]
+	var key [ChunkSize]byte
+	for i := 0; i < len(data)-ChunkSize; i++ {
+		copy(key[:], data[i:])
+		var _, exist = ret[key]
 		if exist {
-			m[k] = append(m[k], i)
+			ret[key] = append(ret[key], i)
 		} else {
-			m[k] = []int{i}
+			ret[key] = []int{i}
 		}
 	}
-	return m
+	return ret
 } //                                                                     MakeMap
 
 //end

@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-15 20:03:17 F670C4                             go-delta/[func.go]
+// :v: 2019-01-15 20:06:41 635985                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -28,7 +28,6 @@ func ApplyDiff(source []byte, diff Diff) []byte {
 func MakeDiff(a, b []byte) Diff {
 	if len(b) < ChunkSize {
 		return Diff{
-			mode:       0,
 			targetHash: makeHash(b),
 			parts:      []diffPart{{sourceLoc: Direct, size: len(b), data: b}},
 		}

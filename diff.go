@@ -1,13 +1,12 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-15 20:03:17 DDC868                             go-delta/[diff.go]
+// :v: 2019-01-15 20:06:41 D6BF78                             go-delta/[diff.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
 
 // Diff __
 type Diff struct {
-	mode       byte
 	sourceHash []byte
 	targetHash []byte
 	parts      []diffPart

@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-15 16:26:52 245CD7                             go-delta/[func.go]
+// :v: 2019-01-15 18:45:31 77BEF1                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -32,7 +32,7 @@ func MakeDiff(a, b []byte) Diff {
 		/// WRITE b TO RETURNED VALUE
 		return Diff{}
 	}
-	var m = MakeMap(a)
+	var m = makeMap(a)
 	var nmatch = 0
 	var nmiss = 0
 	var step = 1024
@@ -44,7 +44,7 @@ func MakeDiff(a, b []byte) Diff {
 	var chunk [ChunkSize]byte
 	for i < end {
 		if end-i < ChunkSize {
-			WriteDiff(Direct, end-i, b[i:])
+			writeDiff(Direct, end-i, b[i:])
 			nmiss++
 			break
 		}
@@ -55,13 +55,13 @@ func MakeDiff(a, b []byte) Diff {
 			locs, found = m[chunk]
 		}
 		if found {
-			var at, size = LongestMatch(a, locs, b, i)
-			WriteDiff(at, size, a[at:at+size])
+			var at, size = longestMatch(a, locs, b, i)
+			writeDiff(at, size, a[at:at+size])
 			i += size
 			nmatch++
 			continue
 		}
-		WriteDiff(Direct, ChunkSize, chunk[:])
+		writeDiff(Direct, ChunkSize, chunk[:])
 		i += ChunkSize
 		nmiss++
 	}
@@ -73,8 +73,8 @@ func MakeDiff(a, b []byte) Diff {
 // -----------------------------------------------------------------------------
 // # Helper Functions
 
-// LongestMatch __
-func LongestMatch(a []byte, aLocs []int, b []byte, bLoc int) (loc, size int) {
+// longestMatch __
+func longestMatch(a []byte, aLocs []int, b []byte, bLoc int) (loc, size int) {
 	if len(aLocs) < 1 {
 		zr.Error("aLocs is empty")
 		return -1, -1
@@ -102,12 +102,12 @@ func LongestMatch(a []byte, aLocs []int, b []byte, bLoc int) (loc, size int) {
 		}
 	}
 	return retLoc, retSize
-} //                                                                LongestMatch
+} //                                                                longestMatch
 
-// MakeMap create a map of unique chunks in 'data'.
+// makeMap create a map of unique chunks in 'data'.
 // The key specifies the unique chunk of bytes, while the
 // values array returns the positions of the chunk in 'data'.
-func MakeMap(data []byte) (ret map[[ChunkSize]byte][]int) {
+func makeMap(data []byte) (ret map[[ChunkSize]byte][]int) {
 	ret = make(map[[ChunkSize]byte][]int, 0)
 	if len(data) < ChunkSize {
 		return ret
@@ -123,11 +123,11 @@ func MakeMap(data []byte) (ret map[[ChunkSize]byte][]int) {
 		}
 	}
 	return ret
-} //                                                                     MakeMap
+} //                                                                     makeMap
 
-// WriteDiff __
-func WriteDiff(offset, size int, data []byte) {
+// writeDiff __
+func writeDiff(offset, size int, data []byte) {
 	PL("WD", "offset:", offset, "size:", size, "data:", data, string(data))
-} //                                                                   WriteDiff
+} //                                                                   writeDiff
 
 //end

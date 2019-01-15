@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-15 16:24:49 47EABF                        go-delta/[func_test.go]
+// :v: 2019-01-15 18:45:31 8467FE                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -35,10 +35,10 @@ func readData(filename string) []byte {
 func Test1(t *testing.T) {
 	PL("Test1 ################################################################")
 	//
-	var m1 = MakeMap(readData("test1.zip"))
+	var m1 = makeMap(readData("test1.zip"))
 	PL("Created m1. len(m1):", len(m1))
 	//
-	var m2 = MakeMap(readData("test2.zip"))
+	var m2 = makeMap(readData("test2.zip"))
 	PL("Created m2. len(m2):", len(m2))
 	//
 	if false {

@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-15 16:12:26 013AE5                             go-delta/[func.go]
+// :v: 2019-01-15 16:26:52 245CD7                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -43,9 +43,9 @@ func MakeDiff(a, b []byte) Diff {
 	var end = len(b)
 	var chunk [ChunkSize]byte
 	for i < end {
-		PL()
 		if end-i < ChunkSize {
 			WriteDiff(Direct, end-i, b[i:])
+			nmiss++
 			break
 		}
 		var locs []int
@@ -56,7 +56,7 @@ func MakeDiff(a, b []byte) Diff {
 		}
 		if found {
 			var at, size = LongestMatch(a, locs, b, i)
-			WriteDiff(at, size, nil)
+			WriteDiff(at, size, a[at:at+size])
 			i += size
 			nmatch++
 			continue

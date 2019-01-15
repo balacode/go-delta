@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-15 18:45:31 77BEF1                             go-delta/[func.go]
+// :v: 2019-01-15 18:51:31 620EEE                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -13,8 +13,6 @@ import (
 
 const ChunkSize = 8
 const Direct = -1
-
-type Diff []byte
 
 var PL = fmt.Println
 

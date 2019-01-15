@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-15 15:26:21 5EDBF4                             go-delta/[func.go]
+// :v: 2019-01-15 15:28:55 6ECE56                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -79,7 +79,7 @@ func LongestMatch(a []byte, aLocs []int, b []byte, bLoc int) (loc, size int) {
 
 // MakeMap create a map of unique chunks in 'data'.
 // The key specifies the unique chunk of bytes, while the
-// values array returns the positions of the chunks in 'data'.
+// values array returns the positions of the chunk in 'data'.
 func MakeMap(data []byte) (ret map[[ChunkSize]byte][]int) {
 	ret = make(map[[ChunkSize]byte][]int, 0)
 	if len(data) < ChunkSize {
@@ -88,8 +88,8 @@ func MakeMap(data []byte) (ret map[[ChunkSize]byte][]int) {
 	var key [ChunkSize]byte
 	for i := 0; i < len(data)-ChunkSize; i++ {
 		copy(key[:], data[i:])
-		var _, exist = ret[key]
-		if exist {
+		var _, found = ret[key]
+		if found {
 			ret[key] = append(ret[key], i)
 		} else {
 			ret[key] = []int{i}

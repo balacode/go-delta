@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-15 19:50:37 D03356                             go-delta/[func.go]
+// :v: 2019-01-15 20:03:17 F670C4                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -33,6 +33,7 @@ func MakeDiff(a, b []byte) Diff {
 			parts:      []diffPart{{sourceLoc: Direct, size: len(b), data: b}},
 		}
 	}
+	var ret = Diff{}
 	var m = makeMap(a)
 	var nmatch = 0
 	var nmiss = 0
@@ -45,7 +46,7 @@ func MakeDiff(a, b []byte) Diff {
 	var chunk [ChunkSize]byte
 	for i < end {
 		if end-i < ChunkSize {
-			writeDiff(Direct, end-i, b[i:])
+			ret.writePart(Direct, end-i, b[i:])
 			nmiss++
 			break
 		}
@@ -57,18 +58,18 @@ func MakeDiff(a, b []byte) Diff {
 		}
 		if found {
 			var at, size = longestMatch(a, locs, b, i)
-			writeDiff(at, size, a[at:at+size])
+			ret.writePart(at, size, a[at:at+size])
 			i += size
 			nmatch++
 			continue
 		}
-		writeDiff(Direct, ChunkSize, chunk[:])
+		ret.writePart(Direct, ChunkSize, chunk[:])
 		i += ChunkSize
 		nmiss++
 	}
 	PL("nmatch:", nmatch)
 	PL("nmiss:", nmiss)
-	return Diff{}
+	return ret
 } //                                                                    MakeDiff
 
 // -----------------------------------------------------------------------------
@@ -131,10 +132,5 @@ func makeMap(data []byte) (ret map[[ChunkSize]byte][]int) {
 	}
 	return ret
 } //                                                                     makeMap
-
-// writeDiff __
-func writeDiff(offset, size int, data []byte) {
-	PL("WD", "offset:", offset, "size:", size, "data:", data, string(data))
-} //                                                                   writeDiff
 
 //end

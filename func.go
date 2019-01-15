@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-15 11:55:50 457CCB                             go-delta/[func.go]
+// :v: 2019-01-15 15:26:21 5EDBF4                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -8,6 +8,7 @@ package bdelta
 import (
 	"bytes"
 	"fmt"
+	"github.com/balacode/zr"
 )
 
 const ChunkSize = 8
@@ -41,6 +42,40 @@ func MakeDiff(a, b []byte) Diff {
 	PL("nmiss:", nmiss)
 	return Diff{}
 } //                                                                    MakeDiff
+
+// -----------------------------------------------------------------------------
+// # Helper Functions
+
+// LongestMatch __
+func LongestMatch(a []byte, aLocs []int, b []byte, bLoc int) (loc, size int) {
+	if len(aLocs) < 1 {
+		zr.Error("aLocs is empty")
+		return -1, -1
+	}
+	var bEnd = len(b) - 1
+	if bLoc < 0 || bLoc > bEnd {
+		zr.Error("bLoc", bLoc, "out of range [0 -", len(b), "]")
+		return -1, -1
+	}
+	var aEnd = len(a) - 1
+	var retLoc, retSize = -1, -1
+	for _, aLoc := range aLocs {
+		var n = ChunkSize
+		if !bytes.Equal(a[aLoc:aLoc+n], b[bLoc:bLoc+n]) {
+			zr.Error("mismatch at aLoc:", aLoc, "bLoc:", bLoc)
+			continue
+		}
+		// extend match forward
+		for aLoc+n <= aEnd && bLoc+n <= bEnd && a[aLoc+n] == b[bLoc+n] {
+			n++
+		}
+		if n > retSize {
+			retLoc = aLoc
+			retSize = n
+		}
+	}
+	return retLoc, retSize
+} //                                                                LongestMatch
 
 // MakeMap create a map of unique chunks in 'data'.
 // The key specifies the unique chunk of bytes, while the

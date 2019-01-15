@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-15 20:13:21 CBF531                             go-delta/[diff.go]
+// :v: 2019-01-15 20:27:06 7E19B3                             go-delta/[diff.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -15,6 +15,13 @@ type Diff struct {
 	//
 	parts []diffPart
 	// array of referring to chunks in source array, or new bytes to append
+	//
+	newCount int
+	// number of chunks that could not be matched in source
+	//
+	oldCount int
+	// number of chunks that were matched in source
+	//
 } //                                                                        Diff
 
 // diffPart stores references to chunks in the source array,
@@ -30,6 +37,22 @@ type diffPart struct {
 	data []byte
 	// optional bytes (only when sourceLoc is -1)
 } //                                                                    diffPart
+
+// -----------------------------------------------------------------------------
+// # Public Properties
+
+// NewCount __
+func (ob *Diff) NewCount() int {
+	return ob.newCount
+} //                                                                    NewCount
+
+// OldCount __
+func (ob *Diff) OldCount() int {
+	return ob.oldCount
+} //                                                                    OldCount
+
+// -----------------------------------------------------------------------------
+// # Internal Methods
 
 // writePart appends binary difference data
 func (ob *Diff) writePart(sourceLoc, size int, data []byte) {

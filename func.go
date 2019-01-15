@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-15 15:28:55 6ECE56                             go-delta/[func.go]
+// :v: 2019-01-15 16:12:26 013AE5                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -12,6 +12,7 @@ import (
 )
 
 const ChunkSize = 8
+const Direct = -1
 
 type Diff []byte
 
@@ -22,23 +23,49 @@ func ApplyDiff(source []byte, diff Diff) []byte {
 	return []byte{}
 } //                                                                   ApplyDiff
 
-// MakeDiff __
+// MakeDiff given two byte arrays 'a' and 'b', calculates the binary
+// delta difference between the two arrays and returns it as a Diff.
+// You can then use ApplyDiff() to generate 'b' from 'a' the Diff.
 func MakeDiff(a, b []byte) Diff {
 	if len(b) < ChunkSize {
+		/// WRITE MODE 0 TO RETURNED VALUE
+		/// WRITE b TO RETURNED VALUE
 		return Diff{}
 	}
-	var nfound = 0
+	var m = MakeMap(a)
+	var nmatch = 0
 	var nmiss = 0
-	var chunk [ChunkSize]byte
-	for i := 0; i < len(b)-ChunkSize; i += 1024 {
-		copy(chunk[:], b[i:])
-		if bytes.Index(a, chunk[:]) == -1 {
-			nmiss++
-		} else {
-			nfound++
-		}
+	var step = 1024
+	if step > len(b) {
+		step = 1
 	}
-	PL("nfound:", nfound)
+	var i = 0
+	var end = len(b)
+	var chunk [ChunkSize]byte
+	for i < end {
+		PL()
+		if end-i < ChunkSize {
+			WriteDiff(Direct, end-i, b[i:])
+			break
+		}
+		var locs []int
+		var found = false
+		if end-i >= ChunkSize {
+			copy(chunk[:], b[i:])
+			locs, found = m[chunk]
+		}
+		if found {
+			var at, size = LongestMatch(a, locs, b, i)
+			WriteDiff(at, size, nil)
+			i += size
+			nmatch++
+			continue
+		}
+		WriteDiff(Direct, ChunkSize, chunk[:])
+		i += ChunkSize
+		nmiss++
+	}
+	PL("nmatch:", nmatch)
 	PL("nmiss:", nmiss)
 	return Diff{}
 } //                                                                    MakeDiff
@@ -97,5 +124,10 @@ func MakeMap(data []byte) (ret map[[ChunkSize]byte][]int) {
 	}
 	return ret
 } //                                                                     MakeMap
+
+// WriteDiff __
+func WriteDiff(offset, size int, data []byte) {
+	PL("WD", "offset:", offset, "size:", size, "data:", data, string(data))
+} //                                                                   WriteDiff
 
 //end

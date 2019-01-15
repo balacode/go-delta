@@ -1,9 +1,13 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-15 23:20:53 358C58                             go-delta/[diff.go]
+// :v: 2019-01-16 00:12:51 7A0BF8                             go-delta/[diff.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
+
+import (
+	"github.com/balacode/zr"
+)
 
 // Diff stores the binary delta difference between two byte arrays
 type Diff struct {
@@ -55,12 +59,47 @@ func (ob *Diff) OldCount() int {
 
 // appendPart appends binary difference data
 func (ob *Diff) appendPart(sourceLoc, size int, data []byte) {
-	PL("WP",
-		"sourceLoc:", sourceLoc,
-		"size:", size,
-		"data:", data, string(data))
+	if true {
+		PL("appendPart",
+			"sourceLoc:", sourceLoc,
+			"size:", size,
+			"data:", data, string(data))
+	}
+	// argument validations
+	switch {
+	case sourceLoc < -1:
+		zr.Error("sourceLoc:", sourceLoc, " < -1")
+		return
+	case sourceLoc == -1 && len(data) == 0:
+		zr.Error("sourceLoc == -1 && len(data) == 0")
+		return
+	case sourceLoc != -1 && len(data) != 0:
+		zr.Error("sourceLoc != -1 && len(data):", len(data), "!= 0")
+		return
+	case size < 1:
+		zr.Error("size:", size, " < 1")
+		return
+	}
+	// if the previous part was embedded directly, append to that part's data
+	if sourceLoc == -1 {
+		var n = len(ob.parts)
+		if n > 0 {
+			var last = &ob.parts[n-1]
+			if last.sourceLoc == -1 {
+				last.size += len(data)
+				last.data = append(last.data, data...)
+				return
+			}
+		}
+	}
+	// append a new part
+	var ar []byte
+	if sourceLoc != -1 {
+		var ar = make([]byte, len(data))
+		copy(ar, data)
+	}
 	ob.parts = append(ob.parts,
-		diffPart{sourceLoc: sourceLoc, size: size, data: data})
+		diffPart{sourceLoc: sourceLoc, size: size, data: ar})
 } //                                                                  appendPart
 
 //end

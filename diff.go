@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-15 20:27:06 7E19B3                             go-delta/[diff.go]
+// :v: 2019-01-15 23:20:53 358C58                             go-delta/[diff.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -21,7 +21,6 @@ type Diff struct {
 	//
 	oldCount int
 	// number of chunks that were matched in source
-	//
 } //                                                                        Diff
 
 // diffPart stores references to chunks in the source array,
@@ -54,12 +53,14 @@ func (ob *Diff) OldCount() int {
 // -----------------------------------------------------------------------------
 // # Internal Methods
 
-// writePart appends binary difference data
-func (ob *Diff) writePart(sourceLoc, size int, data []byte) {
+// appendPart appends binary difference data
+func (ob *Diff) appendPart(sourceLoc, size int, data []byte) {
 	PL("WP",
 		"sourceLoc:", sourceLoc,
 		"size:", size,
 		"data:", data, string(data))
-} //                                                                   writePart
+	ob.parts = append(ob.parts,
+		diffPart{sourceLoc: sourceLoc, size: size, data: data})
+} //                                                                  appendPart
 
 //end

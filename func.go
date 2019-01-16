@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-16 12:33:12 7020EA                             go-delta/[func.go]
+// :v: 2019-01-16 12:37:51 1E06AC                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -9,7 +9,6 @@ import (
 	"bytes"
 	"compress/zlib"
 	"crypto/sha512"
-	"github.com/balacode/zr"
 )
 
 // ApplyDiff __
@@ -74,12 +73,12 @@ func compressBytes(data []byte) []byte {
 	// log any problem
 	const ERRM = "Failed compressing data with zlib:"
 	if err != nil {
-		zr.Error(ERRM, err)
+		mod.Error(ERRM, err)
 		return []byte{}
 	}
 	var ret = b.Bytes()
 	if len(ret) < 3 {
-		zr.Error(ERRM, "length < 3")
+		mod.Error(ERRM, "length < 3")
 		return []byte{}
 	}
 	return ret
@@ -88,12 +87,12 @@ func compressBytes(data []byte) []byte {
 // longestMatch __
 func longestMatch(a []byte, aLocs []int, b []byte, bLoc int) (loc, size int) {
 	if len(aLocs) < 1 {
-		zr.Error("aLocs is empty")
+		mod.Error("aLocs is empty")
 		return -1, -1
 	}
 	var bEnd = len(b) - 1
 	if bLoc < 0 || bLoc > bEnd {
-		zr.Error("bLoc", bLoc, "out of range [0 -", len(b), "]")
+		mod.Error("bLoc", bLoc, "out of range [0 -", len(b), "]")
 		return -1, -1
 	}
 	var aEnd = len(a) - 1
@@ -102,7 +101,7 @@ func longestMatch(a []byte, aLocs []int, b []byte, bLoc int) (loc, size int) {
 	for _, aLoc := range aLocs {
 		var n = ChunkSize
 		if !bytes.Equal(a[aLoc:aLoc+n], b[bLoc:bLoc+n]) {
-			zr.Error("mismatch at aLoc:", aLoc, "bLoc:", bLoc)
+			mod.Error("mismatch at aLoc:", aLoc, "bLoc:", bLoc)
 			continue
 		}
 		// extend match forward

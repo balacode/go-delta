@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-16 15:07:20 73E6E1                           go-delta/[module.go]
+// :v: 2019-01-16 15:18:00 845B74                           go-delta/[module.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -15,6 +15,7 @@ import (
 
 const ChunkSize = 8
 
+const DebugInfo = true
 const DebugTiming = true
 
 // PL is fmt.Println() but is used only for debugging.

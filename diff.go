@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-16 15:07:20 F7AAD4                             go-delta/[diff.go]
+// :v: 2019-01-16 15:18:00 23E60B                             go-delta/[diff.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -74,7 +74,13 @@ func (ob *Diff) Bytes() []byte {
 		wrInt(part.size)
 	}
 	// compress the delta
+	if DebugInfo {
+		PL("unsipped delta length:", len(buf.Bytes()))
+	}
 	var ret = compressBytes(buf.Bytes())
+	if DebugInfo {
+		PL("zipped delta length:", len(ret))
+	}
 	return ret
 } //                                                                       Bytes
 
@@ -127,7 +133,7 @@ func (ob *Diff) appendPart(sourceLoc, size int, data []byte) {
 		tmr.Start("appendPart")
 		defer tmr.Stop("appendPart")
 	}
-	if true {
+	if DebugInfo {
 		PL("appendPart",
 			"sourceLoc:", sourceLoc,
 			"size:", size,

@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-16 15:07:20 554E1D                             go-delta/[func.go]
+// :v: 2019-01-16 15:18:00 141420                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -36,7 +36,12 @@ func MakeDiff(a, b []byte) Diff {
 	}
 	var m = makeMap(a)
 	var chunk [ChunkSize]byte
+	var tmc = 0 // timing counter
 	for i := 0; i < lenB; {
+		if DebugInfo && i-tmc >= 10000 {
+			PL("MakeDiff:", int(100.0/float32(lenB)*float32(i)), "%")
+			tmc = i
+		}
 		if lenB-i < ChunkSize {
 			ret.appendPart(-1, lenB-i, b[i:])
 			ret.newCount++
@@ -58,6 +63,9 @@ func MakeDiff(a, b []byte) Diff {
 		ret.appendPart(-1, ChunkSize, chunk[:])
 		i += ChunkSize
 		ret.newCount++
+	}
+	if DebugInfo {
+		PL("MakeDiff: finished writing parts. len(b) = ", len(b))
 	}
 	ret.sourceHash = makeHash(a)
 	return ret

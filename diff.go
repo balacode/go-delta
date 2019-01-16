@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-16 12:41:32 0F5ACE                             go-delta/[diff.go]
+// :v: 2019-01-16 12:45:22 83B72A                             go-delta/[diff.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -12,37 +12,26 @@ import (
 
 // Diff stores the binary delta difference between two byte arrays
 type Diff struct {
-	sourceHash []byte
-	// hash of the source byte array
+	sourceHash []byte // hash of the source byte array
+	targetHash []byte // hash of the result after this Diff is applied
 	//
-	targetHash []byte
-	// expected hash of result after this Diff is applied to source
+	parts []diffPart // array referring to chunks in source array,
+	//                  or new bytes to append
 	//
-	parts []diffPart
-	// array of referring to chunks in source array, or new bytes to append
-	//
-	newCount int
-	// number of chunks that could not be matched in source
-	//
-	oldCount int
-	// number of chunks that were matched in source
+	newCount   int // number of chunks not matched in source array
+	oldCount   int // number of matched chunks in source array
 	sourceSize int // size of the source array
 	targetSize int // size of the target array
-
 } //                                                                        Diff
 
 // diffPart stores references to chunks in the source array,
 // or specifies bytes to append to result array directly
 type diffPart struct {
-	sourceLoc int
-	// byte position of the chunk in source array,
-	// or -1 when the bytes should be picked from 'data'
+	sourceLoc int // byte position of the chunk in source array,
+	//               or -1 when 'data' supplies the bytes directly
 	//
-	size int
-	// size of the chunk in bytes
-	//
-	data []byte
-	// optional bytes (only when sourceLoc is -1)
+	size int    // size of the chunk in bytes
+	data []byte // optional bytes (only when sourceLoc is -1)
 } //                                                                    diffPart
 
 // -----------------------------------------------------------------------------

@@ -1,12 +1,13 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-16 00:01:01 187AA6                             go-delta/[func.go]
+// :v: 2019-01-16 12:30:43 7A12F0                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
 
 import (
 	"bytes"
+	"compress/zlib"
 	"crypto/sha512"
 	"fmt"
 	"github.com/balacode/zr"
@@ -62,6 +63,32 @@ func MakeDiff(a, b []byte) Diff {
 
 // -----------------------------------------------------------------------------
 // # Helper Functions
+
+// compressBytes compresses an array of bytes and
+// returns the ZLIB-compressed array of bytes.
+func compressBytes(data []byte) []byte {
+	if len(data) == 0 {
+		return []byte{}
+	}
+	// zip data in standard manner
+	var b bytes.Buffer
+	var w = zlib.NewWriter(&b)
+	var _, err = w.Write(data)
+	w.Close()
+	//
+	// log any problem
+	const ERRM = "Failed compressing data with zlib:"
+	if err != nil {
+		zr.Error(ERRM, err)
+		return []byte{}
+	}
+	var ret = b.Bytes()
+	if len(ret) < 3 {
+		zr.Error(ERRM, "length < 3")
+		return []byte{}
+	}
+	return ret
+} //                                                               compressBytes
 
 // longestMatch __
 func longestMatch(a []byte, aLocs []int, b []byte, bLoc int) (loc, size int) {

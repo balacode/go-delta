@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-16 12:45:22 83B72A                             go-delta/[diff.go]
+// :v: 2019-01-16 14:44:38 35C081                             go-delta/[diff.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -12,16 +12,14 @@ import (
 
 // Diff stores the binary delta difference between two byte arrays
 type Diff struct {
-	sourceHash []byte // hash of the source byte array
-	targetHash []byte // hash of the result after this Diff is applied
-	//
-	parts []diffPart // array referring to chunks in source array,
-	//                  or new bytes to append
-	//
-	newCount   int // number of chunks not matched in source array
-	oldCount   int // number of matched chunks in source array
-	sourceSize int // size of the source array
-	targetSize int // size of the target array
+	sourceSize int        // size of the source array
+	sourceHash []byte     // hash of the source byte array
+	targetSize int        // size of the target array
+	targetHash []byte     // hash of the result after this Diff is applied
+	newCount   int        // number of chunks not matched in source array
+	oldCount   int        // number of matched chunks in source array
+	parts      []diffPart // array referring to chunks in source array,
+	//                       or new bytes to append
 } //                                                                        Diff
 
 // diffPart stores references to chunks in the source array,

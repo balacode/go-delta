@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-16 00:12:51 7A0BF8                             go-delta/[diff.go]
+// :v: 2019-01-16 03:02:04 897286                             go-delta/[diff.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -94,7 +94,7 @@ func (ob *Diff) appendPart(sourceLoc, size int, data []byte) {
 	}
 	// append a new part
 	var ar []byte
-	if sourceLoc != -1 {
+	if sourceLoc == -1 {
 		var ar = make([]byte, len(data))
 		copy(ar, data)
 	}

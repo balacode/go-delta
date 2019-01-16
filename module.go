@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-16 12:37:51 7262F5                           go-delta/[module.go]
+// :v: 2019-01-16 14:37:52 27BDA9                           go-delta/[module.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -17,6 +17,8 @@ const ChunkSize = 8
 
 // PL is fmt.Println() but is used only for debugging.
 var PL = fmt.Println
+
+var tmr zr.Timer
 
 // -----------------------------------------------------------------------------
 // # Function Proxy Variables (for mocking)

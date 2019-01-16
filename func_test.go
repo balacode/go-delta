@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-15 18:45:31 8467FE                        go-delta/[func_test.go]
+// :v: 2019-01-16 14:37:52 2E081D                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -17,8 +17,6 @@ to generate a test coverage report for the whole module use:
 import (
 	"io/ioutil"
 	"testing"
-
-	"github.com/balacode/zr"
 )
 
 // readData reads 'filename' and returns its contents as an array of bytes
@@ -70,7 +68,6 @@ func Test_MakeDiff_(t *testing.T) {
 		"ABCDEFGHIJKLMNOPQRSTUVWXYZ" + " " +
 		"ABCDEFGHIJKLMNOPQRSTUVWXYZ" + " " + "0123456789",
 	)
-	var tmr zr.Timer
 	tmr.Start("MakeDiff()")
 	{
 		MakeDiff(a, b)

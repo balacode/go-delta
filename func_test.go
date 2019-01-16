@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-16 14:37:52 2E081D                        go-delta/[func_test.go]
+// :v: 2019-01-16 15:07:20 3DD72D                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -68,12 +68,16 @@ func Test_MakeDiff_(t *testing.T) {
 		"ABCDEFGHIJKLMNOPQRSTUVWXYZ" + " " +
 		"ABCDEFGHIJKLMNOPQRSTUVWXYZ" + " " + "0123456789",
 	)
-	tmr.Start("MakeDiff()")
+	if DebugTiming {
+		tmr.Start("MakeDiff")
+	}
 	{
 		MakeDiff(a, b)
 	}
-	tmr.Stop("MakeDiff()")
-	tmr.Print()
+	if DebugTiming {
+		tmr.Stop("MakeDiff")
+		tmr.Print()
+	}
 } //                                                              Test_MakeDiff_
 
 //end

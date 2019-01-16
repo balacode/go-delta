@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-16 14:42:48 6996F8                             go-delta/[func.go]
+// :v: 2019-01-16 15:07:20 554E1D                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -13,6 +13,10 @@ import (
 
 // ApplyDiff __
 func ApplyDiff(source []byte, diff Diff) []byte {
+	if DebugTiming {
+		tmr.Start("ApplyDiff")
+		defer tmr.Stop("ApplyDiff")
+	}
 	return []byte{}
 } //                                                                   ApplyDiff
 
@@ -20,6 +24,10 @@ func ApplyDiff(source []byte, diff Diff) []byte {
 // delta difference between the two arrays and returns it as a Diff.
 // You can then use ApplyDiff() to generate 'b' from 'a' the Diff.
 func MakeDiff(a, b []byte) Diff {
+	if DebugTiming {
+		tmr.Start("MakeDiff")
+		defer tmr.Stop("MakeDiff")
+	}
 	var ret = Diff{targetHash: makeHash(b)}
 	var lenB = len(b)
 	if lenB < ChunkSize {
@@ -61,6 +69,10 @@ func MakeDiff(a, b []byte) Diff {
 // compressBytes compresses an array of bytes and
 // returns the ZLIB-compressed array of bytes.
 func compressBytes(data []byte) []byte {
+	if DebugTiming {
+		tmr.Start("compressBytes")
+		defer tmr.Stop("compressBytes")
+	}
 	if len(data) == 0 {
 		return []byte{}
 	}
@@ -86,6 +98,10 @@ func compressBytes(data []byte) []byte {
 
 // longestMatch __
 func longestMatch(a []byte, aLocs []int, b []byte, bLoc int) (loc, size int) {
+	if DebugTiming {
+		tmr.Start("longestMatch")
+		defer tmr.Stop("longestMatch")
+	}
 	if len(aLocs) < 1 {
 		mod.Error("aLocs is empty")
 		return -1, -1
@@ -118,6 +134,10 @@ func longestMatch(a []byte, aLocs []int, b []byte, bLoc int) (loc, size int) {
 
 // makeHash returns the SHA-512 hash of byte slice 'data'.
 func makeHash(data []byte) []byte {
+	if DebugTiming {
+		tmr.Start("makeHash")
+		defer tmr.Stop("makeHash")
+	}
 	var ret = sha512.Sum512(data)
 	return ret[:]
 } //                                                                    makeHash
@@ -126,6 +146,10 @@ func makeHash(data []byte) []byte {
 // The key specifies the unique chunk of bytes, while the
 // values array returns the positions of the chunk in 'data'.
 func makeMap(data []byte) (ret map[[ChunkSize]byte][]int) {
+	if DebugTiming {
+		tmr.Start("makeMap")
+		defer tmr.Stop("makeMap")
+	}
 	ret = make(map[[ChunkSize]byte][]int, 0)
 	if len(data) < ChunkSize {
 		return ret

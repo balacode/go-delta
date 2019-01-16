@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-16 14:49:40 369FF7                             go-delta/[diff.go]
+// :v: 2019-01-16 15:07:20 F7AAD4                             go-delta/[diff.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -123,6 +123,10 @@ func (ob *Diff) Dump() {
 
 // appendPart appends binary difference data
 func (ob *Diff) appendPart(sourceLoc, size int, data []byte) {
+	if DebugTiming {
+		tmr.Start("appendPart")
+		defer tmr.Stop("appendPart")
+	}
 	if true {
 		PL("appendPart",
 			"sourceLoc:", sourceLoc,

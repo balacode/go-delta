@@ -1,11 +1,13 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-16 14:44:38 35C081                             go-delta/[diff.go]
+// :v: 2019-01-16 14:49:40 369FF7                             go-delta/[diff.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
 
 import (
+	"bytes"
+	"encoding/binary"
 	"fmt"
 	"github.com/balacode/zr"
 )
@@ -34,6 +36,47 @@ type diffPart struct {
 
 // -----------------------------------------------------------------------------
 // # Public Properties
+
+// Bytes converts the Delta structure to a byte array
+// (for serializing to a file, etc.)
+func (ob *Diff) Bytes() []byte {
+	var buf = bytes.NewBuffer(make([]byte, 0, 1024))
+	var wrInt = func(i int) {
+		err := binary.Write(buf, binary.BigEndian, int32(i))
+		if err != nil {
+			mod.Error("wrInt(", i, ") failed:", err)
+		}
+	}
+	var wrHash = func(hash []byte) {
+		err := binary.Write(buf, binary.BigEndian, int32(len(hash)))
+		if err != nil {
+			mod.Error("wrHash(", hash, ") failed:", err)
+		}
+		buf.Write(hash)
+	}
+	// write the header
+	wrInt(ob.sourceSize)
+	wrHash(ob.sourceHash)
+	wrInt(ob.targetSize)
+	wrHash(ob.targetHash)
+	wrInt(ob.newCount)
+	wrInt(ob.oldCount)
+	wrInt(len(ob.parts))
+	//
+	// write the parts
+	for _, part := range ob.parts {
+		wrInt(part.sourceLoc)
+		if part.sourceLoc == -1 {
+			wrInt(len(part.data))
+			buf.Write(part.data)
+			continue
+		}
+		wrInt(part.size)
+	}
+	// compress the delta
+	var ret = compressBytes(buf.Bytes())
+	return ret
+} //                                                                       Bytes
 
 // NewCount __
 func (ob *Diff) NewCount() int {

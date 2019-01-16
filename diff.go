@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-16 03:14:13 8186CA                             go-delta/[diff.go]
+// :v: 2019-01-16 12:41:32 0F5ACE                             go-delta/[diff.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -26,6 +26,9 @@ type Diff struct {
 	//
 	oldCount int
 	// number of chunks that were matched in source
+	sourceSize int // size of the source array
+	targetSize int // size of the target array
+
 } //                                                                        Diff
 
 // diffPart stores references to chunks in the source array,
@@ -54,6 +57,16 @@ func (ob *Diff) NewCount() int {
 func (ob *Diff) OldCount() int {
 	return ob.oldCount
 } //                                                                    OldCount
+
+// SourceSize returns the size of the source byte array, in bytes.
+func (ob *Diff) SourceSize() int {
+	return ob.sourceSize
+} //                                                                  SourceSize
+
+// TargetSize returns the size of the target byte array, in bytes.
+func (ob *Diff) TargetSize() int {
+	return ob.targetSize
+} //                                                                  TargetSize
 
 // -----------------------------------------------------------------------------
 // # Public Method

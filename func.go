@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-16 12:37:51 1E06AC                             go-delta/[func.go]
+// :v: 2019-01-16 14:42:48 6996F8                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -42,7 +42,7 @@ func MakeDiff(a, b []byte) Diff {
 		}
 		if found {
 			var at, size = longestMatch(a, locs, b, i)
-			ret.appendPart(at, size, a[at:at+size])
+			ret.appendPart(at, size, nil)
 			i += size
 			ret.oldCount++
 			continue

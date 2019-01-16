@@ -1,11 +1,12 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-16 03:10:35 F3314C                             go-delta/[diff.go]
+// :v: 2019-01-16 03:14:13 8186CA                             go-delta/[diff.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
 
 import (
+	"fmt"
 	"github.com/balacode/zr"
 )
 
@@ -53,6 +54,26 @@ func (ob *Diff) NewCount() int {
 func (ob *Diff) OldCount() int {
 	return ob.oldCount
 } //                                                                    OldCount
+
+// -----------------------------------------------------------------------------
+// # Public Method
+
+// Dump prints this object to the console in a human-friendly format.
+func (ob *Diff) Dump() {
+	var pl = fmt.Println
+	pl()
+	pl("sourceHash:", ob.sourceHash)
+	pl("targetHash:", ob.targetHash)
+	pl("newCount:", ob.newCount)
+	pl("oldCount:", ob.oldCount)
+	pl("len(parts):", len(ob.parts))
+	pl()
+	for i, part := range ob.parts {
+		pl("part:", i, "sourceLoc:", part.sourceLoc,
+			"size:", part.size,
+			"data:", part.data, string(part.data))
+	}
+} //                                                                        Dump
 
 // -----------------------------------------------------------------------------
 // # Internal Methods

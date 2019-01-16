@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-16 12:30:43 7A12F0                             go-delta/[func.go]
+// :v: 2019-01-16 12:33:12 7020EA                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -9,13 +9,8 @@ import (
 	"bytes"
 	"compress/zlib"
 	"crypto/sha512"
-	"fmt"
 	"github.com/balacode/zr"
 )
-
-const ChunkSize = 8
-
-var PL = fmt.Println
 
 // ApplyDiff __
 func ApplyDiff(source []byte, diff Diff) []byte {

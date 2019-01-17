@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-17 15:03:13 B5D088                             go-delta/[diff.go]
+// :v: 2019-01-17 15:31:29 F1242B                             go-delta/[diff.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -238,15 +238,16 @@ func loadDiff(delta []byte) (Diff, error) {
 		return Diff{},
 			mod.Error("readBytes() failed @4: invalid number of parts:", count)
 	}
-	ret.parts = make([]diffPart, 0, count)
-	for _, part := range ret.parts {
-		part.sourceLoc = readInt()
-		if part.sourceLoc == -1 {
-			part.data = readBytes()
-			part.size = len(part.data)
+	ret.parts = make([]diffPart, count)
+	for i := range ret.parts {
+		var p = &ret.parts[i]
+		p.sourceLoc = readInt()
+		if p.sourceLoc == -1 {
+			p.data = readBytes()
+			p.size = len(p.data)
 			continue
 		}
-		part.size = readInt()
+		p.size = readInt()
 	}
 	return ret, nil
 } //                                                                    loadDiff

@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-17 02:22:11 3B637D                             go-delta/[func.go]
+// :v: 2019-01-17 03:07:43 174753                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -122,18 +122,25 @@ func longestMatch(a []byte, aLocs []int, b []byte, bLoc int) (loc, size int) {
 	var aEnd = len(a) - 1
 	var retLoc = -1
 	var retSize = -1
-	for _, aLoc := range aLocs {
+	for _, ai := range aLocs {
 		var n = MatchSize
-		if !bytes.Equal(a[aLoc:aLoc+n], b[bLoc:bLoc+n]) {
-			mod.Error("mismatch at aLoc:", aLoc, "bLoc:", bLoc)
+		var bi = bLoc
+		if !bytes.Equal(a[ai:ai+n], b[bi:bi+n]) {
+			mod.Error("mismatch at ai:", ai, "bi:", bi)
 			continue
 		}
+		// extend match backward
+		for ai-1 >= 0 && bi-1 >= 0 && a[ai-1] == b[bi-1] {
+			ai--
+			bi--
+			n++
+		}
 		// extend match forward
-		for aLoc+n <= aEnd && bLoc+n <= bEnd && a[aLoc+n] == b[bLoc+n] {
+		for ai+n <= aEnd && bi+n <= bEnd && a[ai+n] == b[bi+n] {
 			n++
 		}
 		if n > retSize {
-			retLoc = aLoc
+			retLoc = ai
 			retSize = n
 		}
 	}

@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-17 02:30:38 952430                        go-delta/[func_test.go]
+// :v: 2019-01-17 03:11:39 9FD49D                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -109,6 +109,19 @@ func Test_MakeDiff_(t *testing.T) {
 			  0.14999: longestMatch
 			  0.07882: appendPart
 			  0.09806: compressBytes
+
+			After adding backward-scanning in longestMatch()
+			--------------------------------------------------------------
+			unsipped delta length: 1,675,811 bytes
+			zipped delta length:     666,880 (3.92% of target's size)
+			elapsed time:                2.4 seconds
+			--------------------------------------------------------------
+			  2.45898: MakeDiff
+			  0.15910: makeHash
+			  1.49399: makeMap
+			  0.16595: longestMatch
+			  0.07311: appendPart
+			  0.12408: compressBytes
 		*/
 		a = readData("test1.file")
 		b = readData("test2.file")

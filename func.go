@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-16 15:18:00 141420                             go-delta/[func.go]
+// :v: 2019-01-17 02:11:01 C9CE98                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -30,26 +30,26 @@ func MakeDiff(a, b []byte) Diff {
 	}
 	var ret = Diff{targetHash: makeHash(b)}
 	var lenB = len(b)
-	if lenB < ChunkSize {
+	if lenB < MatchSize {
 		ret.parts = []diffPart{{sourceLoc: -1, size: lenB, data: b}}
 		return ret
 	}
 	var m = makeMap(a)
-	var chunk [ChunkSize]byte
+	var chunk [MatchSize]byte
 	var tmc = 0 // timing counter
 	for i := 0; i < lenB; {
 		if DebugInfo && i-tmc >= 10000 {
 			PL("MakeDiff:", int(100.0/float32(lenB)*float32(i)), "%")
 			tmc = i
 		}
-		if lenB-i < ChunkSize {
+		if lenB-i < MatchSize {
 			ret.appendPart(-1, lenB-i, b[i:])
 			ret.newCount++
 			break
 		}
 		var locs []int
 		var found = false
-		if lenB-i >= ChunkSize {
+		if lenB-i >= MatchSize {
 			copy(chunk[:], b[i:])
 			locs, found = m[chunk]
 		}
@@ -60,8 +60,8 @@ func MakeDiff(a, b []byte) Diff {
 			ret.oldCount++
 			continue
 		}
-		ret.appendPart(-1, ChunkSize, chunk[:])
-		i += ChunkSize
+		ret.appendPart(-1, MatchSize, chunk[:])
+		i += MatchSize
 		ret.newCount++
 	}
 	if DebugInfo {
@@ -123,7 +123,7 @@ func longestMatch(a []byte, aLocs []int, b []byte, bLoc int) (loc, size int) {
 	var retLoc = -1
 	var retSize = -1
 	for _, aLoc := range aLocs {
-		var n = ChunkSize
+		var n = MatchSize
 		if !bytes.Equal(a[aLoc:aLoc+n], b[bLoc:bLoc+n]) {
 			mod.Error("mismatch at aLoc:", aLoc, "bLoc:", bLoc)
 			continue
@@ -153,17 +153,17 @@ func makeHash(data []byte) []byte {
 // makeMap creates a map of unique chunks in 'data'.
 // The key specifies the unique chunk of bytes, while the
 // values array returns the positions of the chunk in 'data'.
-func makeMap(data []byte) (ret map[[ChunkSize]byte][]int) {
+func makeMap(data []byte) (ret map[[MatchSize]byte][]int) {
 	if DebugTiming {
 		tmr.Start("makeMap")
 		defer tmr.Stop("makeMap")
 	}
-	ret = make(map[[ChunkSize]byte][]int, 0)
-	if len(data) < ChunkSize {
+	ret = make(map[[MatchSize]byte][]int, 0)
+	if len(data) < MatchSize {
 		return ret
 	}
-	var key [ChunkSize]byte
-	for i := 0; i < len(data)-ChunkSize; i++ {
+	var key [MatchSize]byte
+	for i := 0; i < len(data)-MatchSize; i++ {
 		copy(key[:], data[i:])
 		var _, found = ret[key]
 		if found {

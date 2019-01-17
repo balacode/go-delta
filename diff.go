@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-17 14:54:17 520860                             go-delta/[diff.go]
+// :v: 2019-01-17 14:56:21 AD2E58                             go-delta/[diff.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -40,18 +40,29 @@ type diffPart struct {
 // (for serializing to a file, etc.)
 func (ob *Diff) Bytes() []byte {
 	var buf = bytes.NewBuffer(make([]byte, 0, 1024))
-	var writeInt = func(i int) {
+	//
+	var writeInt = func(i int) error {
 		err := binary.Write(buf, binary.BigEndian, int32(i))
 		if err != nil {
-			mod.Error("writeInt(", i, ") failed:", err)
+			return mod.Error("writeInt(", i, ") failed:", err)
 		}
+		return nil
 	}
-	var writeBytes = func(data []byte) {
-		err := binary.Write(buf, binary.BigEndian, int32(len(data)))
+	var writeBytes = func(data []byte) error {
+		var err = writeInt(len(data))
 		if err != nil {
-			mod.Error("writeBytes(", data, ") failed:", err)
+			return mod.Error("writeBytes([", len(data), "]) failed @1:", err)
 		}
-		buf.Write(data)
+		var n int
+		n, err = buf.Write(data)
+		if err != nil {
+			return mod.Error("writeBytes([", len(data), "]) failed @2:", err)
+		}
+		if n != len(data) {
+			return mod.Error("writeBytes([", len(data), "]) failed @3:",
+				"wrote wrong number of bytes:", n)
+		}
+		return nil
 	}
 	// write the header
 	writeInt(ob.sourceSize)
@@ -66,19 +77,18 @@ func (ob *Diff) Bytes() []byte {
 	for _, part := range ob.parts {
 		writeInt(part.sourceLoc)
 		if part.sourceLoc == -1 {
-			writeInt(len(part.data))
-			buf.Write(part.data)
+			writeBytes(part.data)
 			continue
 		}
 		writeInt(part.size)
 	}
 	// compress the delta
 	if DebugInfo {
-		PL("unsipped delta length:", len(buf.Bytes()))
+		PL("uncompressed delta length:", len(buf.Bytes()))
 	}
 	var ret = compressBytes(buf.Bytes())
 	if DebugInfo {
-		PL("zipped delta length:", len(ret))
+		PL("compressed delta length:", len(ret))
 	}
 	return ret
 } //                                                                       Bytes

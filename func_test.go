@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-16 15:11:43 33508E                        go-delta/[func_test.go]
+// :v: 2019-01-17 02:30:38 952430                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -82,17 +82,33 @@ func Test_MakeDiff_(t *testing.T) {
 		)
 	case 3:
 		/*
-			size:           16,994,304
-			unzipped delta:  1,855,440
-			zipped delta:      704,583 (4% of file size)
-			elapsed time:   171.4 seconds
-			 171.25880: MakeDiff()
-			   0.16411: makeHash()
-			   3.78551: makeMap()
-			 165.82172: longestMatch()
-			   0.09878: appendPart()
-			   0.03101: append new
-			   0.13109: compressBytes()
+			Target array's size: 16,994,304 bytes
+
+			Before optimizing makeMap():
+			--------------------------------------------------------------
+			unsipped delta length: 1,855,440 bytes
+			zipped delta length:     704,583 (4.15% of target's size)
+			elapsed time:              171.4 seconds
+			--------------------------------------------------------------
+			171.25880: MakeDiff
+			  0.16411: makeHash
+			  3.78551: makeMap
+			165.82172: longestMatch
+			  0.09878: appendPart
+			  0.13109: compressBytes
+
+			After optimizing makeMap():
+			--------------------------------------------------------------
+			unsipped delta length: 1,952,772 bytes
+			zipped delta length:     729,574 (4.29% of target's size)
+			elapsed time:                2.4 seconds
+			--------------------------------------------------------------
+			  2.40135: MakeDiff
+			  0.11608: makeHash
+			  1.28985: makeMap
+			  0.14999: longestMatch
+			  0.07882: appendPart
+			  0.09806: compressBytes
 		*/
 		a = readData("test1.file")
 		b = readData("test2.file")

@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-17 03:11:39 9FD49D                        go-delta/[func_test.go]
+// :v: 2019-01-17 15:01:54 5B1BD9                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -16,8 +16,17 @@ to generate a test coverage report for the whole module use:
 
 import (
 	"io/ioutil"
+	"strings"
 	"testing"
 )
+
+const AtoM = "ABCDEFGHIJKLM"
+const AtoS = "ABCDEFGHIJKLMNOPQRS"
+const AtoZ = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+const Nums = "0123456789"
+const atoz = "abcdefghijklmnopqrstuvwxyz"
+
+var Line = strings.Repeat("#", 70)
 
 // readData reads 'filename' and returns its contents as an array of bytes
 func readData(filename string) []byte {
@@ -31,7 +40,7 @@ func readData(filename string) []byte {
 
 // go test --run Test1
 func Test1(t *testing.T) {
-	PL("Test1 ################################################################")
+	PL("Test1 " + Line)
 	//
 	var m1 = makeMap(readData("test1.zip"))
 	PL("Created m1. len(m1):", len(m1))
@@ -63,23 +72,11 @@ func Test_MakeDiff_(t *testing.T) {
 	var a, b []byte
 	switch 3 {
 	case 1:
-		a = []byte("ABCDEFGHIJKLM" + " " +
-			"ABCDEFGHIJKLMNOPQRSTUVWX" + " " +
-			"ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-		)
-		b = []byte("0x0x0xABCDEFGHIJKLMNOPQRSTUVWXYZ" + " " +
-			"ABCDEFGHIJKLMNOPQRSTUVWXYZ" + " " +
-			"ABCDEFGHIJKLMNOPQRSTUVWXYZ" + " " + "0123456789",
-		)
+		a = []byte(AtoM + " " + AtoS + " " + AtoZ)
+		b = []byte("0x0x0x" + AtoZ + " " + AtoZ + " " + AtoZ + " " + Nums)
 	case 2:
-		a = []byte("ABCDEFGHIJKLM" + " " +
-			"ABCDEFGHIJKLMNOPQRSTUVWX" + " " +
-			"ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-		)
-		b = []byte("abcdefghijklmnopqrstuvwxyz" + " " +
-			"abcdefghijklmnopqrstuvwxyz" + " " +
-			"abcdefghijklmnopqrstuvwxyz" + " " + "0123456789",
-		)
+		a = []byte(AtoM + " " + AtoS + " " + AtoZ)
+		b = []byte(atoz + " " + atoz + " " + atoz + " " + Nums)
 	case 3:
 		/*
 			Target array's size: 16,994,304 bytes

@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-17 03:07:43 174753                             go-delta/[func.go]
+// :v: 2019-01-17 13:35:19 E96557                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -129,12 +129,15 @@ func longestMatch(a []byte, aLocs []int, b []byte, bLoc int) (loc, size int) {
 			mod.Error("mismatch at ai:", ai, "bi:", bi)
 			continue
 		}
-		// extend match backward
-		for ai-1 >= 0 && bi-1 >= 0 && a[ai-1] == b[bi-1] {
-			ai--
-			bi--
-			n++
-		}
+		/*
+			DISABLED: EXTENDING MATCH BACKWARD OVERLAPS PREVIOUSLY-WRITTEN PARTS
+			// extend match backward
+			for ai-1 >= 0 && bi-1 >= 0 && a[ai-1] == b[bi-1] {
+				ai--
+				bi--
+				n++
+			}
+		*/
 		// extend match forward
 		for ai+n <= aEnd && bi+n <= bEnd && a[ai+n] == b[bi+n] {
 			n++

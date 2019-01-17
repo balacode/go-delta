@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-16 15:18:00 23E60B                             go-delta/[diff.go]
+// :v: 2019-01-17 02:32:24 68C697                             go-delta/[diff.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -133,7 +133,7 @@ func (ob *Diff) appendPart(sourceLoc, size int, data []byte) {
 		tmr.Start("appendPart")
 		defer tmr.Stop("appendPart")
 	}
-	if DebugInfo {
+	if DebugInfo && DebugAppendPartArgs {
 		PL("appendPart",
 			"sourceLoc:", sourceLoc,
 			"size:", size,

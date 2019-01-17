@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-17 14:56:21 AD2E58                             go-delta/[diff.go]
+// :v: 2019-01-17 15:03:13 B5D088                             go-delta/[diff.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -184,5 +184,71 @@ func (ob *Diff) appendPart(sourceLoc, size int, data []byte) {
 	ob.parts = append(ob.parts,
 		diffPart{sourceLoc: sourceLoc, size: size, data: ar})
 } //                                                                  appendPart
+
+// loadDiff __
+func loadDiff(delta []byte) (Diff, error) {
+	//
+	// uncompress the delta
+	if DebugInfo {
+		PL("loadDiff: compressed delta length:", len(delta))
+	}
+	var data = uncompressBytes(delta)
+	if DebugInfo {
+		PL("loadDiff: uncompressed delta length:", len(data))
+	}
+	var buf = bytes.NewBuffer(data)
+	var readInt = func() int {
+		var i int32
+		err := binary.Read(buf, binary.BigEndian, &i)
+		if err != nil {
+			mod.Error("readInt() failed:", err)
+			return -1
+		}
+		return int(i)
+	}
+	var readBytes = func() []byte {
+		var size int32
+		err := binary.Read(buf, binary.BigEndian, &size)
+		if err != nil {
+			mod.Error("readBytes() failed @1:", err)
+		}
+		var ar = make([]byte, size)
+		var nread int
+		nread, err = buf.Read(ar)
+		if err != nil {
+			mod.Error("readBytes() failed @2:", err)
+		}
+		if nread != int(size) {
+			mod.Error("readBytes() failed @3: size:", size, "nread:", nread)
+		}
+		return ar
+	}
+	// read the header
+	var ret = Diff{
+		sourceSize: readInt(),
+		sourceHash: readBytes(),
+		targetSize: readInt(),
+		targetHash: readBytes(),
+		newCount:   readInt(),
+		oldCount:   readInt(),
+	}
+	// read the parts
+	var count = readInt()
+	if count < 1 {
+		return Diff{},
+			mod.Error("readBytes() failed @4: invalid number of parts:", count)
+	}
+	ret.parts = make([]diffPart, 0, count)
+	for _, part := range ret.parts {
+		part.sourceLoc = readInt()
+		if part.sourceLoc == -1 {
+			part.data = readBytes()
+			part.size = len(part.data)
+			continue
+		}
+		part.size = readInt()
+	}
+	return ret, nil
+} //                                                                    loadDiff
 
 //end

@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-17 02:11:01 A48438                           go-delta/[module.go]
+// :v: 2019-01-17 02:12:36 A34097                           go-delta/[module.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -13,8 +13,8 @@ import (
 // -----------------------------------------------------------------------------
 // # Module Constants / Variables
 
+const MatchLimit = 50
 const MatchSize = 8
-
 const DebugInfo = true
 const DebugTiming = true
 

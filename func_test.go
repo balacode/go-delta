@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-17 15:01:54 5B1BD9                        go-delta/[func_test.go]
+// :v: 2019-01-17 15:04:30 C88090                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -146,5 +146,42 @@ func Test_MakeDiff_(t *testing.T) {
 		tmr.Print()
 	}
 } //                                                              Test_MakeDiff_
+
+// go test --run Test_03_
+func Test_03_(t *testing.T) {
+	var a, b []byte
+	switch 3 {
+	case 1:
+		a = []byte("ABCDEFGHIJKLM" + " " +
+			"ABCDEFGHIJKLMNOPQRSTUVWX" + " " +
+			AtoZ,
+		)
+		b = []byte("0x0x0x" + AtoZ + " " +
+			AtoZ + " " +
+			AtoZ + " " + "0123456789",
+		)
+	}
+	PL("start Test_03_")
+	// -------------------------------------------------------------------------
+	PL("\n" + Line)
+	var d1 = MakeDiff(a, b)
+	PL("CREATED d1:")
+	d1.Dump()
+	//
+	var dbytes = d1.Bytes()
+	PL("got 'dbytes'")
+	// -------------------------------------------------------------------------
+	PL("\n" + Line)
+	if DebugTiming {
+		tmr.Start("loadDiff")
+	}
+	var d2, err = loadDiff(dbytes)
+	PL("CREATED d2: err:", err)
+	d2.Dump()
+	if DebugTiming {
+		tmr.Stop("loadDiff")
+		tmr.Print()
+	}
+} //                                                                    Test_03_
 
 //end

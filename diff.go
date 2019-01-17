@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-17 02:32:24 68C697                             go-delta/[diff.go]
+// :v: 2019-01-17 13:39:19 1DB8D8                             go-delta/[diff.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -9,7 +9,6 @@ import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
-	"github.com/balacode/zr"
 )
 
 // Diff stores the binary delta difference between two byte arrays
@@ -142,16 +141,16 @@ func (ob *Diff) appendPart(sourceLoc, size int, data []byte) {
 	// argument validations
 	switch {
 	case sourceLoc < -1:
-		zr.Error("sourceLoc:", sourceLoc, " < -1")
+		mod.Error("sourceLoc:", sourceLoc, " < -1")
 		return
 	case sourceLoc == -1 && len(data) == 0:
-		zr.Error("sourceLoc == -1 && len(data) == 0")
+		mod.Error("sourceLoc == -1 && len(data) == 0")
 		return
 	case sourceLoc != -1 && len(data) != 0:
-		zr.Error("sourceLoc != -1 && len(data):", len(data), "!= 0")
+		mod.Error("sourceLoc != -1 && len(data):", len(data), "!= 0")
 		return
 	case size < 1:
-		zr.Error("size:", size, " < 1")
+		mod.Error("size:", size, " < 1")
 		return
 	}
 	// if the previous part was embedded directly, append to that part's data

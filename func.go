@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-17 02:11:01 C9CE98                             go-delta/[func.go]
+// :v: 2019-01-17 02:22:11 3B637D                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -153,24 +153,32 @@ func makeHash(data []byte) []byte {
 // makeMap creates a map of unique chunks in 'data'.
 // The key specifies the unique chunk of bytes, while the
 // values array returns the positions of the chunk in 'data'.
-func makeMap(data []byte) (ret map[[MatchSize]byte][]int) {
+func makeMap(data []byte) map[[MatchSize]byte][]int {
 	if DebugTiming {
 		tmr.Start("makeMap")
 		defer tmr.Stop("makeMap")
 	}
-	ret = make(map[[MatchSize]byte][]int, 0)
-	if len(data) < MatchSize {
-		return ret
+	var lenData = len(data)
+	if lenData < MatchSize {
+		return map[[MatchSize]byte][]int{}
 	}
+	var ret = make(map[[MatchSize]byte][]int, lenData/4)
 	var key [MatchSize]byte
-	for i := 0; i < len(data)-MatchSize; i++ {
+	lenData -= MatchSize
+	for i := 0; i < lenData; {
 		copy(key[:], data[i:])
-		var _, found = ret[key]
-		if found {
-			ret[key] = append(ret[key], i)
-		} else {
+		var ar, found = ret[key]
+		if !found {
 			ret[key] = []int{i}
+			i++
+			continue
 		}
+		if len(ar) >= MatchLimit {
+			i++
+			continue
+		}
+		ret[key] = append(ret[key], i)
+		i += MatchSize
 	}
 	return ret
 } //                                                                     makeMap

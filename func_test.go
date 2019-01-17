@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-17 15:04:30 C88090                        go-delta/[func_test.go]
+// :v: 2019-01-17 15:32:01 09994C                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -150,16 +150,10 @@ func Test_MakeDiff_(t *testing.T) {
 // go test --run Test_03_
 func Test_03_(t *testing.T) {
 	var a, b []byte
-	switch 3 {
+	switch 1 {
 	case 1:
-		a = []byte("ABCDEFGHIJKLM" + " " +
-			"ABCDEFGHIJKLMNOPQRSTUVWX" + " " +
-			AtoZ,
-		)
-		b = []byte("0x0x0x" + AtoZ + " " +
-			AtoZ + " " +
-			AtoZ + " " + "0123456789",
-		)
+		a = []byte(AtoM + " " + AtoS + " " + AtoZ)
+		b = []byte("000" + AtoZ + " " + AtoZ + " " + AtoZ + " " + Nums)
 	}
 	PL("start Test_03_")
 	// -------------------------------------------------------------------------

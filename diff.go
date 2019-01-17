@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-17 13:39:19 1DB8D8                             go-delta/[diff.go]
+// :v: 2019-01-17 14:54:17 520860                             go-delta/[diff.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -40,37 +40,37 @@ type diffPart struct {
 // (for serializing to a file, etc.)
 func (ob *Diff) Bytes() []byte {
 	var buf = bytes.NewBuffer(make([]byte, 0, 1024))
-	var wrInt = func(i int) {
+	var writeInt = func(i int) {
 		err := binary.Write(buf, binary.BigEndian, int32(i))
 		if err != nil {
-			mod.Error("wrInt(", i, ") failed:", err)
+			mod.Error("writeInt(", i, ") failed:", err)
 		}
 	}
-	var wrHash = func(hash []byte) {
-		err := binary.Write(buf, binary.BigEndian, int32(len(hash)))
+	var writeBytes = func(data []byte) {
+		err := binary.Write(buf, binary.BigEndian, int32(len(data)))
 		if err != nil {
-			mod.Error("wrHash(", hash, ") failed:", err)
+			mod.Error("writeBytes(", data, ") failed:", err)
 		}
-		buf.Write(hash)
+		buf.Write(data)
 	}
 	// write the header
-	wrInt(ob.sourceSize)
-	wrHash(ob.sourceHash)
-	wrInt(ob.targetSize)
-	wrHash(ob.targetHash)
-	wrInt(ob.newCount)
-	wrInt(ob.oldCount)
-	wrInt(len(ob.parts))
+	writeInt(ob.sourceSize)
+	writeBytes(ob.sourceHash)
+	writeInt(ob.targetSize)
+	writeBytes(ob.targetHash)
+	writeInt(ob.newCount)
+	writeInt(ob.oldCount)
+	writeInt(len(ob.parts))
 	//
 	// write the parts
 	for _, part := range ob.parts {
-		wrInt(part.sourceLoc)
+		writeInt(part.sourceLoc)
 		if part.sourceLoc == -1 {
-			wrInt(len(part.data))
+			writeInt(len(part.data))
 			buf.Write(part.data)
 			continue
 		}
-		wrInt(part.size)
+		writeInt(part.size)
 	}
 	// compress the delta
 	if DebugInfo {

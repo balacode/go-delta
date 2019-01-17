@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-17 13:35:19 E96557                             go-delta/[func.go]
+// :v: 2019-01-17 14:52:20 99E81A                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -9,6 +9,7 @@ import (
 	"bytes"
 	"compress/zlib"
 	"crypto/sha512"
+	"io"
 )
 
 // ApplyDiff __
@@ -72,7 +73,7 @@ func MakeDiff(a, b []byte) Diff {
 } //                                                                    MakeDiff
 
 // -----------------------------------------------------------------------------
-// # Helper Functions
+// # Helper Functions: Compression
 
 // compressBytes compresses an array of bytes and
 // returns the ZLIB-compressed array of bytes.
@@ -103,6 +104,22 @@ func compressBytes(data []byte) []byte {
 	}
 	return ret
 } //                                                               compressBytes
+
+// uncompressBytes uncompresses a ZLIB-compressed array of bytes.
+func uncompressBytes(data []byte) []byte {
+	var readCloser, err = zlib.NewReader(bytes.NewReader(data))
+	if err != nil {
+		mod.Error("uncompressBytes:", err)
+		return []byte{}
+	}
+	var ret = bytes.NewBuffer(make([]byte, 0, 8192))
+	io.Copy(ret, readCloser)
+	readCloser.Close()
+	return ret.Bytes()
+} //                                                             uncompressBytes
+
+// -----------------------------------------------------------------------------
+// # Helper Functions
 
 // longestMatch __
 func longestMatch(a []byte, aLocs []int, b []byte, bLoc int) (loc, size int) {

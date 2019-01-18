@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-18 14:34:53 ED514E                             go-delta/[func.go]
+// :v: 2019-01-18 14:37:16 2143B4                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -83,7 +83,7 @@ func compressBytes(data []byte) []byte {
 		defer tmr.Stop("compressBytes")
 	}
 	if len(data) == 0 {
-		return []byte{}
+		return nil
 	}
 	// zip data in standard manner
 	var b bytes.Buffer
@@ -95,12 +95,12 @@ func compressBytes(data []byte) []byte {
 	const ERRM = "Failed compressing data with zlib:"
 	if err != nil {
 		mod.Error(ERRM, err)
-		return []byte{}
+		return nil
 	}
 	var ret = b.Bytes()
 	if len(ret) < 3 {
 		mod.Error(ERRM, "length < 3")
-		return []byte{}
+		return nil
 	}
 	return ret
 } //                                                               compressBytes
@@ -110,7 +110,7 @@ func uncompressBytes(data []byte) []byte {
 	var readCloser, err = zlib.NewReader(bytes.NewReader(data))
 	if err != nil {
 		mod.Error("uncompressBytes:", err)
-		return []byte{}
+		return nil
 	}
 	var ret = bytes.NewBuffer(make([]byte, 0, 8192))
 	io.Copy(ret, readCloser)

@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-18 14:31:27 9200B7                        go-delta/[func_test.go]
+// :v: 2019-01-18 14:37:16 2A5C7E                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -216,7 +216,7 @@ func readData(filename string) []byte {
 	ret, err := ioutil.ReadFile(filename)
 	if err != nil {
 		PL("File reading error:", err)
-		return []byte{}
+		return nil
 	}
 	return ret
 } //                                                                    readData

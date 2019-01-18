@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-18 08:05:12 65F081                        go-delta/[func_test.go]
+// :v: 2019-01-18 14:31:27 9200B7                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -168,8 +168,8 @@ func Test_MakeDiff_(t *testing.T) {
 		tmr.Start("MakeDiff")
 	}
 	{
-		var diff = MakeDiff(a, b)
-		diff.Bytes()
+		var dif = MakeDiff(a, b)
+		dif.Bytes()
 	}
 	if DebugTiming {
 		tmr.Stop("MakeDiff")

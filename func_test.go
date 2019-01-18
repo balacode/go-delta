@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-18 14:45:09 02BBD8                        go-delta/[func_test.go]
+// :v: 2019-01-18 14:51:38 29620D                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -29,9 +29,33 @@ const atoz = "abcdefghijklmnopqrstuvwxyz"
 
 var Line = strings.Repeat("#", 70)
 
-// go test --run Test1
-func Test1(t *testing.T) {
-	PL("Test1 " + Line)
+// go test --run Test_ApplyDiff_
+func Test_ApplyDiff_(t *testing.T) {
+	var test = func(src []byte, d Diff, expect []byte) {
+		var result, _ = ApplyDiff(src, d)
+		if !bytes.Equal(result, expect) {
+			t.Errorf("\n expect:\n\t%v\n\t'%s'\n result:\n\t%v\n\t'%s'\n",
+				expect, expect, result, result)
+		}
+	}
+	test(
+		[]byte{},
+		Diff{
+			sourceHash: nil,
+			targetHash: makeHash(ab("abc")),
+			parts: []diffPart{
+				{sourceLoc: -1, size: 3, data: ab("abc")},
+			},
+		},
+		ab("abc"))
+} //                                                             Test_ApplyDiff_
+
+// -----------------------------------------------------------------------------
+// # Auxiliary / Temporary Unit Tests
+
+// go test --run Test_01_
+func Test_01_(t *testing.T) {
+	PL("Test_01_ " + Line)
 	//
 	var m1 = makeMap(readData("test1.zip"))
 	PL("Created m1. len(m1):", len(m1))
@@ -56,31 +80,10 @@ func Test1(t *testing.T) {
 			PL("key:", k, "val:", v, "exist:", exist)
 		}
 	}
-} //                                                                       Test1
+} //                                                                    Test_01_
 
-// go test --run Test_ApplyDiff_
-func Test_ApplyDiff_(t *testing.T) {
-	var test = func(src []byte, d Diff, expect []byte) {
-		var result, _ = ApplyDiff(src, d)
-		if !bytes.Equal(result, expect) {
-			t.Errorf("\n expect:\n\t%v\n\t'%s'\n result:\n\t%v\n\t'%s'\n",
-				expect, expect, result, result)
-		}
-	}
-	test(
-		[]byte{},
-		Diff{
-			sourceHash: nil,
-			targetHash: makeHash(ab("abc")),
-			parts: []diffPart{
-				{sourceLoc: -1, size: 3, data: ab("abc")},
-			},
-		},
-		ab("abc"))
-} //                                                             Test_ApplyDiff_
-
-// go test --run Test_MakeDiff_
-func Test_MakeDiff_(t *testing.T) {
+// go test --run Test_02_
+func Test_02_(t *testing.T) {
 	var a, b []byte
 	switch 5 {
 	case 1:
@@ -175,7 +178,7 @@ func Test_MakeDiff_(t *testing.T) {
 		tmr.Stop("MakeDiff")
 		tmr.Print()
 	}
-} //                                                              Test_MakeDiff_
+} //                                                                    Test_02_
 
 // go test --run Test_03_
 func Test_03_(t *testing.T) {

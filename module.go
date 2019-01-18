@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-17 02:32:24 E6A86D                           go-delta/[module.go]
+// :v: 2019-01-18 17:36:32 30EDF0                           go-delta/[module.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -15,10 +15,10 @@ import (
 
 const MatchLimit = 50
 const MatchSize = 8
-const DebugInfo = true
-const DebugTiming = true
 
-const DebugAppendPartArgs = false
+var DebugInfo = false
+var DebugTiming = true
+var DebugAppendPartArgs = false
 
 // PL is fmt.Println() but is used only for debugging.
 var PL = fmt.Println

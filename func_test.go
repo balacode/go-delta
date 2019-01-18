@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-18 07:49:49 0A56F7                        go-delta/[func_test.go]
+// :v: 2019-01-18 07:51:01 CECA17                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -28,16 +28,6 @@ const Nums = "0123456789"
 const atoz = "abcdefghijklmnopqrstuvwxyz"
 
 var Line = strings.Repeat("#", 70)
-
-// readData reads 'filename' and returns its contents as an array of bytes
-func readData(filename string) []byte {
-	ret, err := ioutil.ReadFile(filename)
-	if err != nil {
-		PL("File reading error:", err)
-		return []byte{}
-	}
-	return ret
-} //                                                                    readData
 
 // go test --run Test1
 func Test1(t *testing.T) {
@@ -102,7 +92,7 @@ func Test_MakeDiff_(t *testing.T) {
 	case 3:
 		/*
 			Target array's size: 16,994,304 bytes
-
+			-
 			Before optimizing makeMap():
 			--------------------------------------------------------------
 			unsipped delta length: 1,855,440 bytes
@@ -115,7 +105,7 @@ func Test_MakeDiff_(t *testing.T) {
 			165.82172: longestMatch
 			  0.09878: appendPart
 			  0.13109: compressBytes
-
+			-
 			After optimizing makeMap():
 			--------------------------------------------------------------
 			unsipped delta length: 1,952,772 bytes
@@ -128,7 +118,7 @@ func Test_MakeDiff_(t *testing.T) {
 			  0.14999: longestMatch
 			  0.07882: appendPart
 			  0.09806: compressBytes
-
+			-
 			After adding backward-scanning in longestMatch()
 			--------------------------------------------------------------
 			unsipped delta length: 1,675,811 bytes
@@ -199,5 +189,18 @@ func Test_03_(t *testing.T) {
 		tmr.Print()
 	}
 } //                                                                    Test_03_
+
+// -----------------------------------------------------------------------------
+// # Test Helper Function
+
+// readData reads 'filename' and returns its contents as an array of bytes
+func readData(filename string) []byte {
+	ret, err := ioutil.ReadFile(filename)
+	if err != nil {
+		PL("File reading error:", err)
+		return []byte{}
+	}
+	return ret
+} //                                                                    readData
 
 //end

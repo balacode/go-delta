@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-18 14:31:27 C4C38B                             go-delta/[diff.go]
+// :v: 2019-01-18 14:32:37 110D2B                             go-delta/[diff.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -92,6 +92,38 @@ func (ob *Diff) Bytes() []byte {
 	}
 	return ret
 } //                                                                       Bytes
+
+// GoString returns a Go-syntax representation of the Diff structure.
+// It implements the GoStringer interface.
+func (ob Diff) GoString() string {
+	var buf bytes.Buffer
+	var write = func(args ...string) {
+		for _, s := range args {
+			PL("ARG:", s)
+			buf.WriteString(s)
+		}
+	}
+	var str = func(v interface{}) string {
+		return fmt.Sprintf("%#v", v)
+	}
+	write("Diff{", "\n",
+		"\t", "sourceSize: ", str(ob.sourceSize), ",\n",
+		"\t", "sourceHash: ", str(ob.sourceHash), ",\n",
+		"\t", "targetSize: ", str(ob.targetSize), ",\n",
+		"\t", "targetHash: ", str(ob.targetHash), ",\n",
+		"\t", "newCount:   ", str(ob.newCount), ",\n",
+		"\t", "oldCount:   ", str(ob.oldCount), ",\n",
+		"\t", "parts: []diffPart{\n",
+	)
+	for _, pt := range ob.parts {
+		write("\t\t{",
+			"sourceLoc: ", str(pt.sourceLoc), ", ",
+			"size: ", str(pt.size), ", ",
+			"data: ", str(pt.data), "}\n")
+	}
+	write("\t},\n}")
+	return buf.String()
+} //                                                                    GoString
 
 // NewCount __
 func (ob *Diff) NewCount() int {

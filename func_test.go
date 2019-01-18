@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-18 14:51:38 29620D                        go-delta/[func_test.go]
+// :v: 2019-01-18 14:55:37 FED555                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -32,14 +32,18 @@ var Line = strings.Repeat("#", 70)
 // go test --run Test_ApplyDiff_
 func Test_ApplyDiff_(t *testing.T) {
 	var test = func(src []byte, d Diff, expect []byte) {
-		var result, _ = ApplyDiff(src, d)
+		var result, err = ApplyDiff(src, d)
+		if err != nil {
+			t.Errorf("\n encountered error: %s\n", err)
+			return
+		}
 		if !bytes.Equal(result, expect) {
 			t.Errorf("\n expect:\n\t%v\n\t'%s'\n result:\n\t%v\n\t'%s'\n",
 				expect, expect, result, result)
 		}
 	}
 	test(
-		[]byte{},
+		nil,
 		Diff{
 			sourceHash: nil,
 			targetHash: makeHash(ab("abc")),

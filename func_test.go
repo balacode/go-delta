@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-17 15:32:01 09994C                        go-delta/[func_test.go]
+// :v: 2019-01-18 07:49:49 0A56F7                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -15,6 +15,7 @@ to generate a test coverage report for the whole module use:
 */
 
 import (
+	"bytes"
 	"io/ioutil"
 	"strings"
 	"testing"
@@ -66,6 +67,27 @@ func Test1(t *testing.T) {
 		}
 	}
 } //                                                                       Test1
+
+// go test --run Test_ApplyDiff_
+func Test_ApplyDiff_(t *testing.T) {
+	var test = func(src []byte, d Diff, expect []byte) {
+		var result = ApplyDiff(src, d)
+		if !bytes.Equal(result, expect) {
+			t.Errorf("\n expect:\n\t%v\n\t'%s'\n result:\n\t%v\n\t'%s'\n",
+				expect, expect, result, result)
+		}
+	}
+	test(
+		[]byte{},
+		Diff{
+			sourceHash: nil,
+			targetHash: makeHash([]byte("abc")),
+			parts: []diffPart{
+				{sourceLoc: -1, size: 3, data: []byte("abc")},
+			},
+		},
+		[]byte("abc"))
+} //                                                             Test_ApplyDiff_
 
 // go test --run Test_MakeDiff_
 func Test_MakeDiff_(t *testing.T) {

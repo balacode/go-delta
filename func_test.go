@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-18 14:58:33 D17DCA                        go-delta/[func_test.go]
+// :v: 2019-01-18 14:59:42 FF95E6                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -241,6 +241,24 @@ func Test_03_(t *testing.T) {
 		tmr.Print()
 	}
 } //                                                                    Test_03_
+
+// go test --run Test_04_
+func Test_04_(t *testing.T) {
+	PL("Test_04_")
+	var dif = Diff{
+		sourceSize: 111,
+		sourceHash: []byte("SOURCE"),
+		targetSize: 222,
+		targetHash: []byte("TARGET"),
+		newCount:   333,
+		oldCount:   444,
+		parts: []diffPart{
+			{},
+			{},
+		},
+	}
+	PL(dif.GoString())
+} //                                                                    Test_04_
 
 // -----------------------------------------------------------------------------
 // # Test Helper Function

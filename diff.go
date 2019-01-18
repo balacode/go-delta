@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-18 14:32:37 110D2B                             go-delta/[diff.go]
+// :v: 2019-01-18 15:00:34 E8C863                             go-delta/[diff.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -99,7 +99,6 @@ func (ob Diff) GoString() string {
 	var buf bytes.Buffer
 	var write = func(args ...string) {
 		for _, s := range args {
-			PL("ARG:", s)
 			buf.WriteString(s)
 		}
 	}

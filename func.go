@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-17 14:52:20 99E81A                             go-delta/[func.go]
+// :v: 2019-01-18 14:34:53 ED514E                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -172,6 +172,9 @@ func makeHash(data []byte) []byte {
 	if DebugTiming {
 		tmr.Start("makeHash")
 		defer tmr.Stop("makeHash")
+	}
+	if len(data) == 0 {
+		return nil
 	}
 	var ret = sha512.Sum512(data)
 	return ret[:]

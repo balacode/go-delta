@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-18 14:37:16 2A5C7E                        go-delta/[func_test.go]
+// :v: 2019-01-18 14:45:09 02BBD8                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -61,7 +61,7 @@ func Test1(t *testing.T) {
 // go test --run Test_ApplyDiff_
 func Test_ApplyDiff_(t *testing.T) {
 	var test = func(src []byte, d Diff, expect []byte) {
-		var result = ApplyDiff(src, d)
+		var result, _ = ApplyDiff(src, d)
 		if !bytes.Equal(result, expect) {
 			t.Errorf("\n expect:\n\t%v\n\t'%s'\n result:\n\t%v\n\t'%s'\n",
 				expect, expect, result, result)
@@ -71,12 +71,12 @@ func Test_ApplyDiff_(t *testing.T) {
 		[]byte{},
 		Diff{
 			sourceHash: nil,
-			targetHash: makeHash([]byte("abc")),
+			targetHash: makeHash(ab("abc")),
 			parts: []diffPart{
-				{sourceLoc: -1, size: 3, data: []byte("abc")},
+				{sourceLoc: -1, size: 3, data: ab("abc")},
 			},
 		},
-		[]byte("abc"))
+		ab("abc"))
 } //                                                             Test_ApplyDiff_
 
 // go test --run Test_MakeDiff_
@@ -84,11 +84,11 @@ func Test_MakeDiff_(t *testing.T) {
 	var a, b []byte
 	switch 5 {
 	case 1:
-		a = []byte(AtoM + " " + AtoS + " " + AtoZ)
-		b = []byte("0x0x0x" + AtoZ + " " + AtoZ + " " + AtoZ + " " + Nums)
+		a = ab(AtoM + " " + AtoS + " " + AtoZ)
+		b = ab("0x0x0x" + AtoZ + " " + AtoZ + " " + AtoZ + " " + Nums)
 	case 2:
-		a = []byte(AtoM + " " + AtoS + " " + AtoZ)
-		b = []byte(atoz + " " + atoz + " " + atoz + " " + Nums)
+		a = ab(AtoM + " " + AtoS + " " + AtoZ)
+		b = ab(atoz + " " + atoz + " " + atoz + " " + Nums)
 	case 3:
 		/*
 			Target array's size: 16,994,304 bytes
@@ -182,8 +182,8 @@ func Test_03_(t *testing.T) {
 	var a, b []byte
 	switch 1 {
 	case 1:
-		a = []byte(AtoM + " " + AtoS + " " + AtoZ)
-		b = []byte("000" + AtoZ + " " + AtoZ + " " + AtoZ + " " + Nums)
+		a = ab(AtoM + " " + AtoS + " " + AtoZ)
+		b = ab("000" + AtoZ + " " + AtoZ + " " + AtoZ + " " + Nums)
 	}
 	PL("start Test_03_")
 	// -------------------------------------------------------------------------
@@ -220,5 +220,10 @@ func readData(filename string) []byte {
 	}
 	return ret
 } //                                                                    readData
+
+// ab converts s to a byte array
+func ab(s string) []byte {
+	return []byte(s)
+} //                                                                          ab
 
 //end

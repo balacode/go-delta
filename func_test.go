@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-18 17:34:02 D76ABE                        go-delta/[func_test.go]
+// :v: 2019-01-18 17:53:01 A7C5CF                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -78,7 +78,26 @@ func Test_ApplyDiff_(t *testing.T) {
 				{sourceLoc: -1, size: 3, data: ab("abc")},
 			},
 		},
-		ab("abc"))
+		// expect:
+		ab("abc"),
+	)
+	test(
+		// source:
+		ab("abc"),
+		//
+		// diff:
+		Diff{
+			sourceHash: makeHash(ab("abc")),
+			sourceSize: 3,
+			targetHash: makeHash(ab("abc")),
+			targetSize: 3,
+			parts: []diffPart{
+				{sourceLoc: -1, size: 3, data: ab("abc")},
+			},
+		},
+		// expect:
+		ab("abc"),
+	)
 } //                                                             Test_ApplyDiff_
 
 // -----------------------------------------------------------------------------

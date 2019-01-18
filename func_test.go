@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-18 07:51:01 CECA17                        go-delta/[func_test.go]
+// :v: 2019-01-18 08:05:12 65F081                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -82,7 +82,7 @@ func Test_ApplyDiff_(t *testing.T) {
 // go test --run Test_MakeDiff_
 func Test_MakeDiff_(t *testing.T) {
 	var a, b []byte
-	switch 3 {
+	switch 5 {
 	case 1:
 		a = []byte(AtoM + " " + AtoS + " " + AtoZ)
 		b = []byte("0x0x0x" + AtoZ + " " + AtoZ + " " + AtoZ + " " + Nums)
@@ -95,8 +95,8 @@ func Test_MakeDiff_(t *testing.T) {
 			-
 			Before optimizing makeMap():
 			--------------------------------------------------------------
-			unsipped delta length: 1,855,440 bytes
-			zipped delta length:     704,583 (4.15% of target's size)
+			uncompressed delta length: 1,855,440 bytes
+			compressed delta length:     704,583 (4.15% of target's size)
 			elapsed time:              171.4 seconds
 			--------------------------------------------------------------
 			171.25880: MakeDiff
@@ -108,8 +108,8 @@ func Test_MakeDiff_(t *testing.T) {
 			-
 			After optimizing makeMap():
 			--------------------------------------------------------------
-			unsipped delta length: 1,952,772 bytes
-			zipped delta length:     729,574 (4.29% of target's size)
+			uncompressed delta length: 1,952,772 bytes
+			compressed delta length:     729,574 (4.29% of target's size)
 			elapsed time:                2.4 seconds
 			--------------------------------------------------------------
 			  2.40135: MakeDiff
@@ -121,9 +121,9 @@ func Test_MakeDiff_(t *testing.T) {
 			-
 			After adding backward-scanning in longestMatch()
 			--------------------------------------------------------------
-			unsipped delta length: 1,675,811 bytes
-			zipped delta length:     666,880 (3.92% of target's size)
-			elapsed time:                2.4 seconds
+			uncompressed delta length: 1,675,811 bytes
+			compressed delta length:     666,880 (3.92% of target's size)
+			elapsed time:                    2.4 seconds
 			--------------------------------------------------------------
 			  2.45898: MakeDiff
 			  0.15910: makeHash
@@ -137,13 +137,31 @@ func Test_MakeDiff_(t *testing.T) {
 		PL("loaded data")
 	case 4:
 		/*
-			target size:    10,356,821
-			unzipped delta:  5,414,754
-			zipped delta:    5,258,684 (50.7% of file size)
-			elapsed time:          6.2 seconds
+			target size:        10,356,821
+			uncompressed delta:  5,414,754
+			compressed delta:    5,258,684 (50.7% of file size)
+			elapsed time:              6.2 seconds
 		*/
 		a = readData("test1.zip")
 		b = readData("test2.zip")
+		PL("loaded data")
+	case 5:
+		/*
+				target size:        17,096,704 bytes
+				uncompressed delta:     64,081 bytes
+				compressed delta:       25,967 (50.7% of file size)
+				elapsed time:             2.06 seconds
+				--------------------------------------------------------------
+			  	  2.06019: MakeDiff
+				  0.11507: makeHash
+				  1.44146: makeMap
+				  0.05109: longestMatch
+				  0.00349: appendPart
+				  0.00600: compressBytes
+				  3.67731
+		*/
+		a = readData("day1.data")
+		b = readData("day2.data")
 		PL("loaded data")
 	}
 	if DebugTiming {

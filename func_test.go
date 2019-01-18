@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-18 14:59:42 FF95E6                        go-delta/[func_test.go]
+// :v: 2019-01-18 17:34:02 D76ABE                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -16,7 +16,6 @@ to generate a test coverage report for the whole module use:
 
 import (
 	"bytes"
-	"fmt"
 	"io/ioutil"
 	"strings"
 	"testing"
@@ -37,8 +36,9 @@ func Test_MakeDiff_(t *testing.T) {
 	//
 	var test = func(a, b []byte, expect Diff) {
 		var result = MakeDiff(a, b)
-		if fmt.Sprint(result) != fmt.Sprint(expect) {
-			t.Errorf("\n expect:\n\t%v\n result:\n\t%v\n", expect, result)
+		if result.GoString() != expect.GoString() {
+			t.Errorf("\n expect:\n\t%s\n result:\n\t%s\n",
+				expect.GoString(), result.GoString())
 		}
 	}
 	test(

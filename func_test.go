@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-18 17:53:01 A7C5CF                        go-delta/[func_test.go]
+// :v: 2019-01-18 17:54:24 E5316E                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -70,7 +70,10 @@ func Test_ApplyDiff_(t *testing.T) {
 		}
 	}
 	test(
+		// source:
 		nil,
+		//
+		// diff:
 		Diff{
 			sourceHash: nil,
 			targetHash: makeHash(ab("abc")),

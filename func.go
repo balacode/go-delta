@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-18 14:39:14 57243D                             go-delta/[func.go]
+// :v: 2019-01-18 17:54:24 800A59                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -38,7 +38,7 @@ func ApplyDiff(source []byte, dif Diff) ([]byte, error) {
 				"out of range 0 -", dif.sourceSize-1)
 		case pt.sourceLoc+pt.size > dif.sourceSize:
 			return nil, mod.Error("part", i, "sourceLoc:", pt.sourceLoc,
-				"+", "size:", pt.size, "extends beyond", dif.sourceSize)
+				"+ size:", pt.size, "extends beyond", dif.sourceSize)
 		default:
 			data = source[pt.sourceLoc : pt.sourceLoc+pt.size]
 		}

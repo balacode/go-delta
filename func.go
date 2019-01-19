@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-18 17:54:24 800A59                             go-delta/[func.go]
+// :v: 2019-01-19 22:08:49 437F96                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package bdelta
@@ -65,7 +65,12 @@ func MakeDiff(a, b []byte) Diff {
 		tmr.Start("MakeDiff")
 		defer tmr.Stop("MakeDiff")
 	}
-	var ret = Diff{targetHash: makeHash(b)}
+	var ret = Diff{
+		sourceSize: len(a),
+		sourceHash: makeHash(a),
+		targetSize: len(b),
+		targetHash: makeHash(b),
+	}
 	var lenB = len(b)
 	if lenB < MatchSize {
 		ret.parts = []diffPart{{sourceLoc: -1, size: lenB, data: b}}
@@ -104,7 +109,6 @@ func MakeDiff(a, b []byte) Diff {
 	if DebugInfo {
 		PL("MakeDiff: finished writing parts. len(b) = ", len(b))
 	}
-	ret.sourceHash = makeHash(a)
 	return ret
 } //                                                                    MakeDiff
 

@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 12:55:19 C30EAF                        go-delta/[func_test.go]
+// :v: 2019-01-20 13:26:00 CD6DFF                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -26,14 +26,22 @@ const AtoZ = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 const Nums = "0123456789"
 const atoz = "abcdefghijklmnopqrstuvwxyz"
 
+const RunTest01 = false
+const RunTest02 = false
+const RunTest03 = false
+const RunTest04 = false
+
 var Line = strings.Repeat("#", 70)
 
 // -----------------------------------------------------------------------------
 // # Auxiliary / Temporary Unit Tests
 
-// go test --run Test_01_
-func Test_01_(t *testing.T) {
-	PL("Test_01_ " + Line)
+// go test --run Test01
+func Test01(t *testing.T) {
+	if !RunTest01 {
+		return
+	}
+	PL("Test01 " + Line)
 	//
 	var m1 = makeMap(readData("test1.zip"))
 	PL("Created m1. len(m1):", len(m1))
@@ -58,10 +66,13 @@ func Test_01_(t *testing.T) {
 			PL("key:", k, "val:", v, "exist:", exist)
 		}
 	}
-} //                                                                    Test_01_
+} //                                                                      Test01
 
-// go test --run Test_02_
-func Test_02_(t *testing.T) {
+// go test --run Test02
+func Test02(t *testing.T) {
+	if !RunTest02 {
+		return
+	}
 	var a, b []byte
 	switch 5 {
 	case 1:
@@ -156,17 +167,20 @@ func Test_02_(t *testing.T) {
 		tmr.Stop("delta.Make")
 		tmr.Print()
 	}
-} //                                                                    Test_02_
+} //                                                                      Test02
 
-// go test --run Test_03_
-func Test_03_(t *testing.T) {
+// go test --run Test03
+func Test03(t *testing.T) {
+	if !RunTest03 {
+		return
+	}
 	var a, b []byte
 	switch 1 {
 	case 1:
 		a = ab(AtoM + " " + AtoS + " " + AtoZ)
 		b = ab("000" + AtoZ + " " + AtoZ + " " + AtoZ + " " + Nums)
 	}
-	PL("start Test_03_")
+	PL("start Test03")
 	// -------------------------------------------------------------------------
 	PL("\n" + Line)
 	var d1 = Make(a, b)
@@ -187,11 +201,14 @@ func Test_03_(t *testing.T) {
 		tmr.Stop("loadDelta")
 		tmr.Print()
 	}
-} //                                                                    Test_03_
+} //                                                                      Test03
 
-// go test --run Test_04_
-func Test_04_(t *testing.T) {
-	PL("Test_04_")
+// go test --run Test04
+func Test04(t *testing.T) {
+	if !RunTest04 {
+		return
+	}
+	PL("Test04")
 	var d = Delta{
 		sourceSize: 111,
 		sourceHash: []byte("SOURCE"),
@@ -205,7 +222,7 @@ func Test_04_(t *testing.T) {
 		},
 	}
 	PL(d.GoString())
-} //                                                                    Test_04_
+} //                                                                      Test04
 
 // -----------------------------------------------------------------------------
 // # Test Helper Function

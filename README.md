@@ -31,7 +31,7 @@ func main() {
     )
     fmt.Print("The update is:", "\n", string(target), "\n\n")
 
-    // Use MakeDelta to generate a compressed patch between source and target
+    // Use delta.Make to generate a compressed patch between source and target
     var d = delta.Make(source, target)
 
     // Apply the patch to source to get the target

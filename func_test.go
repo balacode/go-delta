@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 06:47:38 77A024                        go-delta/[func_test.go]
+// :v: 2019-01-20 06:55:02 51F34A                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -29,13 +29,13 @@ const atoz = "abcdefghijklmnopqrstuvwxyz"
 
 var Line = strings.Repeat("#", 70)
 
-// go test --run Test_MakeDelta_
-func Test_MakeDelta_(t *testing.T) {
+// go test --run Test_Make_
+func Test_Make_(t *testing.T) {
 	//
-	// func MakeDelta(a, b []byte) Delta
+	// func Make(a, b []byte) Delta
 	//
 	var test = func(a, b []byte, expect Delta) {
-		var result = MakeDelta(a, b)
+		var result = Make(a, b)
 		if result.GoString() != expect.GoString() {
 			t.Errorf("\n expect:\n\t%s\n result:\n\t%s\n",
 				expect.GoString(), result.GoString())
@@ -54,7 +54,7 @@ func Test_MakeDelta_(t *testing.T) {
 			},
 		},
 	)
-} //                                                             Test_MakeDelta_
+} //                                                                  Test_Make_
 
 // go test --run Test_Delta_Apply_
 func Test_Delta_Apply_(t *testing.T) {
@@ -155,7 +155,7 @@ func Test_02_(t *testing.T) {
 			compressed delta length:     704,583 (4.15% of target's size)
 			elapsed time:              171.4 seconds
 			--------------------------------------------------------------
-			171.25880: MakeDelta
+			171.25880: delta.Make
 			  0.16411: makeHash
 			  3.78551: makeMap
 			165.82172: longestMatch
@@ -168,7 +168,7 @@ func Test_02_(t *testing.T) {
 			compressed delta length:     729,574 (4.29% of target's size)
 			elapsed time:                2.4 seconds
 			--------------------------------------------------------------
-			  2.40135: MakeDelta
+			  2.40135: delta.Make
 			  0.11608: makeHash
 			  1.28985: makeMap
 			  0.14999: longestMatch
@@ -181,7 +181,7 @@ func Test_02_(t *testing.T) {
 			compressed delta length:     666,880 (3.92% of target's size)
 			elapsed time:                    2.4 seconds
 			--------------------------------------------------------------
-			  2.45898: MakeDelta
+			  2.45898: delta.Make
 			  0.15910: makeHash
 			  1.49399: makeMap
 			  0.16595: longestMatch
@@ -208,7 +208,7 @@ func Test_02_(t *testing.T) {
 				compressed delta:       25,967 (50.7% of file size)
 				elapsed time:             2.06 seconds
 				--------------------------------------------------------------
-			  	  2.06019: MakeDelta
+			  	  2.06019: delta.Make
 				  0.11507: makeHash
 				  1.44146: makeMap
 				  0.05109: longestMatch
@@ -221,14 +221,14 @@ func Test_02_(t *testing.T) {
 		PL("loaded data")
 	}
 	if DebugTiming {
-		tmr.Start("MakeDelta")
+		tmr.Start("delta.Make")
 	}
 	{
-		var d = MakeDelta(a, b)
+		var d = Make(a, b)
 		d.Bytes()
 	}
 	if DebugTiming {
-		tmr.Stop("MakeDelta")
+		tmr.Stop("delta.Make")
 		tmr.Print()
 	}
 } //                                                                    Test_02_
@@ -244,7 +244,7 @@ func Test_03_(t *testing.T) {
 	PL("start Test_03_")
 	// -------------------------------------------------------------------------
 	PL("\n" + Line)
-	var d1 = MakeDelta(a, b)
+	var d1 = Make(a, b)
 	PL("CREATED d1:")
 	d1.Dump()
 	//

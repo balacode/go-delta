@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 12:49:30 02CB94                        go-delta/[func_test.go]
+// :v: 2019-01-20 12:55:19 C30EAF                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -15,7 +15,6 @@ to generate a test coverage report for the whole module use:
 */
 
 import (
-	"bytes"
 	"io/ioutil"
 	"strings"
 	"testing"
@@ -28,53 +27,6 @@ const Nums = "0123456789"
 const atoz = "abcdefghijklmnopqrstuvwxyz"
 
 var Line = strings.Repeat("#", 70)
-
-// go test --run Test_Delta_Apply_
-func Test_Delta_Apply_(t *testing.T) {
-	var test = func(src []byte, d Delta, expect []byte) {
-		var result, err = d.Apply(src)
-		if err != nil {
-			t.Errorf("\n encountered error: %s\n", err)
-			return
-		}
-		if !bytes.Equal(result, expect) {
-			t.Errorf("\n expect:\n\t%v\n\t'%s'\n result:\n\t%v\n\t'%s'\n",
-				expect, expect, result, result)
-		}
-	}
-	test(
-		// source:
-		nil,
-		//
-		// delta:
-		Delta{
-			sourceHash: nil,
-			targetHash: makeHash(ab("abc")),
-			parts: []deltaPart{
-				{sourceLoc: -1, size: 3, data: ab("abc")},
-			},
-		},
-		// expect:
-		ab("abc"),
-	)
-	test(
-		// source:
-		ab("abc"),
-		//
-		// delta:
-		Delta{
-			sourceHash: makeHash(ab("abc")),
-			sourceSize: 3,
-			targetHash: makeHash(ab("abc")),
-			targetSize: 3,
-			parts: []deltaPart{
-				{sourceLoc: -1, size: 3, data: ab("abc")},
-			},
-		},
-		// expect:
-		ab("abc"),
-	)
-} //                                                           Test_Delta_Apply_
 
 // -----------------------------------------------------------------------------
 // # Auxiliary / Temporary Unit Tests

@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 07:32:31 C0EE11                            go-delta/[delta.go]
+// :v: 2019-01-20 07:34:51 5F174D                            go-delta/[delta.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -59,13 +59,13 @@ func (ob *Delta) TargetSize() int {
 // # Internal Methods
 
 // loadDelta __
-func loadDelta(delta []byte) (Delta, error) {
+func loadDelta(data []byte) (Delta, error) {
 	//
 	// uncompress the delta
 	if DebugInfo {
-		PL("loadDelta: compressed delta length:", len(delta))
+		PL("loadDelta: compressed delta length:", len(data))
 	}
-	var data = uncompressBytes(delta)
+	data = uncompressBytes(data)
 	if DebugInfo {
 		PL("loadDelta: uncompressed delta length:", len(data))
 	}

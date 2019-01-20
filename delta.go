@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 07:27:23 E53CF0                            go-delta/[delta.go]
+// :v: 2019-01-20 07:32:31 C0EE11                            go-delta/[delta.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -8,7 +8,6 @@ package delta
 import (
 	"bytes"
 	"encoding/binary"
-	"fmt"
 )
 
 // Delta stores the binary delta difference between two byte arrays
@@ -55,26 +54,6 @@ func (ob *Delta) SourceSize() int {
 func (ob *Delta) TargetSize() int {
 	return ob.targetSize
 } //                                                                  TargetSize
-
-// -----------------------------------------------------------------------------
-// # Public Method
-
-// Dump prints this object to the console in a human-friendly format.
-func (ob *Delta) Dump() {
-	var pl = fmt.Println
-	pl()
-	pl("sourceHash:", ob.sourceHash)
-	pl("targetHash:", ob.targetHash)
-	pl("newCount:", ob.newCount)
-	pl("oldCount:", ob.oldCount)
-	pl("len(parts):", len(ob.parts))
-	pl()
-	for i, part := range ob.parts {
-		pl("part:", i, "sourceLoc:", part.sourceLoc,
-			"size:", part.size,
-			"data:", part.data, string(part.data))
-	}
-} //                                                                        Dump
 
 // -----------------------------------------------------------------------------
 // # Internal Methods

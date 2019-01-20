@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 06:51:11 5A31CE                             go-delta/[func.go]
+// :v: 2019-01-20 07:11:02 A08799                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -61,52 +61,6 @@ func uncompressBytes(data []byte) []byte {
 // -----------------------------------------------------------------------------
 // # Helper Functions
 
-// longestMatch __
-func longestMatch(a []byte, aLocs []int, b []byte, bLoc int) (loc, size int) {
-	if DebugTiming {
-		tmr.Start("longestMatch")
-		defer tmr.Stop("longestMatch")
-	}
-	if len(aLocs) < 1 {
-		mod.Error("aLocs is empty")
-		return -1, -1
-	}
-	var bEnd = len(b) - 1
-	if bLoc < 0 || bLoc > bEnd {
-		mod.Error("bLoc", bLoc, "out of range [0 -", len(b), "]")
-		return -1, -1
-	}
-	var aEnd = len(a) - 1
-	var retLoc = -1
-	var retSize = -1
-	for _, ai := range aLocs {
-		var n = MatchSize
-		var bi = bLoc
-		if !bytes.Equal(a[ai:ai+n], b[bi:bi+n]) {
-			mod.Error("mismatch at ai:", ai, "bi:", bi)
-			continue
-		}
-		/*
-			DISABLED: EXTENDING MATCH BACKWARD OVERLAPS PREVIOUSLY-WRITTEN PARTS
-			// extend match backward
-			for ai-1 >= 0 && bi-1 >= 0 && a[ai-1] == b[bi-1] {
-				ai--
-				bi--
-				n++
-			}
-		*/
-		// extend match forward
-		for ai+n <= aEnd && bi+n <= bEnd && a[ai+n] == b[bi+n] {
-			n++
-		}
-		if n > retSize {
-			retLoc = ai
-			retSize = n
-		}
-	}
-	return retLoc, retSize
-} //                                                                longestMatch
-
 // makeHash returns the SHA-512 hash of byte slice 'data'.
 func makeHash(data []byte) []byte {
 	if DebugTiming {
@@ -119,38 +73,5 @@ func makeHash(data []byte) []byte {
 	var ret = sha512.Sum512(data)
 	return ret[:]
 } //                                                                    makeHash
-
-// makeMap creates a map of unique chunks in 'data'.
-// The key specifies the unique chunk of bytes, while the
-// values array returns the positions of the chunk in 'data'.
-func makeMap(data []byte) map[[MatchSize]byte][]int {
-	if DebugTiming {
-		tmr.Start("makeMap")
-		defer tmr.Stop("makeMap")
-	}
-	var lenData = len(data)
-	if lenData < MatchSize {
-		return map[[MatchSize]byte][]int{}
-	}
-	var ret = make(map[[MatchSize]byte][]int, lenData/4)
-	var key [MatchSize]byte
-	lenData -= MatchSize
-	for i := 0; i < lenData; {
-		copy(key[:], data[i:])
-		var ar, found = ret[key]
-		if !found {
-			ret[key] = []int{i}
-			i++
-			continue
-		}
-		if len(ar) >= MatchLimit {
-			i++
-			continue
-		}
-		ret[key] = append(ret[key], i)
-		i += MatchSize
-	}
-	return ret
-} //                                                                     makeMap
 
 //end

@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 14:00:48 1E2B07                        go-delta/[func_test.go]
+// :v: 2019-01-20 14:02:12 926F16                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -31,7 +31,7 @@ const RunExperiments = false
 var Line = strings.Repeat("#", 70)
 
 // -----------------------------------------------------------------------------
-// # Auxiliary / Temporary Unit Tests
+// # Experimental / Auxiliary Tests
 
 // go test --run Test01
 func Test01(t *testing.T) {
@@ -234,7 +234,10 @@ func Test04(t *testing.T) {
 // -----------------------------------------------------------------------------
 // # Test Helper Function
 
-// readData reads 'filename' and returns its contents as an array of bytes
+// ab converts s to a byte array.
+func ab(s string) []byte {
+	return []byte(s)
+} //                                                                          ab
 
 // printTestName prints the name of the calling unit test.
 func printTestName() {
@@ -254,6 +257,7 @@ func printTestName() {
 	fmt.Println("Running test:", funcName())
 } //                                                               printTestName
 
+// readData reads 'filename' and returns its contents as an array of bytes.
 func readData(filename string) []byte {
 	ret, err := ioutil.ReadFile(filename)
 	if err != nil {
@@ -262,10 +266,5 @@ func readData(filename string) []byte {
 	}
 	return ret
 } //                                                                    readData
-
-// ab converts s to a byte array
-func ab(s string) []byte {
-	return []byte(s)
-} //                                                                          ab
 
 //end

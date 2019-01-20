@@ -36,7 +36,7 @@ func main() {
 
     // Apply the patch to source to get the target
     // The size of the patch is much shorter than target.
-    var target2, err = ApplyDiff(source, dif)
+    var target2, err = dif.Apply(source)
     if err != nil {
         fmt.Println(err)
     }

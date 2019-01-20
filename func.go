@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 06:00:21 ED751B                             go-delta/[func.go]
+// :v: 2019-01-20 06:30:05 F74E55                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -9,57 +9,12 @@ import (
 	"bytes"
 	"compress/zlib"
 	"crypto/sha512"
-	"fmt"
 	"io"
 )
 
-// ApplyDiff __
-func ApplyDiff(source []byte, dif Diff) ([]byte, error) {
-	if DebugTiming {
-		tmr.Start("ApplyDiff")
-		defer tmr.Stop("ApplyDiff")
-	}
-	if len(source) != dif.sourceSize {
-		return nil, mod.Error(fmt.Sprintf(
-			"Size of source [%d] does not match expected [%d]",
-			len(source), dif.sourceSize))
-	}
-	if !bytes.Equal(makeHash(source), dif.sourceHash) {
-		return nil, mod.Error("Diff. can not be applied to source")
-	}
-	var buf = bytes.NewBuffer(make([]byte, 0, dif.targetSize))
-	for i, pt := range dif.parts {
-		var data []byte
-		switch {
-		case pt.sourceLoc == -1:
-			data = pt.data
-		case pt.sourceLoc < 0 || pt.sourceLoc >= dif.sourceSize:
-			return nil, mod.Error("part", i, "sourceLoc:", pt.sourceLoc,
-				"out of range 0 -", dif.sourceSize-1)
-		case pt.sourceLoc+pt.size > dif.sourceSize:
-			return nil, mod.Error("part", i, "sourceLoc:", pt.sourceLoc,
-				"+ size:", pt.size, "extends beyond", dif.sourceSize)
-		default:
-			data = source[pt.sourceLoc : pt.sourceLoc+pt.size]
-		}
-		var n, err = buf.Write(data)
-		if err != nil {
-			return nil, mod.Error(err)
-		}
-		if n != pt.size {
-			return nil, mod.Error("Wrote", n, "bytes instead of", pt.size)
-		}
-	}
-	var ret = buf.Bytes()
-	if !bytes.Equal(makeHash(ret), dif.targetHash) {
-		return nil, mod.Error("Result does not match target hash.")
-	}
-	return buf.Bytes(), nil
-} //                                                                   ApplyDiff
-
 // MakeDiff given two byte arrays 'a' and 'b', calculates the binary
 // delta difference between the two arrays and returns it as a Diff.
-// You can then use ApplyDiff() to generate 'b' from 'a' the Diff.
+// You can then use Diff.Apply() to generate 'b' from 'a' the Diff.
 func MakeDiff(a, b []byte) Diff {
 	if DebugTiming {
 		tmr.Start("MakeDiff")

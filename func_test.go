@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 06:00:21 3A32E5                        go-delta/[func_test.go]
+// :v: 2019-01-20 06:30:05 B7066A                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -56,10 +56,10 @@ func Test_MakeDiff_(t *testing.T) {
 	)
 } //                                                              Test_MakeDiff_
 
-// go test --run Test_ApplyDiff_
-func Test_ApplyDiff_(t *testing.T) {
+// go test --run Test_Diff_Apply_
+func Test_Diff_Apply_(t *testing.T) {
 	var test = func(src []byte, d Diff, expect []byte) {
-		var result, err = ApplyDiff(src, d)
+		var result, err = d.Apply(src)
 		if err != nil {
 			t.Errorf("\n encountered error: %s\n", err)
 			return
@@ -101,7 +101,7 @@ func Test_ApplyDiff_(t *testing.T) {
 		// expect:
 		ab("abc"),
 	)
-} //                                                             Test_ApplyDiff_
+} //                                                            Test_Diff_Apply_
 
 // -----------------------------------------------------------------------------
 // # Auxiliary / Temporary Unit Tests

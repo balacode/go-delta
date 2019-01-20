@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 07:25:22 1DA5A1                        go-delta/[func_test.go]
+// :v: 2019-01-20 12:49:30 02CB94                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -28,33 +28,6 @@ const Nums = "0123456789"
 const atoz = "abcdefghijklmnopqrstuvwxyz"
 
 var Line = strings.Repeat("#", 70)
-
-// go test --run Test_Make_
-func Test_Make_(t *testing.T) {
-	//
-	// func Make(a, b []byte) Delta
-	//
-	var test = func(a, b []byte, expect Delta) {
-		var result = Make(a, b)
-		if result.GoString() != expect.GoString() {
-			t.Errorf("\n expect:\n\t%s\n result:\n\t%s\n",
-				expect.GoString(), result.GoString())
-		}
-	}
-	test(
-		ab(AtoZ),
-		ab(AtoZ),
-		Delta{
-			sourceHash: makeHash(ab(AtoZ)),
-			targetHash: makeHash(ab(AtoZ)),
-			newCount:   0,
-			oldCount:   1,
-			parts: []deltaPart{
-				{sourceLoc: 0, size: 26, data: nil},
-			},
-		},
-	)
-} //                                                                  Test_Make_
 
 // go test --run Test_Delta_Apply_
 func Test_Delta_Apply_(t *testing.T) {

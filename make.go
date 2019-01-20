@@ -1,9 +1,13 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 07:11:02 901C16                             go-delta/[make.go]
+// :v: 2019-01-20 07:16:23 66DDEC                             go-delta/[make.go]
 // -----------------------------------------------------------------------------
 
 package delta
+
+import (
+	"bytes"
+)
 
 // Make given two byte arrays 'a' and 'b', calculates the binary
 // delta difference between the two arrays and returns it as a Delta.
@@ -85,7 +89,6 @@ func longestMatch(a []byte, aLocs []int, b []byte, bLoc int) (loc, size int) {
 		var n = MatchSize
 		var bi = bLoc
 		if !bytes.Equal(a[ai:ai+n], b[bi:bi+n]) {
-		   //^ undefined: bytes ````
 			mod.Error("mismatch at ai:", ai, "bi:", bi)
 			continue
 		}

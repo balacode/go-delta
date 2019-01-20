@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 06:55:02 51F34A                        go-delta/[func_test.go]
+// :v: 2019-01-20 07:25:22 1DA5A1                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -159,7 +159,7 @@ func Test_02_(t *testing.T) {
 			  0.16411: makeHash
 			  3.78551: makeMap
 			165.82172: longestMatch
-			  0.09878: appendPart
+			  0.09878: write
 			  0.13109: compressBytes
 			-
 			After optimizing makeMap():
@@ -172,7 +172,7 @@ func Test_02_(t *testing.T) {
 			  0.11608: makeHash
 			  1.28985: makeMap
 			  0.14999: longestMatch
-			  0.07882: appendPart
+			  0.07882: write
 			  0.09806: compressBytes
 			-
 			After adding backward-scanning in longestMatch()
@@ -185,7 +185,7 @@ func Test_02_(t *testing.T) {
 			  0.15910: makeHash
 			  1.49399: makeMap
 			  0.16595: longestMatch
-			  0.07311: appendPart
+			  0.07311: write
 			  0.12408: compressBytes
 		*/
 		a = readData("test1.file")
@@ -212,7 +212,7 @@ func Test_02_(t *testing.T) {
 				  0.11507: makeHash
 				  1.44146: makeMap
 				  0.05109: longestMatch
-				  0.00349: appendPart
+				  0.00349: write
 				  0.00600: compressBytes
 				  3.67731
 		*/

@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 06:14:08 54CD50                           go-delta/[module.go]
+// :v: 2019-01-20 07:25:22 4A054E                           go-delta/[module.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -26,8 +26,8 @@ var DebugInfo = false
 // DebugTiming controls timing (benchmarking) of time spent in each function.
 var DebugTiming = true
 
-// DebugAppendPartArgs when set, prints the arguments passed to appendPart()
-var DebugAppendPartArgs = false
+// DebugWriteArgs when set, prints the arguments passed to write()
+var DebugWriteArgs = false
 
 // PL is fmt.Println() but is used only for debugging.
 var PL = fmt.Println

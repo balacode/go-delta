@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 07:18:53 5458F6                            go-delta/[delta.go]
+// :v: 2019-01-20 07:25:22 76347D                            go-delta/[delta.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -79,14 +79,14 @@ func (ob *Delta) Dump() {
 // -----------------------------------------------------------------------------
 // # Internal Methods
 
-// appendPart appends binary difference data
-func (ob *Delta) appendPart(sourceLoc, size int, data []byte) {
+// write appends binary difference data
+func (ob *Delta) write(sourceLoc, size int, data []byte) {
 	if DebugTiming {
-		tmr.Start("appendPart")
-		defer tmr.Stop("appendPart")
+		tmr.Start("write")
+		defer tmr.Stop("write")
 	}
-	if DebugInfo && DebugAppendPartArgs {
-		PL("appendPart",
+	if DebugInfo && DebugWriteArgs {
+		PL("write",
 			"sourceLoc:", sourceLoc,
 			"size:", size,
 			"data:", data, string(data))
@@ -126,7 +126,7 @@ func (ob *Delta) appendPart(sourceLoc, size int, data []byte) {
 	}
 	ob.parts = append(ob.parts,
 		deltaPart{sourceLoc: sourceLoc, size: size, data: ar})
-} //                                                                  appendPart
+} //                                                                       write
 
 // loadDelta __
 func loadDelta(delta []byte) (Delta, error) {

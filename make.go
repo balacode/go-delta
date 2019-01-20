@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 07:16:23 66DDEC                             go-delta/[make.go]
+// :v: 2019-01-20 07:25:22 C6C04D                             go-delta/[make.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -37,7 +37,7 @@ func Make(a, b []byte) Delta {
 			tmc = i
 		}
 		if lenB-i < MatchSize {
-			ret.appendPart(-1, lenB-i, b[i:])
+			ret.write(-1, lenB-i, b[i:])
 			ret.newCount++
 			break
 		}
@@ -49,12 +49,12 @@ func Make(a, b []byte) Delta {
 		}
 		if found {
 			var at, size = longestMatch(a, locs, b, i)
-			ret.appendPart(at, size, nil)
+			ret.write(at, size, nil)
 			i += size
 			ret.oldCount++
 			continue
 		}
-		ret.appendPart(-1, MatchSize, chunk[:])
+		ret.write(-1, MatchSize, chunk[:])
 		i += MatchSize
 		ret.newCount++
 	}

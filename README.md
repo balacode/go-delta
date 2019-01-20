@@ -7,7 +7,11 @@
 [![godoc](https://godoc.org/github.com/balacode/go-delta?status.svg)](https://godoc.org/github.com/balacode/go-delta)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-## Hello World:
+## Suggestions:
+
+- Works best on text files, database dumps and any other files with lots of repeating patterns and few changes between updates.
+
+## Demonstration:
 
 ```go
 package main
@@ -31,8 +35,17 @@ func main() {
     )
     fmt.Print("The update is:", "\n", string(target), "\n\n")
 
-    // Use delta.Make to generate a compressed patch between source and target
-    var d = delta.Make(source, target)
+    var dbytes []byte
+    {
+    	// Use Make() to generate a compressed patch from source and target
+    	var d = delta.Make(source, target)
+    	
+    	// Convert the delta to a slice of bytes (e.g. for writing to a file)
+    	dbytes = d.Bytes()
+    }
+
+    // Create a Delta from the byte slice
+    var d = delta.Load(dbytes)
 
     // Apply the patch to source to get the target
     // The size of the patch is much shorter than target.

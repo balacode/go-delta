@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 06:39:26 EFB4E9                      go-delta/[delta_apply.go]
+// :v: 2019-01-20 12:17:17 639E68                      go-delta/[delta_apply.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -10,7 +10,10 @@ import (
 	"fmt"
 )
 
-// Apply __
+// Apply uses the 'source' byte array, applies this
+// Delta to it and returns the updated byte array.
+// If this delta was not generated from source,
+// returns an error.
 func (ob *Delta) Apply(source []byte) ([]byte, error) {
 	if DebugTiming {
 		tmr.Start("Delta.Apply")

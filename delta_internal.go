@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 07:48:27 EBD345                   go-delta/[delta_internal.go]
+// :v: 2019-01-20 12:16:12 06708E                   go-delta/[delta_internal.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -10,7 +10,8 @@ import (
 	"encoding/binary"
 )
 
-// loadDelta __
+// loadDelta fills a new Delta structure from a byte
+// array previously returned by Delta.Bytes().
 func loadDelta(data []byte) (Delta, error) {
 	//
 	// uncompress the delta

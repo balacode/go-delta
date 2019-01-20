@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 06:00:21 3C3F7D                             go-delta/[diff.go]
+// :v: 2019-01-20 06:44:30 F7326E                            go-delta/[delta.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -11,34 +11,34 @@ import (
 	"fmt"
 )
 
-// Diff stores the binary delta difference between two byte arrays
-type Diff struct {
-	sourceSize int        // size of the source array
-	sourceHash []byte     // hash of the source byte array
-	targetSize int        // size of the target array
-	targetHash []byte     // hash of the result after this Diff is applied
-	newCount   int        // number of chunks not matched in source array
-	oldCount   int        // number of matched chunks in source array
-	parts      []diffPart // array referring to chunks in source array,
-	//                       or new bytes to append
-} //                                                                        Diff
+// Delta stores the binary delta difference between two byte arrays
+type Delta struct {
+	sourceSize int         // size of the source array
+	sourceHash []byte      // hash of the source byte array
+	targetSize int         // size of the target array
+	targetHash []byte      // hash of the result after this Delta is applied
+	newCount   int         // number of chunks not matched in source array
+	oldCount   int         // number of matched chunks in source array
+	parts      []deltaPart // array referring to chunks in source array,
+	//                        or new bytes to append
+} //                                                                       Delta
 
-// diffPart stores references to chunks in the source array,
+// deltaPart stores references to chunks in the source array,
 // or specifies bytes to append to result array directly
-type diffPart struct {
+type deltaPart struct {
 	sourceLoc int // byte position of the chunk in source array,
 	//               or -1 when 'data' supplies the bytes directly
 	//
 	size int    // size of the chunk in bytes
 	data []byte // optional bytes (only when sourceLoc is -1)
-} //                                                                    diffPart
+} //                                                                   deltaPart
 
 // -----------------------------------------------------------------------------
 // # Public Properties
 
 // Bytes converts the Delta structure to a byte array
 // (for serializing to a file, etc.)
-func (ob *Diff) Bytes() []byte {
+func (ob *Delta) Bytes() []byte {
 	var buf = bytes.NewBuffer(make([]byte, 0, 1024))
 	//
 	var writeInt = func(i int) error {
@@ -93,9 +93,9 @@ func (ob *Diff) Bytes() []byte {
 	return ret
 } //                                                                       Bytes
 
-// GoString returns a Go-syntax representation of the Diff structure.
+// GoString returns a Go-syntax representation of the Delta structure.
 // It implements the GoStringer interface.
-func (ob Diff) GoString() string {
+func (ob Delta) GoString() string {
 	var buf bytes.Buffer
 	var write = func(args ...string) {
 		for _, s := range args {
@@ -105,14 +105,14 @@ func (ob Diff) GoString() string {
 	var str = func(v interface{}) string {
 		return fmt.Sprintf("%#v", v)
 	}
-	write("Diff{", "\n",
+	write("Delta{", "\n",
 		"\t", "sourceSize: ", str(ob.sourceSize), ",\n",
 		"\t", "sourceHash: ", str(ob.sourceHash), ",\n",
 		"\t", "targetSize: ", str(ob.targetSize), ",\n",
 		"\t", "targetHash: ", str(ob.targetHash), ",\n",
 		"\t", "newCount:   ", str(ob.newCount), ",\n",
 		"\t", "oldCount:   ", str(ob.oldCount), ",\n",
-		"\t", "parts: []diffPart{\n",
+		"\t", "parts: []deltaPart{\n",
 	)
 	for _, pt := range ob.parts {
 		write("\t\t{",
@@ -125,22 +125,22 @@ func (ob Diff) GoString() string {
 } //                                                                    GoString
 
 // NewCount __
-func (ob *Diff) NewCount() int {
+func (ob *Delta) NewCount() int {
 	return ob.newCount
 } //                                                                    NewCount
 
 // OldCount __
-func (ob *Diff) OldCount() int {
+func (ob *Delta) OldCount() int {
 	return ob.oldCount
 } //                                                                    OldCount
 
 // SourceSize returns the size of the source byte array, in bytes.
-func (ob *Diff) SourceSize() int {
+func (ob *Delta) SourceSize() int {
 	return ob.sourceSize
 } //                                                                  SourceSize
 
 // TargetSize returns the size of the target byte array, in bytes.
-func (ob *Diff) TargetSize() int {
+func (ob *Delta) TargetSize() int {
 	return ob.targetSize
 } //                                                                  TargetSize
 
@@ -148,7 +148,7 @@ func (ob *Diff) TargetSize() int {
 // # Public Method
 
 // Dump prints this object to the console in a human-friendly format.
-func (ob *Diff) Dump() {
+func (ob *Delta) Dump() {
 	var pl = fmt.Println
 	pl()
 	pl("sourceHash:", ob.sourceHash)
@@ -168,7 +168,7 @@ func (ob *Diff) Dump() {
 // # Internal Methods
 
 // appendPart appends binary difference data
-func (ob *Diff) appendPart(sourceLoc, size int, data []byte) {
+func (ob *Delta) appendPart(sourceLoc, size int, data []byte) {
 	if DebugTiming {
 		tmr.Start("appendPart")
 		defer tmr.Stop("appendPart")
@@ -213,19 +213,19 @@ func (ob *Diff) appendPart(sourceLoc, size int, data []byte) {
 		copy(ar, data)
 	}
 	ob.parts = append(ob.parts,
-		diffPart{sourceLoc: sourceLoc, size: size, data: ar})
+		deltaPart{sourceLoc: sourceLoc, size: size, data: ar})
 } //                                                                  appendPart
 
-// loadDiff __
-func loadDiff(delta []byte) (Diff, error) {
+// loadDelta __
+func loadDelta(delta []byte) (Delta, error) {
 	//
 	// uncompress the delta
 	if DebugInfo {
-		PL("loadDiff: compressed delta length:", len(delta))
+		PL("loadDelta: compressed delta length:", len(delta))
 	}
 	var data = uncompressBytes(delta)
 	if DebugInfo {
-		PL("loadDiff: uncompressed delta length:", len(data))
+		PL("loadDelta: uncompressed delta length:", len(data))
 	}
 	var buf = bytes.NewBuffer(data)
 	var readInt = func() int {
@@ -255,7 +255,7 @@ func loadDiff(delta []byte) (Diff, error) {
 		return ar
 	}
 	// read the header
-	var ret = Diff{
+	var ret = Delta{
 		sourceSize: readInt(),
 		sourceHash: readBytes(),
 		targetSize: readInt(),
@@ -266,10 +266,10 @@ func loadDiff(delta []byte) (Diff, error) {
 	// read the parts
 	var count = readInt()
 	if count < 1 {
-		return Diff{},
+		return Delta{},
 			mod.Error("readBytes() failed @4: invalid number of parts:", count)
 	}
-	ret.parts = make([]diffPart, count)
+	ret.parts = make([]deltaPart, count)
 	for i := range ret.parts {
 		var pt = &ret.parts[i]
 		pt.sourceLoc = readInt()
@@ -281,6 +281,6 @@ func loadDiff(delta []byte) (Diff, error) {
 		pt.size = readInt()
 	}
 	return ret, nil
-} //                                                                    loadDiff
+} //                                                                   loadDelta
 
 //end

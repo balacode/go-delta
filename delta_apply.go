@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 06:32:50 F48889                       go-delta/[diff_apply.go]
+// :v: 2019-01-20 06:39:26 EFB4E9                      go-delta/[delta_apply.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -11,10 +11,10 @@ import (
 )
 
 // Apply __
-func (ob *Diff) Apply(source []byte) ([]byte, error) {
+func (ob *Delta) Apply(source []byte) ([]byte, error) {
 	if DebugTiming {
-		tmr.Start("Diff.Apply")
-		defer tmr.Stop("Diff.Apply")
+		tmr.Start("Delta.Apply")
+		defer tmr.Stop("Delta.Apply")
 	}
 	if len(source) != ob.sourceSize {
 		return nil, mod.Error(fmt.Sprintf(
@@ -22,7 +22,7 @@ func (ob *Diff) Apply(source []byte) ([]byte, error) {
 			len(source), ob.sourceSize))
 	}
 	if !bytes.Equal(makeHash(source), ob.sourceHash) {
-		return nil, mod.Error("Diff. can not be applied to source")
+		return nil, mod.Error("Delta does not belong to specified source")
 	}
 	var buf = bytes.NewBuffer(make([]byte, 0, ob.targetSize))
 	for i, pt := range ob.parts {

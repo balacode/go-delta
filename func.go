@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 06:30:05 F74E55                             go-delta/[func.go]
+// :v: 2019-01-20 06:39:26 C59C5B                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -12,15 +12,15 @@ import (
 	"io"
 )
 
-// MakeDiff given two byte arrays 'a' and 'b', calculates the binary
-// delta difference between the two arrays and returns it as a Diff.
-// You can then use Diff.Apply() to generate 'b' from 'a' the Diff.
-func MakeDiff(a, b []byte) Diff {
+// MakeDelta given two byte arrays 'a' and 'b', calculates the binary
+// delta difference between the two arrays and returns it as a Delta.
+// You can then use Delta.Apply() to generate 'b' from 'a' the Delta.
+func MakeDelta(a, b []byte) Delta {
 	if DebugTiming {
-		tmr.Start("MakeDiff")
-		defer tmr.Stop("MakeDiff")
+		tmr.Start("MakeDelta")
+		defer tmr.Stop("MakeDelta")
 	}
-	var ret = Diff{
+	var ret = Delta{
 		sourceSize: len(a),
 		sourceHash: makeHash(a),
 		targetSize: len(b),
@@ -28,7 +28,7 @@ func MakeDiff(a, b []byte) Diff {
 	}
 	var lenB = len(b)
 	if lenB < MatchSize {
-		ret.parts = []diffPart{{sourceLoc: -1, size: lenB, data: b}}
+		ret.parts = []deltaPart{{sourceLoc: -1, size: lenB, data: b}}
 		return ret
 	}
 	var m = makeMap(a)
@@ -36,7 +36,7 @@ func MakeDiff(a, b []byte) Diff {
 	var tmc = 0 // timing counter
 	for i := 0; i < lenB; {
 		if DebugInfo && i-tmc >= 10000 {
-			PL("MakeDiff:", int(100.0/float32(lenB)*float32(i)), "%")
+			PL("MakeDelta:", int(100.0/float32(lenB)*float32(i)), "%")
 			tmc = i
 		}
 		if lenB-i < MatchSize {
@@ -62,10 +62,10 @@ func MakeDiff(a, b []byte) Diff {
 		ret.newCount++
 	}
 	if DebugInfo {
-		PL("MakeDiff: finished writing parts. len(b) = ", len(b))
+		PL("MakeDelta: finished writing parts. len(b) = ", len(b))
 	}
 	return ret
-} //                                                                    MakeDiff
+} //                                                                   MakeDelta
 
 // -----------------------------------------------------------------------------
 // # Helper Functions: Compression

@@ -31,12 +31,12 @@ func main() {
     )
     fmt.Print("The update is:", "\n", string(target), "\n\n")
 
-    // Use MakeDiff to generate a compressed patch between source and target
-    var dif = MakeDiff(source, target)
+    // Use MakeDelta to generate a compressed patch between source and target
+    var d = delta.Make(source, target)
 
     // Apply the patch to source to get the target
     // The size of the patch is much shorter than target.
-    var target2, err = dif.Apply(source)
+    var target2, err = d.Apply(source)
     if err != nil {
         fmt.Println(err)
     }

@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 06:30:05 B7066A                        go-delta/[func_test.go]
+// :v: 2019-01-20 06:47:38 77A024                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -29,13 +29,13 @@ const atoz = "abcdefghijklmnopqrstuvwxyz"
 
 var Line = strings.Repeat("#", 70)
 
-// go test --run Test_MakeDiff_
-func Test_MakeDiff_(t *testing.T) {
+// go test --run Test_MakeDelta_
+func Test_MakeDelta_(t *testing.T) {
 	//
-	// func MakeDiff(a, b []byte) Diff
+	// func MakeDelta(a, b []byte) Delta
 	//
-	var test = func(a, b []byte, expect Diff) {
-		var result = MakeDiff(a, b)
+	var test = func(a, b []byte, expect Delta) {
+		var result = MakeDelta(a, b)
 		if result.GoString() != expect.GoString() {
 			t.Errorf("\n expect:\n\t%s\n result:\n\t%s\n",
 				expect.GoString(), result.GoString())
@@ -44,21 +44,21 @@ func Test_MakeDiff_(t *testing.T) {
 	test(
 		ab(AtoZ),
 		ab(AtoZ),
-		Diff{
+		Delta{
 			sourceHash: makeHash(ab(AtoZ)),
 			targetHash: makeHash(ab(AtoZ)),
 			newCount:   0,
 			oldCount:   1,
-			parts: []diffPart{
+			parts: []deltaPart{
 				{sourceLoc: 0, size: 26, data: nil},
 			},
 		},
 	)
-} //                                                              Test_MakeDiff_
+} //                                                             Test_MakeDelta_
 
-// go test --run Test_Diff_Apply_
-func Test_Diff_Apply_(t *testing.T) {
-	var test = func(src []byte, d Diff, expect []byte) {
+// go test --run Test_Delta_Apply_
+func Test_Delta_Apply_(t *testing.T) {
+	var test = func(src []byte, d Delta, expect []byte) {
 		var result, err = d.Apply(src)
 		if err != nil {
 			t.Errorf("\n encountered error: %s\n", err)
@@ -73,11 +73,11 @@ func Test_Diff_Apply_(t *testing.T) {
 		// source:
 		nil,
 		//
-		// diff:
-		Diff{
+		// delta:
+		Delta{
 			sourceHash: nil,
 			targetHash: makeHash(ab("abc")),
-			parts: []diffPart{
+			parts: []deltaPart{
 				{sourceLoc: -1, size: 3, data: ab("abc")},
 			},
 		},
@@ -88,20 +88,20 @@ func Test_Diff_Apply_(t *testing.T) {
 		// source:
 		ab("abc"),
 		//
-		// diff:
-		Diff{
+		// delta:
+		Delta{
 			sourceHash: makeHash(ab("abc")),
 			sourceSize: 3,
 			targetHash: makeHash(ab("abc")),
 			targetSize: 3,
-			parts: []diffPart{
+			parts: []deltaPart{
 				{sourceLoc: -1, size: 3, data: ab("abc")},
 			},
 		},
 		// expect:
 		ab("abc"),
 	)
-} //                                                            Test_Diff_Apply_
+} //                                                           Test_Delta_Apply_
 
 // -----------------------------------------------------------------------------
 // # Auxiliary / Temporary Unit Tests
@@ -155,7 +155,7 @@ func Test_02_(t *testing.T) {
 			compressed delta length:     704,583 (4.15% of target's size)
 			elapsed time:              171.4 seconds
 			--------------------------------------------------------------
-			171.25880: MakeDiff
+			171.25880: MakeDelta
 			  0.16411: makeHash
 			  3.78551: makeMap
 			165.82172: longestMatch
@@ -168,7 +168,7 @@ func Test_02_(t *testing.T) {
 			compressed delta length:     729,574 (4.29% of target's size)
 			elapsed time:                2.4 seconds
 			--------------------------------------------------------------
-			  2.40135: MakeDiff
+			  2.40135: MakeDelta
 			  0.11608: makeHash
 			  1.28985: makeMap
 			  0.14999: longestMatch
@@ -181,7 +181,7 @@ func Test_02_(t *testing.T) {
 			compressed delta length:     666,880 (3.92% of target's size)
 			elapsed time:                    2.4 seconds
 			--------------------------------------------------------------
-			  2.45898: MakeDiff
+			  2.45898: MakeDelta
 			  0.15910: makeHash
 			  1.49399: makeMap
 			  0.16595: longestMatch
@@ -208,7 +208,7 @@ func Test_02_(t *testing.T) {
 				compressed delta:       25,967 (50.7% of file size)
 				elapsed time:             2.06 seconds
 				--------------------------------------------------------------
-			  	  2.06019: MakeDiff
+			  	  2.06019: MakeDelta
 				  0.11507: makeHash
 				  1.44146: makeMap
 				  0.05109: longestMatch
@@ -221,14 +221,14 @@ func Test_02_(t *testing.T) {
 		PL("loaded data")
 	}
 	if DebugTiming {
-		tmr.Start("MakeDiff")
+		tmr.Start("MakeDelta")
 	}
 	{
-		var dif = MakeDiff(a, b)
-		dif.Bytes()
+		var d = MakeDelta(a, b)
+		d.Bytes()
 	}
 	if DebugTiming {
-		tmr.Stop("MakeDiff")
+		tmr.Stop("MakeDelta")
 		tmr.Print()
 	}
 } //                                                                    Test_02_
@@ -244,7 +244,7 @@ func Test_03_(t *testing.T) {
 	PL("start Test_03_")
 	// -------------------------------------------------------------------------
 	PL("\n" + Line)
-	var d1 = MakeDiff(a, b)
+	var d1 = MakeDelta(a, b)
 	PL("CREATED d1:")
 	d1.Dump()
 	//
@@ -253,13 +253,13 @@ func Test_03_(t *testing.T) {
 	// -------------------------------------------------------------------------
 	PL("\n" + Line)
 	if DebugTiming {
-		tmr.Start("loadDiff")
+		tmr.Start("loadDelta")
 	}
-	var d2, err = loadDiff(dbytes)
+	var d2, err = loadDelta(dbytes)
 	PL("CREATED d2: err:", err)
 	d2.Dump()
 	if DebugTiming {
-		tmr.Stop("loadDiff")
+		tmr.Stop("loadDelta")
 		tmr.Print()
 	}
 } //                                                                    Test_03_
@@ -267,19 +267,19 @@ func Test_03_(t *testing.T) {
 // go test --run Test_04_
 func Test_04_(t *testing.T) {
 	PL("Test_04_")
-	var dif = Diff{
+	var d = Delta{
 		sourceSize: 111,
 		sourceHash: []byte("SOURCE"),
 		targetSize: 222,
 		targetHash: []byte("TARGET"),
 		newCount:   333,
 		oldCount:   444,
-		parts: []diffPart{
+		parts: []deltaPart{
 			{},
 			{},
 		},
 	}
-	PL(dif.GoString())
+	PL(d.GoString())
 } //                                                                    Test_04_
 
 // -----------------------------------------------------------------------------

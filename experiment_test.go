@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 23:23:44 A2DAC2                  go-delta/[experiment_test.go]
+// :v: 2019-01-20 23:29:40 E352D4                  go-delta/[experiment_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -182,13 +182,13 @@ func Test03(t *testing.T) {
 	// -------------------------------------------------------------------------
 	PL("\n" + Line)
 	if DebugTiming {
-		tmr.Start("loadDelta")
+		tmr.Start("Load")
 	}
-	var d2, err = loadDelta(dbytes)
+	var d2, err = Load(dbytes)
 	PL("CREATED d2: err:", err)
 	d2.Dump()
 	if DebugTiming {
-		tmr.Stop("loadDelta")
+		tmr.Stop("Load")
 		tmr.Print()
 	}
 } //                                                                      Test03

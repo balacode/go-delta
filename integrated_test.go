@@ -1,12 +1,12 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 23:14:07 DC874B                  go-delta/[integrated_test.go]
+// :v: 2019-01-20 23:29:40 B1239C                  go-delta/[integrated_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
 
 // This unit test checks the functioning of the entire module.
-// It calls Make(), Delta.Apply(), Delta.Bytes() and loadDelta().
+// It calls Make(), Delta.Apply(), Delta.Bytes() and delta.Load().
 
 import (
 	"bytes"
@@ -76,7 +76,7 @@ func TestIntegrated(t *testing.T) {
 			}
 			var d Delta
 			var err error
-			d, err = loadDelta(ar)
+			d, err = Load(ar)
 			if err != nil {
 				PL("FAILED @1")
 				PL("SOURCE:", "\n", string(a))

@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 12:16:12 06708E                   go-delta/[delta_internal.go]
+// :v: 2019-01-20 23:29:40 D8365D                   go-delta/[delta_internal.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -10,17 +10,17 @@ import (
 	"encoding/binary"
 )
 
-// loadDelta fills a new Delta structure from a byte
+// Load fills a new Delta structure from a byte
 // array previously returned by Delta.Bytes().
-func loadDelta(data []byte) (Delta, error) {
+func Load(data []byte) (Delta, error) {
 	//
 	// uncompress the delta
 	if DebugInfo {
-		PL("loadDelta: compressed delta length:", len(data))
+		PL("Load: compressed delta length:", len(data))
 	}
 	data = uncompressBytes(data)
 	if DebugInfo {
-		PL("loadDelta: uncompressed delta length:", len(data))
+		PL("Load: uncompressed delta length:", len(data))
 	}
 	var buf = bytes.NewBuffer(data)
 	var readInt = func() int {
@@ -76,7 +76,7 @@ func loadDelta(data []byte) (Delta, error) {
 		pt.size = readInt()
 	}
 	return ret, nil
-} //                                                                   loadDelta
+} //                                                                        Load
 
 // write appends binary difference data
 func (ob *Delta) write(sourceLoc, size int, data []byte) {

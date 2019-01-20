@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 07:48:27 3CE426                            go-delta/[delta.go]
+// :v: 2019-01-20 07:49:17 2CE007                            go-delta/[delta.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -28,14 +28,14 @@ type deltaPart struct {
 } //                                                                   deltaPart
 
 // -----------------------------------------------------------------------------
-// # Public Properties
+// # Read-Only Properties
 
-// NewCount __
+// NewCount returns the number of chunks not matched in source array.
 func (ob *Delta) NewCount() int {
 	return ob.newCount
 } //                                                                    NewCount
 
-// OldCount __
+// OldCount returns the number of matched chunks in source array.
 func (ob *Delta) OldCount() int {
 	return ob.oldCount
 } //                                                                    OldCount

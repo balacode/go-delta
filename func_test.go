@@ -1,14 +1,11 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 13:26:00 CD6DFF                        go-delta/[func_test.go]
+// :v: 2019-01-20 13:27:09 5555E4                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
 
 /*
-to test all items in dir_watcher_windows.go use:
-    go test --run Test_gdlt_
-
 to generate a test coverage report for the whole module use:
     go test -coverprofile cover.out
     go tool cover -html=cover.out

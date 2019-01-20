@@ -1,9 +1,9 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-18 17:54:24 E5316E                        go-delta/[func_test.go]
+// :v: 2019-01-20 06:00:21 3A32E5                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
-package bdelta
+package delta
 
 /*
 to test all items in dir_watcher_windows.go use:

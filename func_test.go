@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 13:55:14 24B940                        go-delta/[func_test.go]
+// :v: 2019-01-20 14:00:48 1E2B07                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -25,11 +25,8 @@ const AtoZ = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 const Nums = "0123456789"
 const atoz = "abcdefghijklmnopqrstuvwxyz"
 
-const RunTest01 = false
-const RunTest02 = false
-const RunTest03 = false
-const RunTest04 = false
 const PrintTestNames = true
+const RunExperiments = false
 
 var Line = strings.Repeat("#", 70)
 
@@ -38,7 +35,7 @@ var Line = strings.Repeat("#", 70)
 
 // go test --run Test01
 func Test01(t *testing.T) {
-	if !RunTest01 {
+	if !RunExperiments {
 		return
 	}
 	if PrintTestNames {
@@ -73,7 +70,7 @@ func Test01(t *testing.T) {
 
 // go test --run Test02
 func Test02(t *testing.T) {
-	if !RunTest02 {
+	if !RunExperiments {
 		return
 	}
 	if PrintTestNames {
@@ -177,7 +174,7 @@ func Test02(t *testing.T) {
 
 // go test --run Test03
 func Test03(t *testing.T) {
-	if !RunTest03 {
+	if !RunExperiments {
 		return
 	}
 	if PrintTestNames {
@@ -213,7 +210,7 @@ func Test03(t *testing.T) {
 
 // go test --run Test04
 func Test04(t *testing.T) {
-	if !RunTest04 {
+	if !RunExperiments {
 		return
 	}
 	if PrintTestNames {

@@ -1,6 +1,6 @@
 #  -----------------------------------------------------------------------------
 #  (c) balarabe@protonmail.com                                      License: MIT
-#  :v: 2019-01-18 06:59:23 CC5CCA                         /go-delta/[.gitignore]
+#  :v: 2019-01-20 13:49:58 4875C7                         /go-delta/[.gitignore]
 #  -----------------------------------------------------------------------------
 
 # backups, drafts and temporary files
@@ -16,6 +16,7 @@
 
 # log and debugging files
 /build.log
+/cover.out
 /run.log
 
 # sample files used to generate binary deltas

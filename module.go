@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 06:00:21 166723                           go-delta/[module.go]
+// :v: 2019-01-20 06:14:08 54CD50                           go-delta/[module.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -13,11 +13,20 @@ import (
 // -----------------------------------------------------------------------------
 // # Module Constants / Variables
 
+// MatchLimit specifies the maximum number of positions tracked
+// for each unique key in the map of source data. See makeMap().
 const MatchLimit = 50
+
+// MatchSize specifies the size of unique chunks being searched for, in bytes.
 const MatchSize = 8
 
+// DebugInfo when set, causes printing of messages helpful for debugging.
 var DebugInfo = false
+
+// DebugTiming controls timing (benchmarking) of time spent in each function.
 var DebugTiming = true
+
+// DebugAppendPartArgs when set, prints the arguments passed to appendPart()
 var DebugAppendPartArgs = false
 
 // PL is fmt.Println() but is used only for debugging.

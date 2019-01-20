@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 12:16:12 FEF7FF                             go-delta/[make.go]
+// :v: 2019-01-21 00:34:18 DBEE6F                             go-delta/[make.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -67,11 +67,13 @@ func Make(a, b []byte) Delta {
 // -----------------------------------------------------------------------------
 // # Helper Functions
 
-// longestMatch is called by Make() to determine the longest matching block of
-// bytes beween the source array 'a' and target array 'b' out of limited choices.
+// longestMatch is called by Make() to determine the longest
+// matching block of bytes between the source array 'a'
+// and target array 'b' out of limited choices.
 //
-// 'bLoc' specifies the position (in 'b') of the chunk to match. The MatchSize
-// global constant specifies the length of each chunk in bytes, usually 8 bytes.
+// 'bLoc' specifies the position (in 'b') of the chunk to match.
+// The MatchSize global constant specifies the length of each
+// chunk in bytes, usually 8 bytes.
 //
 // 'aLocs' is an array of positions (in 'a') at which the chunk is found.
 // This array is produced by makeMap() before longestMatch() is called.

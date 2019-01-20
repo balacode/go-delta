@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 14:19:46 6F71EA                  go-delta/[experiment_test.go]
+// :v: 2019-01-20 23:23:44 A2DAC2                  go-delta/[experiment_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -12,7 +12,6 @@ to generate a test coverage report for the whole module use:
 */
 
 import (
-	"bytes"
 	"testing"
 )
 

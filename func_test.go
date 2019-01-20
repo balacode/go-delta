@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 13:27:09 5555E4                        go-delta/[func_test.go]
+// :v: 2019-01-20 13:55:14 24B940                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -12,7 +12,9 @@ to generate a test coverage report for the whole module use:
 */
 
 import (
+	"fmt"
 	"io/ioutil"
+	"runtime"
 	"strings"
 	"testing"
 )
@@ -27,6 +29,7 @@ const RunTest01 = false
 const RunTest02 = false
 const RunTest03 = false
 const RunTest04 = false
+const PrintTestNames = true
 
 var Line = strings.Repeat("#", 70)
 
@@ -37,6 +40,9 @@ var Line = strings.Repeat("#", 70)
 func Test01(t *testing.T) {
 	if !RunTest01 {
 		return
+	}
+	if PrintTestNames {
+		printTestName()
 	}
 	PL("Test01 " + Line)
 	//
@@ -69,6 +75,9 @@ func Test01(t *testing.T) {
 func Test02(t *testing.T) {
 	if !RunTest02 {
 		return
+	}
+	if PrintTestNames {
+		printTestName()
 	}
 	var a, b []byte
 	switch 5 {
@@ -171,13 +180,15 @@ func Test03(t *testing.T) {
 	if !RunTest03 {
 		return
 	}
+	if PrintTestNames {
+		printTestName()
+	}
 	var a, b []byte
 	switch 1 {
 	case 1:
 		a = ab(AtoM + " " + AtoS + " " + AtoZ)
 		b = ab("000" + AtoZ + " " + AtoZ + " " + AtoZ + " " + Nums)
 	}
-	PL("start Test03")
 	// -------------------------------------------------------------------------
 	PL("\n" + Line)
 	var d1 = Make(a, b)
@@ -205,7 +216,9 @@ func Test04(t *testing.T) {
 	if !RunTest04 {
 		return
 	}
-	PL("Test04")
+	if PrintTestNames {
+		printTestName()
+	}
 	var d = Delta{
 		sourceSize: 111,
 		sourceHash: []byte("SOURCE"),
@@ -225,6 +238,25 @@ func Test04(t *testing.T) {
 // # Test Helper Function
 
 // readData reads 'filename' and returns its contents as an array of bytes
+
+// printTestName prints the name of the calling unit test.
+func printTestName() {
+	if !PrintTestNames {
+		return
+	}
+	var funcName = func() string {
+		var programCounter, _, _, _ = runtime.Caller(2)
+		var ret = runtime.FuncForPC(programCounter).Name()
+		var i = strings.LastIndex(ret, ".")
+		if i > -1 {
+			ret = ret[i+1:]
+		}
+		ret += "()"
+		return ret
+	}
+	fmt.Println("Running test:", funcName())
+} //                                                               printTestName
+
 func readData(filename string) []byte {
 	ret, err := ioutil.ReadFile(filename)
 	if err != nil {

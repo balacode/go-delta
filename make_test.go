@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 12:49:30 94D768                        go-delta/[make_test.go]
+// :v: 2019-01-20 13:55:14 6931CE                        go-delta/[make_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -11,7 +11,9 @@ import (
 
 // go test --run Test_Make_
 func Test_Make_(t *testing.T) {
-	//
+	if PrintTestNames {
+		printTestName()
+	}
 	// func Make(a, b []byte) Delta
 	//
 	var test = func(a, b []byte, expect Delta) {

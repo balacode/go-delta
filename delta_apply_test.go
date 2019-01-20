@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 12:55:19 32A565                 go-delta/[delta_apply_test.go]
+// :v: 2019-01-20 13:55:14 82D8D5                 go-delta/[delta_apply_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -12,6 +12,9 @@ import (
 
 // go test --run Test_Delta_Apply_
 func Test_Delta_Apply_(t *testing.T) {
+	if PrintTestNames {
+		printTestName()
+	}
 	var test = func(src []byte, d Delta, expect []byte) {
 		var result, err = d.Apply(src)
 		if err != nil {

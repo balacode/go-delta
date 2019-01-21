@@ -1,6 +1,6 @@
 #  -----------------------------------------------------------------------------
 #  (c) balarabe@protonmail.com                                      License: MIT
-#  :v: 2019-01-20 13:49:58 4875C7                         /go-delta/[.gitignore]
+#  :v: 2019-01-21 12:20:03 5E998B                         /go-delta/[.gitignore]
 #  -----------------------------------------------------------------------------
 
 # backups, drafts and temporary files
@@ -13,6 +13,10 @@
 /ll.bat
 /ss.bat
 /t.bat
+
+# executable files
+/deltau/deltau
+/deltau/deltau.exe
 
 # log and debugging files
 /build.log

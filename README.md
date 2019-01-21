@@ -1,4 +1,4 @@
-## go-delta - Package to generate and apply binary delta updates between two byte arrays.
+## go-delta - A package and a utility to generate and apply binary delta updates.
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/balacode/go-delta)](https://goreportcard.com/report/github.com/balacode/go-delta)
 [![Build Status](https://travis-ci.org/balacode/go-delta.svg?branch=master)](https://travis-ci.org/balacode/go-delta)

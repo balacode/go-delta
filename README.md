@@ -9,7 +9,19 @@
 
 ## Suggestions:
 
-- Works best on text files, database dumps and any other files with lots of repeating patterns and few changes between updates.
+- Works best on text files, database dumps and any other files with lots of
+  repeating patterns and few changes between updates.
+
+- Generating deltas of compressed files is not recommended because a small
+  change in the source data can lead to lots of changes in the compressed
+  result, so generating a delta update may give you only minimal size
+  reduction.
+
+- Don't compress bytes returned by Delta.Bytes() because they are already
+  compressed using ZLib compression.
+
+- Every delta update adds about 156 bytes for the source and target hashes
+  and various lengths, so it is not recommended for very miniscule updates.
 
 ## Demonstration:
 

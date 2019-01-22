@@ -1,11 +1,13 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-22 11:11:04 12EE97                           go-delta/[module.go]
+// :v: 2019-01-22 11:13:33 C5469E                           go-delta/[module.go]
 // -----------------------------------------------------------------------------
 
 package delta
 
 import (
+	"bytes"
+	"errors"
 	"fmt"
 	"github.com/balacode/zr"
 )
@@ -39,10 +41,47 @@ var DebugTiming = true
 var DebugWriteArgs = false
 
 // -----------------------------------------------------------------------------
+// # Error Handler
+
+// SetErrorFunc changes the error-handling function, so that
+// all errors in this package will be sent to this handler,
+// which is useful for custom logging and mocking during unit tests.
+// To restore the default error handler use SetErrorFunc(nil).
+func SetErrorFunc(fn func(args ...interface{}) error) {
+	if fn == nil {
+		mod.Error = defaultErrorFunc
+		return
+	}
+	mod.Error = fn
+} //                                                                SetErrorFunc
+
+// defaultErrorFunc is the default error
+// handling function assigned to mod.Error
+func defaultErrorFunc(args ...interface{}) error {
+	//
+	// write all args to a message string (add spaces between args)
+	var buf bytes.Buffer
+	for i, arg := range args {
+		if i > 0 {
+			buf.WriteString(" ")
+		}
+		buf.WriteString(fmt.Sprint(arg))
+	}
+	var msg = buf.String()
+	//
+	// if DebugInfo is on, print the message to the console
+	if DebugInfo {
+		fmt.Println("ERROR:\n", msg)
+	}
+	// return error based on message
+	return errors.New(msg)
+} //                                                            defaultErrorFunc
+
+// -----------------------------------------------------------------------------
 // # Module Global
 
 // mod variable though wich mockable functions are called
-var mod = thisMod{Error: zr.Error}
+var mod = thisMod{Error: defaultErrorFunc}
 
 // thisMod specifies mockable functions
 type thisMod struct {
@@ -50,6 +89,6 @@ type thisMod struct {
 }
 
 // ModReset restores all mocked functions to the original standard functions.
-func (ob *thisMod) Reset() { ob.Error = zr.Error }
+func (ob *thisMod) Reset() { ob.Error = defaultErrorFunc }
 
 //end

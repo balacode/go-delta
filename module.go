@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-22 11:09:26 0E2FC3                           go-delta/[module.go]
+// :v: 2019-01-22 11:11:04 12EE97                           go-delta/[module.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -39,19 +39,17 @@ var DebugTiming = true
 var DebugWriteArgs = false
 
 // -----------------------------------------------------------------------------
-// # Function Proxy Variables (for mocking)
+// # Module Global
 
+// mod variable though wich mockable functions are called
+var mod = thisMod{Error: zr.Error}
+
+// thisMod specifies mockable functions
 type thisMod struct {
 	Error func(args ...interface{}) error
 }
 
-var mod = thisMod{
-	Error: zr.Error,
-}
-
 // ModReset restores all mocked functions to the original standard functions.
-func (ob *thisMod) Reset() {
-	ob.Error = zr.Error
-} //                                                                       Reset
+func (ob *thisMod) Reset() { ob.Error = zr.Error }
 
 //end

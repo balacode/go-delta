@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-21 12:19:27 9D28FE                      go-delta/deltau/[main.go]
+// :v: 2019-01-22 11:41:19 D31B6E                      go-delta/deltau/[main.go]
 // -----------------------------------------------------------------------------
 
 package main
@@ -13,14 +13,14 @@ import (
 	"github.com/balacode/go-delta"
 )
 
-const Usage = `deltau - delta update utility
+const Usage = `delu - delta update utility
 Usage:
 
 To create a delta update file:
-    deltau make <source file> <target file> <delta-file>
+    delu make <source file> <target file> <delta-file>
 
 To apply a delta update:
-    deltau apply <source file> <delta file> <target-file>
+    delu apply <source file> <delta file> <target-file>
 `
 
 var printError = fmt.Println

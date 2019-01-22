@@ -1,6 +1,6 @@
 #  -----------------------------------------------------------------------------
 #  (c) balarabe@protonmail.com                                      License: MIT
-#  :v: 2019-01-21 12:20:03 5E998B                         /go-delta/[.gitignore]
+#  :v: 2019-01-22 11:38:26 C9033A                         /go-delta/[.gitignore]
 #  -----------------------------------------------------------------------------
 
 # backups, drafts and temporary files
@@ -15,12 +15,13 @@
 /t.bat
 
 # executable files
-/deltau/deltau
-/deltau/deltau.exe
+/delu/delu
+/delu/delu.exe
 
 # log and debugging files
 /build.log
 /cover.out
+/delu/build.log
 /run.log
 
 # sample files used to generate binary deltas

@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-22 11:13:33 C5469E                           go-delta/[module.go]
+// :v: 2019-01-23 15:37:12 071868                           go-delta/[module.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -20,7 +20,7 @@ import (
 const MatchLimit = 50
 
 // MatchSize specifies the size of unique chunks being searched for, in bytes.
-const MatchSize = 8
+const MatchSize = 9
 
 // PL is fmt.Println() but is used only for debugging.
 var PL = fmt.Println

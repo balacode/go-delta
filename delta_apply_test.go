@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 13:55:14 82D8D5                 go-delta/[delta_apply_test.go]
+// :v: 2019-01-23 18:50:23 FCB4A9                 go-delta/[delta_apply_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -33,7 +33,7 @@ func Test_Delta_Apply_(t *testing.T) {
 		// delta:
 		Delta{
 			sourceHash: nil,
-			targetHash: makeHash(ab("abc")),
+			targetHash: hashOfBytes(ab("abc")),
 			parts: []deltaPart{
 				{sourceLoc: -1, size: 3, data: ab("abc")},
 			},
@@ -47,9 +47,9 @@ func Test_Delta_Apply_(t *testing.T) {
 		//
 		// delta:
 		Delta{
-			sourceHash: makeHash(ab("abc")),
+			sourceHash: hashOfBytes(ab("abc")),
 			sourceSize: 3,
-			targetHash: makeHash(ab("abc")),
+			targetHash: hashOfBytes(ab("abc")),
 			targetSize: 3,
 			parts: []deltaPart{
 				{sourceLoc: -1, size: 3, data: ab("abc")},

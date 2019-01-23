@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-21 00:34:18 DBEE6F                             go-delta/[make.go]
+// :v: 2019-01-23 18:50:23 C1E132                             go-delta/[make.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -19,9 +19,9 @@ func Make(a, b []byte) Delta {
 	}
 	var ret = Delta{
 		sourceSize: len(a),
-		sourceHash: makeHash(a),
+		sourceHash: hashOfBytes(a),
 		targetSize: len(b),
-		targetHash: makeHash(b),
+		targetHash: hashOfBytes(b),
 	}
 	var lenB = len(b)
 	if lenB < MatchSize {

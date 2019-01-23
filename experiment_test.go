@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 23:29:40 E352D4                  go-delta/[experiment_test.go]
+// :v: 2019-01-23 18:50:23 4A59F2                  go-delta/[experiment_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -80,7 +80,7 @@ func Test02(t *testing.T) {
 			elapsed time:              171.4 seconds
 			--------------------------------------------------------------
 			171.25880: delta.Make
-			  0.16411: makeHash
+			  0.16411: hashOfBytes
 			  3.78551: makeMap
 			165.82172: longestMatch
 			  0.09878: write
@@ -93,7 +93,7 @@ func Test02(t *testing.T) {
 			elapsed time:                2.4 seconds
 			--------------------------------------------------------------
 			  2.40135: delta.Make
-			  0.11608: makeHash
+			  0.11608: hashOfBytes
 			  1.28985: makeMap
 			  0.14999: longestMatch
 			  0.07882: write
@@ -106,7 +106,7 @@ func Test02(t *testing.T) {
 			elapsed time:                    2.4 seconds
 			--------------------------------------------------------------
 			  2.45898: delta.Make
-			  0.15910: makeHash
+			  0.15910: hashOfBytes
 			  1.49399: makeMap
 			  0.16595: longestMatch
 			  0.07311: write
@@ -133,7 +133,7 @@ func Test02(t *testing.T) {
 				elapsed time:             2.06 seconds
 				--------------------------------------------------------------
 			  	  2.06019: delta.Make
-				  0.11507: makeHash
+				  0.11507: hashOfBytes
 				  1.44146: makeMap
 				  0.05109: longestMatch
 				  0.00349: write

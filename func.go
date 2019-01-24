@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-23 18:50:23 CA8D49                             go-delta/[func.go]
+// :v: 2019-01-24 11:47:56 236F71                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -73,5 +73,41 @@ func hashOfBytes(data []byte) []byte {
 	var ret = sha512.Sum512(data)
 	return ret[:]
 } //                                                                 hashOfBytes
+
+// hashOfStream returns the SHA-512 hash of the bytes from 'stream'.
+func hashOfStream(stream io.Reader) []byte {
+	if DebugTiming {
+		tmr.Start("hashOfStream")
+		defer tmr.Stop("hashOfStream")
+	}
+	var hasher = sha512.New()
+	var buf = make([]byte, TempBufferSize)
+	for first := true; ; first = false {
+		var n, err = stream.Read(buf)
+		if err == io.EOF && first {
+			return nil
+		}
+		if err == io.EOF {
+			if n != 0 {
+				mod.Error("Expected zero: n =", n)
+			}
+			break
+		}
+		if err != nil {
+			mod.Error("Failed reading:", err)
+			return nil
+		}
+		if n == 0 {
+			break
+		}
+		n, err = hasher.Write(buf[:n])
+		if err != nil {
+			mod.Error("Failed writing:", err)
+			return nil
+		}
+	}
+	var ret = hasher.Sum(nil)
+	return ret
+} //                                                                hashOfStream
 
 //end

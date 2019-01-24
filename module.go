@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-23 15:37:12 071868                           go-delta/[module.go]
+// :v: 2019-01-24 11:47:56 601D4A                           go-delta/[module.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -24,6 +24,10 @@ const MatchSize = 9
 
 // PL is fmt.Println() but is used only for debugging.
 var PL = fmt.Println
+
+// TempBufferSize sets the size of memory buffers for reading files and other
+// streams. This memory is not fixed but allocated/released transiently.
+var TempBufferSize = 32 * 1024 * 1024 // 32 MB
 
 // tmr is used for timing all methods/functions during tuning.
 var tmr zr.Timer

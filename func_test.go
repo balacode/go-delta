@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 14:19:30 87A8FE                        go-delta/[func_test.go]
+// :v: 2019-01-25 07:30:07 AE909B                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -12,10 +12,12 @@ to generate a test coverage report for the whole module use:
 */
 
 import (
+	"bytes"
 	"fmt"
 	"io/ioutil"
 	"runtime"
 	"strings"
+	"testing"
 )
 
 const AtoM = "ABCDEFGHIJKLM"
@@ -28,6 +30,33 @@ const PrintTestNames = true
 const RunExperiments = true
 
 var Line = strings.Repeat("#", 70)
+
+// -----------------------------------------------------------------------------
+// # Function Unit Tests
+
+// go test --run Test_hashOfStream_
+func Test_hashOfStream_(t *testing.T) {
+	if !RunExperiments {
+		return
+	}
+	if PrintTestNames {
+		printTestName()
+	}
+	var test = func(input []byte) {
+		var buf = bytes.NewBuffer(input)
+		var resultHash = hashOfStream(buf)
+		buf = bytes.NewBuffer(input)
+		var expectHash = hashOfBytes(buf.Bytes())
+		if !bytes.Equal(resultHash, expectHash) {
+			t.Errorf("\n input:\n\t%v\n%s\n expect:%v\n\t result:\n\t%v\n",
+				input, string(input), expectHash, resultHash)
+		}
+	}
+	TempBufferSize = 100
+	test(nil)
+	test([]byte("abc"))
+	test([]byte(strings.Repeat("abc", 1024)))
+} //                                                          Test_hashOfStream_
 
 // -----------------------------------------------------------------------------
 // # Test Helper Functions

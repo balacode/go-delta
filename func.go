@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-24 11:47:56 236F71                             go-delta/[func.go]
+// :v: 2019-02-05 16:54:43 5EADD4                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -74,11 +74,11 @@ func hashOfBytes(data []byte) []byte {
 	return ret[:]
 } //                                                                 hashOfBytes
 
-// hashOfStream returns the SHA-512 hash of the bytes from 'stream'.
-func hashOfStream(stream io.Reader) []byte {
+// hashOfReader returns the SHA-512 hash of the bytes from 'stream'.
+func hashOfReader(stream io.Reader) []byte {
 	if DebugTiming {
-		tmr.Start("hashOfStream")
-		defer tmr.Stop("hashOfStream")
+		tmr.Start("hashOfReader")
+		defer tmr.Stop("hashOfReader")
 	}
 	var hasher = sha512.New()
 	var buf = make([]byte, TempBufferSize)
@@ -108,6 +108,6 @@ func hashOfStream(stream io.Reader) []byte {
 	}
 	var ret = hasher.Sum(nil)
 	return ret
-} //                                                                hashOfStream
+} //                                                                hashOfReader
 
 //end

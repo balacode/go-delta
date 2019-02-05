@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-02-05 16:22:08 C0581D                        go-delta/[func_test.go]
+// :v: 2019-02-05 16:54:43 2D6301                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -33,14 +33,14 @@ var Line = strings.Repeat("#", 70)
 // -----------------------------------------------------------------------------
 // # Function Unit Tests
 
-// go test --run Test_hashOfStream_
-func Test_hashOfStream_(t *testing.T) {
+// go test --run Test_hashOfReader_
+func Test_hashOfReader_(t *testing.T) {
 	if PrintTestNames {
 		printTestName()
 	}
 	var test = func(input []byte) {
 		var buf = bytes.NewBuffer(input)
-		var resultHash = hashOfStream(buf)
+		var resultHash = hashOfReader(buf)
 		buf = bytes.NewBuffer(input)
 		var expectHash = hashOfBytes(buf.Bytes())
 		if !bytes.Equal(resultHash, expectHash) {
@@ -52,7 +52,7 @@ func Test_hashOfStream_(t *testing.T) {
 	test(nil)
 	test([]byte("abc"))
 	test([]byte(strings.Repeat("abc", 1024)))
-} //                                                          Test_hashOfStream_
+} //                                                          Test_hashOfReader_
 
 // -----------------------------------------------------------------------------
 // # Test Helper Functions

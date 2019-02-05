@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-02-05 19:28:27 A940F6                             go-delta/[func.go]
+// :v: 2019-02-05 19:33:17 7CB454                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -109,5 +109,14 @@ func readHash(stream io.Reader) []byte {
 	var ret = hasher.Sum(nil)
 	return ret
 } //                                                                    readHash
+
+// readLen returns the total size of 'stream' in bytes.
+// After a call to readLen, the current reading
+// position returns to the start or the stream.
+func readLen(stream io.ReadSeeker) int {
+	var ret, _ = stream.Seek(0, io.SeekEnd)
+	stream.Seek(0, io.SeekStart)
+	return int(ret)
+} //                                                                     readLen
 
 //end

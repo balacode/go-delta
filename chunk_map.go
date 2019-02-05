@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-02-05 16:47:49 FE291F                        go-delta/[chunk_map.go]
+// :v: 2019-02-05 16:50:31 73E4C3                        go-delta/[chunk_map.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -61,5 +61,11 @@ func newChunkMap(data []byte) chunkMap {
 	}
 	return ret
 } //                                                                 newChunkMap
+
+// get __
+func (ob *chunkMap) get(key chunk) (locs []int, found bool) {
+	locs, found = ob.m[key]
+	return
+} //                                                                         get
 
 //end

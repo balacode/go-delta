@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-02-05 16:41:48 07E899                  go-delta/[experiment_test.go]
+// :v: 2019-02-05 16:52:17 AF3060                  go-delta/[experiment_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -49,7 +49,7 @@ func Test01(t *testing.T) {
 	}
 	if true {
 		for k, v := range cmap2.m {
-			_, exist := cmap1.m[k]
+			_, exist := cmap1.get(k)
 			PL("key:", k, "val:", v, "exist:", exist)
 		}
 	}

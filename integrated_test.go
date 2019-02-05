@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 23:29:40 B1239C                  go-delta/[integrated_test.go]
+// :v: 2019-02-05 16:22:08 2AE656                  go-delta/[integrated_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -15,9 +15,6 @@ import (
 
 // go test --run TestIntegrated
 func TestIntegrated(t *testing.T) {
-	if !RunExperiments {
-		return
-	}
 	if PrintTestNames {
 		printTestName()
 	}

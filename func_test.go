@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-25 07:30:07 AE909B                        go-delta/[func_test.go]
+// :v: 2019-02-05 16:22:08 C0581D                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -27,7 +27,6 @@ const Nums = "0123456789"
 const atoz = "abcdefghijklmnopqrstuvwxyz"
 
 const PrintTestNames = true
-const RunExperiments = true
 
 var Line = strings.Repeat("#", 70)
 
@@ -36,9 +35,6 @@ var Line = strings.Repeat("#", 70)
 
 // go test --run Test_hashOfStream_
 func Test_hashOfStream_(t *testing.T) {
-	if !RunExperiments {
-		return
-	}
 	if PrintTestNames {
 		printTestName()
 	}

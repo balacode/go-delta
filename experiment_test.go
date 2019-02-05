@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-02-05 16:20:23 8D3C78                  go-delta/[experiment_test.go]
+// :v: 2019-02-05 16:22:32 8E63AB                  go-delta/[experiment_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -14,6 +14,8 @@ to generate a test coverage report for the whole module use:
 import (
 	"testing"
 )
+
+const RunExperiments = false
 
 // -----------------------------------------------------------------------------
 // # Experimental / Auxiliary Tests

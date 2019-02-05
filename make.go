@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-02-05 16:35:28 8B2EBF                             go-delta/[make.go]
+// :v: 2019-02-05 16:40:12 60E028                             go-delta/[make.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -45,7 +45,7 @@ func Make(a, b []byte) Delta {
 		var found = false
 		if lenB-i >= MatchSize {
 			copy(key[:], b[i:])
-			locs, found = cmap[key]
+			locs, found = cmap.m[key]
 		}
 		if found {
 			var at, size = longestMatch(a, locs, b, i)

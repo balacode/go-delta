@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-02-05 16:22:32 8E63AB                  go-delta/[experiment_test.go]
+// :v: 2019-02-05 16:41:48 07E899                  go-delta/[experiment_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -30,16 +30,16 @@ func Test01(t *testing.T) {
 	}
 	PL("Test01 " + Line)
 	//
-	var m1 = newChunkMap(readData("test1.zip"))
-	PL("Created m1. len(m1):", len(m1))
+	var cmap1 = newChunkMap(readData("test1.zip"))
+	PL("Created cmap1. len(cmap1):", len(cmap1.m))
 	//
-	var m2 = newChunkMap(readData("test2.zip"))
-	PL("Created m2. len(m2):", len(m2))
+	var cmap2 = newChunkMap(readData("test2.zip"))
+	PL("Created cmap2. len(cmap2):", len(cmap2.m))
 	//
 	if false {
 		const MaxLines = 0
 		var i = 1
-		for k, v := range m1 {
+		for k, v := range cmap1.m {
 			PL("key:", k, "val:", v)
 			i++
 			if i > MaxLines {
@@ -48,8 +48,8 @@ func Test01(t *testing.T) {
 		}
 	}
 	if true {
-		for k, v := range m2 {
-			_, exist := m1[k]
+		for k, v := range cmap2.m {
+			_, exist := cmap1.m[k]
 			PL("key:", k, "val:", v, "exist:", exist)
 		}
 	}

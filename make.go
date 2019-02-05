@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-02-05 16:24:59 FD2EEF                             go-delta/[make.go]
+// :v: 2019-02-05 16:29:48 52CF4B                             go-delta/[make.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -28,8 +28,8 @@ func Make(a, b []byte) Delta {
 		ret.parts = []deltaPart{{sourceLoc: -1, size: lenB, data: b}}
 		return ret
 	}
-	var m = newChunkMap(a)
-	var chunk Chunk
+	var cmap = newChunkMap(a)
+	var key Chunk
 	var tmc = 0 // timing counter
 	for i := 0; i < lenB; {
 		if DebugInfo && i-tmc >= 10000 {
@@ -44,8 +44,8 @@ func Make(a, b []byte) Delta {
 		var locs []int
 		var found = false
 		if lenB-i >= MatchSize {
-			copy(chunk[:], b[i:])
-			locs, found = m[chunk]
+			copy(key[:], b[i:])
+			locs, found = cmap[key]
 		}
 		if found {
 			var at, size = longestMatch(a, locs, b, i)
@@ -54,7 +54,7 @@ func Make(a, b []byte) Delta {
 			ret.oldCount++
 			continue
 		}
-		ret.write(-1, MatchSize, chunk[:])
+		ret.write(-1, MatchSize, key[:])
 		i += MatchSize
 		ret.newCount++
 	}

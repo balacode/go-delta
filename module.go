@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-24 11:47:56 601D4A                           go-delta/[module.go]
+// :v: 2019-02-05 16:20:23 9F6B3D                           go-delta/[module.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -16,7 +16,7 @@ import (
 // # Module Constants / Variables
 
 // MatchLimit specifies the maximum number of positions tracked
-// for each unique key in the map of source data. See makeMap().
+// for each unique key in the map of source data. See newChunkMap().
 const MatchLimit = 50
 
 // MatchSize specifies the size of unique chunks being searched for, in bytes.

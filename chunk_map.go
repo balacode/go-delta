@@ -1,17 +1,17 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-02-05 16:18:45 9EFD0B                        go-delta/[chunk_map.go]
+// :v: 2019-02-05 16:20:23 8D85EE                        go-delta/[chunk_map.go]
 // -----------------------------------------------------------------------------
 
 package delta
 
-// makeMap creates a map of unique chunks in 'data'.
+// newChunkMap creates a map of unique chunks in 'data'.
 // The key specifies the unique chunk of bytes, while the
 // values array returns the positions of the chunk in 'data'.
-func makeMap(data []byte) map[[MatchSize]byte][]int {
+func newChunkMap(data []byte) map[[MatchSize]byte][]int {
 	if DebugTiming {
-		tmr.Start("makeMap")
-		defer tmr.Stop("makeMap")
+		tmr.Start("newChunkMap")
+		defer tmr.Stop("newChunkMap")
 	}
 	var lenData = len(data)
 	if lenData < MatchSize {
@@ -36,6 +36,6 @@ func makeMap(data []byte) map[[MatchSize]byte][]int {
 		i += MatchSize
 	}
 	return ret
-} //                                                                     makeMap
+} //                                                                 newChunkMap
 
 //end

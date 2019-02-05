@@ -1,9 +1,11 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-02-05 16:39:50 3F6F64                        go-delta/[chunk_map.go]
+// :v: 2019-02-05 16:47:49 FE291F                        go-delta/[chunk_map.go]
 // -----------------------------------------------------------------------------
 
 package delta
+
+const DebugChunkMap = false
 
 type chunk [MatchSize]byte
 
@@ -20,13 +22,20 @@ func newChunkMap(data []byte) chunkMap {
 		tmr.Start("newChunkMap")
 		defer tmr.Stop("newChunkMap")
 	}
+	if DebugChunkMap {
+		PL("newChunkMap init:", len(data), "bytes")
+	}
 	var lenData = len(data)
 	if lenData < MatchSize {
 		return chunkMap{m: map[chunk][]int{}}
 	}
+	var dbgN = 0
 	var ret = chunkMap{m: make(map[chunk][]int, lenData/4)}
 	var key chunk
 	lenData -= MatchSize
+	if DebugChunkMap {
+		PL("newChunkMap begin loop")
+	}
 	for i := 0; i < lenData; {
 		copy(key[:], data[i:])
 		var ar, found = ret.m[key]
@@ -41,6 +50,14 @@ func newChunkMap(data []byte) chunkMap {
 		}
 		ret.m[key] = append(ret.m[key], i)
 		i += MatchSize
+		if DebugChunkMap {
+			dbgN++
+			if dbgN < 10E6 {
+				continue
+			}
+			dbgN = 0
+			PL("i:", i, "len(m):", len(ret.m))
+		}
 	}
 	return ret
 } //                                                                 newChunkMap

@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-02-05 16:20:23 692245                             go-delta/[make.go]
+// :v: 2019-02-05 16:24:59 FD2EEF                             go-delta/[make.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -29,7 +29,7 @@ func Make(a, b []byte) Delta {
 		return ret
 	}
 	var m = newChunkMap(a)
-	var chunk [MatchSize]byte
+	var chunk Chunk
 	var tmc = 0 // timing counter
 	for i := 0; i < lenB; {
 		if DebugInfo && i-tmc >= 10000 {

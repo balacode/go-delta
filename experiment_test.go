@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-02-05 16:52:17 AF3060                  go-delta/[experiment_test.go]
+// :v: 2019-02-07 00:22:42 4AE179                  go-delta/[experiment_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -30,10 +30,10 @@ func Test01(t *testing.T) {
 	}
 	PL("Test01 " + Line)
 	//
-	var cmap1 = newChunkMap(readData("test1.zip"))
+	var cmap1 = newIndexMap(readData("test1.zip"))
 	PL("Created cmap1. len(cmap1):", len(cmap1.m))
 	//
-	var cmap2 = newChunkMap(readData("test2.zip"))
+	var cmap2 = newIndexMap(readData("test2.zip"))
 	PL("Created cmap2. len(cmap2):", len(cmap2.m))
 	//
 	if false {
@@ -75,7 +75,7 @@ func Test02(t *testing.T) {
 		/*
 			Target array's size: 16,994,304 bytes
 			-
-			Before optimizing newChunkMap():
+			Before optimizing newIndexMap():
 			--------------------------------------------------------------
 			uncompressed delta length: 1,855,440 bytes
 			compressed delta length:     704,583 (4.15% of target's size)
@@ -83,12 +83,12 @@ func Test02(t *testing.T) {
 			--------------------------------------------------------------
 			171.25880: delta.Make
 			  0.16411: hashOfBytes
-			  3.78551: newChunkMap
+			  3.78551: newIndexMap
 			165.82172: longestMatch
 			  0.09878: write
 			  0.13109: compressBytes
 			-
-			After optimizing newChunkMap():
+			After optimizing newIndexMap():
 			--------------------------------------------------------------
 			uncompressed delta length: 1,952,772 bytes
 			compressed delta length:     729,574 (4.29% of target's size)
@@ -96,7 +96,7 @@ func Test02(t *testing.T) {
 			--------------------------------------------------------------
 			  2.40135: delta.Make
 			  0.11608: hashOfBytes
-			  1.28985: newChunkMap
+			  1.28985: newIndexMap
 			  0.14999: longestMatch
 			  0.07882: write
 			  0.09806: compressBytes
@@ -109,7 +109,7 @@ func Test02(t *testing.T) {
 			--------------------------------------------------------------
 			  2.45898: delta.Make
 			  0.15910: hashOfBytes
-			  1.49399: newChunkMap
+			  1.49399: newIndexMap
 			  0.16595: longestMatch
 			  0.07311: write
 			  0.12408: compressBytes
@@ -136,7 +136,7 @@ func Test02(t *testing.T) {
 				--------------------------------------------------------------
 			  	  2.06019: delta.Make
 				  0.11507: hashOfBytes
-				  1.44146: newChunkMap
+				  1.44146: newIndexMap
 				  0.05109: longestMatch
 				  0.00349: write
 				  0.00600: compressBytes

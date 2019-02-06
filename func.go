@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-02-05 19:33:17 7CB454                             go-delta/[func.go]
+// :v: 2019-02-06 23:58:57 1798DC                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -118,5 +118,25 @@ func readLen(stream io.ReadSeeker) int {
 	stream.Seek(0, io.SeekStart)
 	return int(ret)
 } //                                                                     readLen
+
+// readStream __
+func readStream(from io.ReadSeeker, to []byte) (n int64, err error) {
+	// read from the stream
+	{
+		var num int
+		num, err = from.Read(to)
+		n = int64(num)
+	}
+	if err == io.EOF {
+		if n != 0 {
+			mod.Error("Expected zero: n =", n)
+		}
+		return -1, nil
+	}
+	if err != nil {
+		return -1, mod.Error("Failed reading:", err)
+	}
+	return n, err
+} //                                                                  readStream
 
 //end

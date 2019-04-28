@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-02-06 23:58:57 1798DC                             go-delta/[func.go]
+// :v: 2019-04-28 21:31:36 264F2E                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -61,18 +61,18 @@ func uncompressBytes(data []byte) []byte {
 // -----------------------------------------------------------------------------
 // # Helper Functions
 
-// hashOfBytes returns the SHA-512 hash of byte slice 'ar'.
-func hashOfBytes(ar []byte) []byte {
+// makeHash returns the SHA-512 hash of byte slice 'ar'.
+func makeHash(ar []byte) []byte {
 	if DebugTiming {
-		tmr.Start("hashOfBytes")
-		defer tmr.Stop("hashOfBytes")
+		tmr.Start("makeHash")
+		defer tmr.Stop("makeHash")
 	}
 	if len(ar) == 0 {
 		return nil
 	}
 	var ret = sha512.Sum512(ar)
 	return ret[:]
-} //                                                                 hashOfBytes
+} //                                                                    makeHash
 
 // readHash returns the SHA-512 hash of the bytes from 'stream'.
 func readHash(stream io.Reader) []byte {

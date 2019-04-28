@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-23 18:50:23 F10FC0                      go-delta/[delta_apply.go]
+// :v: 2019-04-28 21:31:36 639E68                      go-delta/[delta_apply.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -24,7 +24,7 @@ func (ob *Delta) Apply(source []byte) ([]byte, error) {
 			"Size of source [%d] does not match expected [%d]",
 			len(source), ob.sourceSize))
 	}
-	if !bytes.Equal(hashOfBytes(source), ob.sourceHash) {
+	if !bytes.Equal(makeHash(source), ob.sourceHash) {
 		return nil, mod.Error("Delta does not belong to specified source")
 	}
 	var buf = bytes.NewBuffer(make([]byte, 0, ob.targetSize))
@@ -51,7 +51,7 @@ func (ob *Delta) Apply(source []byte) ([]byte, error) {
 		}
 	}
 	var ret = buf.Bytes()
-	if !bytes.Equal(hashOfBytes(ret), ob.targetHash) {
+	if !bytes.Equal(makeHash(ret), ob.targetHash) {
 		return nil, mod.Error("Result does not match target hash.")
 	}
 	return buf.Bytes(), nil

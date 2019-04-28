@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-02-05 19:28:27 C30E6C                        go-delta/[func_test.go]
+// :v: 2019-04-28 21:31:36 70332E                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -42,7 +42,7 @@ func Test_readHash_(t *testing.T) {
 		var buf = bytes.NewBuffer(input)
 		var resultHash = readHash(buf)
 		buf = bytes.NewBuffer(input)
-		var expectHash = hashOfBytes(buf.Bytes())
+		var expectHash = makeHash(buf.Bytes())
 		if !bytes.Equal(resultHash, expectHash) {
 			t.Errorf("\n input:\n\t%v\n%s\n expect:%v\n\t result:\n\t%v\n",
 				input, string(input), expectHash, resultHash)

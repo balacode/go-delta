@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-23 18:50:23 F6CE4E                        go-delta/[make_test.go]
+// :v: 2019-04-28 21:31:36 6931CE                        go-delta/[make_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -28,9 +28,9 @@ func Test_Make_(t *testing.T) {
 		ab(AtoZ),
 		Delta{
 			sourceSize: 26,
-			sourceHash: hashOfBytes(ab(AtoZ)),
+			sourceHash: makeHash(ab(AtoZ)),
 			targetSize: 26,
-			targetHash: hashOfBytes(ab(AtoZ)),
+			targetHash: makeHash(ab(AtoZ)),
 			newCount:   0,
 			oldCount:   1,
 			parts: []deltaPart{

@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-04-28 21:39:43 F20099                        go-delta/[index_map.go]
+// :v: 2019-04-28 21:55:25 7BCED5                        go-delta/[index_map.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -14,16 +14,16 @@ type indexMap struct {
 	m map[chunk][]int
 } //                                                                    indexMap
 
-// newIndexMap creates a map of unique chunks in 'data'.
+// makeMap creates a map of unique chunks in 'data'.
 // The key specifies the unique chunk of bytes, while the
 // values array returns the positions of the chunk in 'data'.
-func newIndexMap(data []byte) indexMap {
+func makeMap(data []byte) indexMap {
 	if DebugTiming {
-		tmr.Start("newIndexMap")
-		defer tmr.Stop("newIndexMap")
+		tmr.Start("makeMap")
+		defer tmr.Stop("makeMap")
 	}
 	if DebugIndex {
-		PL("newIndexMap init:", len(data), "bytes")
+		PL("makeMap init:", len(data), "bytes")
 	}
 	lenData := len(data)
 	if lenData < MatchSize {
@@ -34,7 +34,7 @@ func newIndexMap(data []byte) indexMap {
 	var key chunk
 	lenData -= MatchSize
 	if DebugIndex {
-		PL("newIndexMap begin loop")
+		PL("makeMap begin loop")
 	}
 	for i := 0; i < lenData; {
 		copy(key[:], data[i:])
@@ -60,7 +60,7 @@ func newIndexMap(data []byte) indexMap {
 		}
 	}
 	return ret
-} //                                                                 newIndexMap
+} //                                                                     makeMap
 
 // get __
 func (ob *indexMap) get(key chunk) (locs []int, found bool) {

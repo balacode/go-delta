@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-04-28 21:39:43 5B4437                  go-delta/[experiment_test.go]
+// :v: 2019-04-28 21:55:25 A09B78                  go-delta/[experiment_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -30,10 +30,10 @@ func Test01(t *testing.T) {
 	}
 	PL("Test01 " + Line)
 	//
-	cmap1 := newIndexMap(readData("test1.zip"))
+	cmap1 := makeMap(readData("test1.zip"))
 	PL("Created cmap1. len(cmap1):", len(cmap1.m))
 	//
-	cmap2 := newIndexMap(readData("test2.zip"))
+	cmap2 := makeMap(readData("test2.zip"))
 	PL("Created cmap2. len(cmap2):", len(cmap2.m))
 	//
 	if false {
@@ -75,7 +75,7 @@ func Test02(t *testing.T) {
 		/*
 			Target array's size: 16,994,304 bytes
 			-
-			Before optimizing newIndexMap():
+			Before optimizing makeMap():
 			--------------------------------------------------------------
 			uncompressed delta length: 1,855,440 bytes
 			compressed delta length:     704,583 (4.15% of target's size)
@@ -83,12 +83,12 @@ func Test02(t *testing.T) {
 			--------------------------------------------------------------
 			171.25880: delta.Make
 			  0.16411: makeHash
-			  3.78551: newIndexMap
+			  3.78551: makeMap
 			165.82172: longestMatch
 			  0.09878: write
 			  0.13109: compressBytes
 			-
-			After optimizing newIndexMap():
+			After optimizing makeMap():
 			--------------------------------------------------------------
 			uncompressed delta length: 1,952,772 bytes
 			compressed delta length:     729,574 (4.29% of target's size)
@@ -96,7 +96,7 @@ func Test02(t *testing.T) {
 			--------------------------------------------------------------
 			  2.40135: delta.Make
 			  0.11608: makeHash
-			  1.28985: newIndexMap
+			  1.28985: makeMap
 			  0.14999: longestMatch
 			  0.07882: write
 			  0.09806: compressBytes
@@ -109,7 +109,7 @@ func Test02(t *testing.T) {
 			--------------------------------------------------------------
 			  2.45898: delta.Make
 			  0.15910: makeHash
-			  1.49399: newIndexMap
+			  1.49399: makeMap
 			  0.16595: longestMatch
 			  0.07311: write
 			  0.12408: compressBytes
@@ -136,7 +136,7 @@ func Test02(t *testing.T) {
 				--------------------------------------------------------------
 			  	  2.06019: delta.Make
 				  0.11507: makeHash
-				  1.44146: newIndexMap
+				  1.44146: makeMap
 				  0.05109: longestMatch
 				  0.00349: write
 				  0.00600: compressBytes

@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-04-28 21:39:43 C9C4BE                             go-delta/[make.go]
+// :v: 2019-04-28 21:55:25 66E519                             go-delta/[make.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -28,7 +28,7 @@ func Make(a, b []byte) Delta {
 		ret.parts = []deltaPart{{sourceLoc: -1, size: lenB, data: b}}
 		return ret
 	}
-	cmap := newIndexMap(a)
+	cmap := makeMap(a)
 	var key chunk
 	tmc := 0 // timing counter
 	for i := 0; i < lenB; {
@@ -76,7 +76,7 @@ func Make(a, b []byte) Delta {
 // chunk in bytes, usually 8 bytes.
 //
 // 'aLocs' is an array of positions (in 'a') at which the chunk is found.
-// This array is produced by newIndexMap() before longestMatch() is called.
+// This array is produced by makeMap() before longestMatch() is called.
 //
 // Returns the location ('loc') of the match in 'a'
 // and the length of the match in 'b' ('size').

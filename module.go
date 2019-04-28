@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-02-07 00:22:42 59D147                           go-delta/[module.go]
+// :v: 2019-04-28 21:39:43 0FE149                           go-delta/[module.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -71,7 +71,7 @@ func defaultErrorFunc(args ...interface{}) error {
 		}
 		buf.WriteString(fmt.Sprint(arg))
 	}
-	var msg = buf.String()
+	msg := buf.String()
 	//
 	// if DebugInfo is on, print the message to the console
 	if DebugInfo {

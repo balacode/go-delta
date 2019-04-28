@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 07:28:12 B5EE73                  go-delta/[delta_go_string.go]
+// :v: 2019-04-28 21:39:43 2032C7                  go-delta/[delta_go_string.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -14,12 +14,12 @@ import (
 // It implements the GoStringer interface.
 func (ob Delta) GoString() string {
 	var buf bytes.Buffer
-	var write = func(args ...string) {
+	write := func(args ...string) {
 		for _, s := range args {
 			buf.WriteString(s)
 		}
 	}
-	var str = func(v interface{}) string {
+	str := func(v interface{}) string {
 		return fmt.Sprintf("%#v", v)
 	}
 	write("Delta{", "\n",

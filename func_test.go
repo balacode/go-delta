@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-04-28 21:31:36 70332E                        go-delta/[func_test.go]
+// :v: 2019-04-28 21:39:43 19D4DF                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -39,10 +39,16 @@ func Test_readHash_(t *testing.T) {
 		printTestName()
 	}
 	var test = func(input []byte) {
-		var buf = bytes.NewBuffer(input)
-		var resultHash = readHash(buf)
-		buf = bytes.NewBuffer(input)
-		var expectHash = makeHash(buf.Bytes())
+		var resultHash []byte
+		{
+			buf := bytes.NewBuffer(input)
+			resultHash = readHash(buf)
+		}
+		var expectHash []byte
+		{
+			buf := bytes.NewBuffer(input)
+			expectHash = makeHash(buf.Bytes())
+		}
 		if !bytes.Equal(resultHash, expectHash) {
 			t.Errorf("\n input:\n\t%v\n%s\n expect:%v\n\t result:\n\t%v\n",
 				input, string(input), expectHash, resultHash)
@@ -67,10 +73,10 @@ func printTestName() {
 	if !PrintTestNames {
 		return
 	}
-	var funcName = func() string {
-		var programCounter, _, _, _ = runtime.Caller(2)
-		var ret = runtime.FuncForPC(programCounter).Name()
-		var i = strings.LastIndex(ret, ".")
+	funcName := func() string {
+		programCounter, _, _, _ := runtime.Caller(2)
+		ret := runtime.FuncForPC(programCounter).Name()
+		i := strings.LastIndex(ret, ".")
 		if i > -1 {
 			ret = ret[i+1:]
 		}

@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-04-28 21:31:36 004168                  go-delta/[experiment_test.go]
+// :v: 2019-04-28 21:39:43 5B4437                  go-delta/[experiment_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -30,15 +30,15 @@ func Test01(t *testing.T) {
 	}
 	PL("Test01 " + Line)
 	//
-	var cmap1 = newIndexMap(readData("test1.zip"))
+	cmap1 := newIndexMap(readData("test1.zip"))
 	PL("Created cmap1. len(cmap1):", len(cmap1.m))
 	//
-	var cmap2 = newIndexMap(readData("test2.zip"))
+	cmap2 := newIndexMap(readData("test2.zip"))
 	PL("Created cmap2. len(cmap2):", len(cmap2.m))
 	//
 	if false {
 		const MaxLines = 0
-		var i = 1
+		i := 1
 		for k, v := range cmap1.m {
 			PL("key:", k, "val:", v)
 			i++
@@ -150,7 +150,7 @@ func Test02(t *testing.T) {
 		tmr.Start("delta.Make")
 	}
 	{
-		var d = Make(a, b)
+		d := Make(a, b)
 		d.Bytes()
 	}
 	if DebugTiming {
@@ -175,18 +175,18 @@ func Test03(t *testing.T) {
 	}
 	// -------------------------------------------------------------------------
 	PL("\n" + Line)
-	var d1 = Make(a, b)
+	d1 := Make(a, b)
 	PL("CREATED d1:")
 	d1.Dump()
 	//
-	var dbytes = d1.Bytes()
+	dbytes := d1.Bytes()
 	PL("got 'dbytes'")
 	// -------------------------------------------------------------------------
 	PL("\n" + Line)
 	if DebugTiming {
 		tmr.Start("Load")
 	}
-	var d2, err = Load(dbytes)
+	d2, err := Load(dbytes)
 	PL("CREATED d2: err:", err)
 	d2.Dump()
 	if DebugTiming {
@@ -203,7 +203,7 @@ func Test04(t *testing.T) {
 	if PrintTestNames {
 		printTestName()
 	}
-	var d = Delta{
+	d := Delta{
 		sourceSize: 111,
 		sourceHash: []byte("SOURCE"),
 		targetSize: 222,

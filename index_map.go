@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-02-07 00:22:42 9EE845                        go-delta/[index_map.go]
+// :v: 2019-04-28 21:39:43 F20099                        go-delta/[index_map.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -25,12 +25,12 @@ func newIndexMap(data []byte) indexMap {
 	if DebugIndex {
 		PL("newIndexMap init:", len(data), "bytes")
 	}
-	var lenData = len(data)
+	lenData := len(data)
 	if lenData < MatchSize {
 		return indexMap{m: map[chunk][]int{}}
 	}
-	var dbgN = 0
-	var ret = indexMap{m: make(map[chunk][]int, lenData/4)}
+	dbgN := 0
+	ret := indexMap{m: make(map[chunk][]int, lenData/4)}
 	var key chunk
 	lenData -= MatchSize
 	if DebugIndex {
@@ -38,7 +38,7 @@ func newIndexMap(data []byte) indexMap {
 	}
 	for i := 0; i < lenData; {
 		copy(key[:], data[i:])
-		var ar, found = ret.m[key]
+		ar, found := ret.m[key]
 		if !found {
 			ret.m[key] = []int{i}
 			i++

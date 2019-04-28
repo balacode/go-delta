@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-04-28 21:31:36 82D8D5                 go-delta/[delta_apply_test.go]
+// :v: 2019-04-28 21:39:43 269450                 go-delta/[delta_apply_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -15,8 +15,8 @@ func Test_Delta_Apply_(t *testing.T) {
 	if PrintTestNames {
 		printTestName()
 	}
-	var test = func(src []byte, d Delta, expect []byte) {
-		var result, err = d.Apply(src)
+	test := func(src []byte, d Delta, expect []byte) {
+		result, err := d.Apply(src)
 		if err != nil {
 			t.Errorf("\n encountered error: %s\n", err)
 			return

@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-22 11:41:19 D31B6E                      go-delta/deltau/[main.go]
+// :v: 2019-04-28 21:39:43 3FBED6                      go-delta/deltau/[main.go]
 // -----------------------------------------------------------------------------
 
 package main
@@ -26,8 +26,8 @@ To apply a delta update:
 var printError = fmt.Println
 
 func main() {
-	var a = os.Args[1:]
-	var n = len(a)
+	a := os.Args[1:]
+	n := len(a)
 	switch {
 	case n == 0:
 		fmt.Println(Usage)
@@ -91,7 +91,7 @@ func applyDelta(sourceFile, deltaFile, targetFile string) {
 
 // fileExists returns true if the file given by 'path' exists.
 func fileExists(path string) bool {
-	var _, err = os.Stat(path)
+	_, err := os.Stat(path)
 	if err == nil {
 		return true
 	}
@@ -128,8 +128,8 @@ func makeDelta(sourceFile, targetFile, deltaFile string) {
 		return
 	}
 	// create a Delta from the difference between source and target
-	var d = delta.Make(sourceAr, targetAr)
-	var deltaAr = d.Bytes()
+	d := delta.Make(sourceAr, targetAr)
+	deltaAr := d.Bytes()
 	//
 	// save the delta
 	err = ioutil.WriteFile(deltaFile, deltaAr, 0644)

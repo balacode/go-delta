@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 23:32:11 180E22                   go-delta/[delta_internal.go]
+// :v: 2019-04-28 21:39:43 CEDAE0                   go-delta/[delta_internal.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -34,9 +34,9 @@ func (ob *Delta) write(sourceLoc, size int, data []byte) {
 	}
 	// if the previous part was embedded directly, append to that part's data
 	if sourceLoc == -1 {
-		var n = len(ob.parts)
+		n := len(ob.parts)
 		if n > 0 {
-			var last = &ob.parts[n-1]
+			last := &ob.parts[n-1]
 			if last.sourceLoc == -1 {
 				last.size += len(data)
 				last.data = append(last.data, data...)

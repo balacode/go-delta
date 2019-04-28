@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-02-05 16:36:13 8EACD4                  go-delta/[integrated_test.go]
+// :v: 2019-04-28 21:39:43 ADAB82                  go-delta/[integrated_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -18,7 +18,7 @@ func Test_Integrated_(t *testing.T) {
 	if PrintTestNames {
 		printTestName()
 	}
-	var vals = [][]byte{
+	vals := [][]byte{
 		ab(""),
 		ab(" "),
 		ab(AtoZ),
@@ -68,7 +68,7 @@ func Test_Integrated_(t *testing.T) {
 		for _, b := range vals {
 			var ar []byte
 			{
-				var d = Make(a, b)
+				d := Make(a, b)
 				ar = d.Bytes()
 			}
 			var d Delta

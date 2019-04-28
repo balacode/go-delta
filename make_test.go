@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-04-28 21:31:36 6931CE                        go-delta/[make_test.go]
+// :v: 2019-04-28 21:39:43 F247CA                        go-delta/[make_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -16,8 +16,8 @@ func Test_Make_(t *testing.T) {
 	}
 	// func Make(a, b []byte) Delta
 	//
-	var test = func(a, b []byte, expect Delta) {
-		var result = Make(a, b)
+	test := func(a, b []byte, expect Delta) {
+		result := Make(a, b)
 		if result.GoString() != expect.GoString() {
 			t.Errorf("\n expect:\n\t%s\n result:\n\t%s\n",
 				expect.GoString(), result.GoString())

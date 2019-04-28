@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-01-20 07:17:25 30D0C7                      go-delta/[delta_bytes.go]
+// :v: 2019-04-28 21:39:43 739455                      go-delta/[delta_bytes.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -13,17 +13,17 @@ import (
 // Bytes converts the Delta structure to a byte array
 // (for serializing to a file, etc.)
 func (ob *Delta) Bytes() []byte {
-	var buf = bytes.NewBuffer(make([]byte, 0, 1024))
+	buf := bytes.NewBuffer(make([]byte, 0, 1024))
 	//
-	var writeInt = func(i int) error {
+	writeInt := func(i int) error {
 		err := binary.Write(buf, binary.BigEndian, int32(i))
 		if err != nil {
 			return mod.Error("writeInt(", i, ") failed:", err)
 		}
 		return nil
 	}
-	var writeBytes = func(data []byte) error {
-		var err = writeInt(len(data))
+	writeBytes := func(data []byte) error {
+		err := writeInt(len(data))
 		if err != nil {
 			return mod.Error("writeBytes([", len(data), "]) failed @1:", err)
 		}
@@ -60,7 +60,7 @@ func (ob *Delta) Bytes() []byte {
 	if DebugInfo {
 		PL("uncompressed delta length:", len(buf.Bytes()))
 	}
-	var ret = compressBytes(buf.Bytes())
+	ret := compressBytes(buf.Bytes())
 	if DebugInfo {
 		PL("compressed delta length:", len(ret))
 	}

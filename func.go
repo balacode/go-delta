@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-04-28 21:31:36 264F2E                             go-delta/[func.go]
+// :v: 2019-04-28 21:39:43 AB8AB9                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -27,8 +27,8 @@ func compressBytes(data []byte) []byte {
 	}
 	// zip data in standard manner
 	var b bytes.Buffer
-	var w = zlib.NewWriter(&b)
-	var _, err = w.Write(data)
+	w := zlib.NewWriter(&b)
+	_, err := w.Write(data)
 	w.Close()
 	//
 	// log any problem
@@ -37,7 +37,7 @@ func compressBytes(data []byte) []byte {
 		mod.Error(ERRM, err)
 		return nil
 	}
-	var ret = b.Bytes()
+	ret := b.Bytes()
 	if len(ret) < 3 {
 		mod.Error(ERRM, "length < 3")
 		return nil
@@ -47,12 +47,12 @@ func compressBytes(data []byte) []byte {
 
 // uncompressBytes uncompresses a ZLIB-compressed array of bytes.
 func uncompressBytes(data []byte) []byte {
-	var readCloser, err = zlib.NewReader(bytes.NewReader(data))
+	readCloser, err := zlib.NewReader(bytes.NewReader(data))
 	if err != nil {
 		mod.Error("uncompressBytes:", err)
 		return nil
 	}
-	var ret = bytes.NewBuffer(make([]byte, 0, 8192))
+	ret := bytes.NewBuffer(make([]byte, 0, 8192))
 	io.Copy(ret, readCloser)
 	readCloser.Close()
 	return ret.Bytes()
@@ -61,16 +61,16 @@ func uncompressBytes(data []byte) []byte {
 // -----------------------------------------------------------------------------
 // # Helper Functions
 
-// makeHash returns the SHA-512 hash of byte slice 'ar'.
-func makeHash(ar []byte) []byte {
+// makeHash returns the SHA-512 hash of byte slice 'data'.
+func makeHash(data []byte) []byte {
 	if DebugTiming {
 		tmr.Start("makeHash")
 		defer tmr.Stop("makeHash")
 	}
-	if len(ar) == 0 {
+	if len(data) == 0 {
 		return nil
 	}
-	var ret = sha512.Sum512(ar)
+	ret := sha512.Sum512(data)
 	return ret[:]
 } //                                                                    makeHash
 
@@ -80,10 +80,10 @@ func readHash(stream io.Reader) []byte {
 		tmr.Start("readHash")
 		defer tmr.Stop("readHash")
 	}
-	var hasher = sha512.New()
-	var buf = make([]byte, TempBufferSize)
+	hasher := sha512.New()
+	buf := make([]byte, TempBufferSize)
 	for first := true; ; first = false {
-		var n, err = stream.Read(buf)
+		n, err := stream.Read(buf)
 		if err == io.EOF && first {
 			return nil
 		}
@@ -106,7 +106,7 @@ func readHash(stream io.Reader) []byte {
 			return nil
 		}
 	}
-	var ret = hasher.Sum(nil)
+	ret := hasher.Sum(nil)
 	return ret
 } //                                                                    readHash
 
@@ -114,7 +114,7 @@ func readHash(stream io.Reader) []byte {
 // After a call to readLen, the current reading
 // position returns to the start or the stream.
 func readLen(stream io.ReadSeeker) int {
-	var ret, _ = stream.Seek(0, io.SeekEnd)
+	ret, _ := stream.Seek(0, io.SeekEnd)
 	stream.Seek(0, io.SeekStart)
 	return int(ret)
 } //                                                                     readLen

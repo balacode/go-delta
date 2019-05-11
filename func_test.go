@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-04-28 21:55:25 FC057B                        go-delta/[func_test.go]
+// :v: 2019-05-11 04:20:16 10FD01                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -20,11 +20,13 @@ import (
 	"testing"
 )
 
-const AtoM = "ABCDEFGHIJKLM"
-const AtoS = "ABCDEFGHIJKLMNOPQRS"
-const AtoZ = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-const Nums = "0123456789"
-const atoz = "abcdefghijklmnopqrstuvwxyz"
+const (
+	AtoM = "ABCDEFGHIJKLM"
+	AtoS = "ABCDEFGHIJKLMNOPQRS"
+	AtoZ = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	Nums = "0123456789"
+	atoz = "abcdefghijklmnopqrstuvwxyz"
+)
 
 const PrintTestNames = true
 
@@ -74,9 +76,11 @@ func printTestName() {
 		return
 	}
 	funcName := func() string {
-		programCounter, _, _, _ := runtime.Caller(2)
-		ret := runtime.FuncForPC(programCounter).Name()
-		i := strings.LastIndex(ret, ".")
+		var (
+			programCounter, _, _, _ = runtime.Caller(2)
+			ret                     = runtime.FuncForPC(programCounter).Name()
+			i                       = strings.LastIndex(ret, ".")
+		)
 		if i > -1 {
 			ret = ret[i+1:]
 		}

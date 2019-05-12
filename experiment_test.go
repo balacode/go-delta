@@ -1,15 +1,13 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-04-28 21:55:25 A09B78                  go-delta/[experiment_test.go]
+// :v: 2019-05-12 16:58:42 DB2BCD                  go-delta/[experiment_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
 
-/*
-to generate a test coverage report for the whole module use:
-    go test -coverprofile cover.out
-    go tool cover -html=cover.out
-*/
+//  to generate a test coverage report for the whole module use:
+//      go test -coverprofile cover.out
+//      go tool cover -html=cover.out
 
 import (
 	"testing"

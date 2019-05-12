@@ -1,15 +1,13 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-05-11 04:20:16 10FD01                        go-delta/[func_test.go]
+// :v: 2019-05-12 16:58:42 FBD053                        go-delta/[func_test.go]
 // -----------------------------------------------------------------------------
 
 package delta
 
-/*
-to generate a test coverage report for the whole module use:
-    go test -coverprofile cover.out
-    go tool cover -html=cover.out
-*/
+//  to generate a test coverage report for the whole module use:
+//      go test -coverprofile cover.out
+//      go tool cover -html=cover.out
 
 import (
 	"bytes"

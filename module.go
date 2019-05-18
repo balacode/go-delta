@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-04-28 21:55:25 28BAAB                           go-delta/[module.go]
+// :v: 2019-05-18 17:56:25 FA0B06                           go-delta/[module.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -15,34 +15,41 @@ import (
 // -----------------------------------------------------------------------------
 // # Module Constants / Variables
 
-// MatchLimit specifies the maximum number of positions tracked
-// for each unique key in the map of source data. See makeMap().
-const MatchLimit = 50
+const (
+	// MatchLimit specifies the maximum number of positions tracked
+	// for each unique key in the map of source data. See makeMap().
+	MatchLimit = 50
 
-// MatchSize specifies the size of unique chunks being searched for, in bytes.
-const MatchSize = 9
+	// MatchSize specifies the size of unique
+	// chunks being searched for, in bytes.
+	MatchSize = 9
+)
 
-// PL is fmt.Println() but is used only for debugging.
-var PL = fmt.Println
+var (
+	// PL is fmt.Println() but is used only for debugging.
+	PL = fmt.Println
 
-// TempBufferSize sets the size of memory buffers for reading files and other
-// streams. This memory is not fixed but allocated/released transiently.
-var TempBufferSize = 32 * 1024 * 1024 // 32 MB
+	// TempBufferSize sets the size of memory buffers for reading files and other
+	// streams. This memory is not fixed but allocated/released transiently.
+	TempBufferSize = 32 * 1024 * 1024 // 32 MB
 
-// tmr is used for timing all methods/functions during tuning.
-var tmr zr.Timer
+	// tmr is used for timing all methods/functions during tuning.
+	tmr zr.Timer
+)
 
 // -----------------------------------------------------------------------------
 // # Debugging Flags
 
-// DebugInfo when set, causes printing of messages helpful for debugging.
-var DebugInfo = false
+var (
+	// DebugInfo when set, causes printing of messages helpful for debugging.
+	DebugInfo = false
 
-// DebugTiming controls timing (benchmarking) of time spent in each function.
-var DebugTiming = true
+	// DebugTiming controls timing (benchmarking) of time spent in each function.
+	DebugTiming = true
 
-// DebugWriteArgs when set, prints the arguments passed to write()
-var DebugWriteArgs = false
+	// DebugWriteArgs when set, prints the arguments passed to write()
+	DebugWriteArgs = false
+)
 
 // -----------------------------------------------------------------------------
 // # Error Handler

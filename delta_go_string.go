@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-04-28 21:39:43 2032C7                  go-delta/[delta_go_string.go]
+// :v: 2019-05-20 02:30:25 EDAA72                  go-delta/[delta_go_string.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -11,7 +11,7 @@ import (
 )
 
 // GoString returns a Go-syntax representation of the Delta structure.
-// It implements the GoStringer interface.
+// It implements the fmt.GoStringer interface.
 func (ob Delta) GoString() string {
 	var buf bytes.Buffer
 	write := func(args ...string) {

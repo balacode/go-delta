@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-05-18 17:56:25 FA0B06                           go-delta/[module.go]
+// :v: 2019-05-25 22:34:13 FA0B42                           go-delta/[module.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -9,6 +9,7 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+
 	"github.com/balacode/zr"
 )
 

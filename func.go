@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-04-28 21:39:43 AB8AB9                             go-delta/[func.go]
+// :v: 2020-06-20 10:00:14 692FAB                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -119,7 +119,7 @@ func readLen(stream io.ReadSeeker) int {
 	return int(ret)
 } //                                                                     readLen
 
-// readStream __
+// readStream _ _
 func readStream(from io.ReadSeeker, to []byte) (n int64, err error) {
 	// read from the stream
 	{

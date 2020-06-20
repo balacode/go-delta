@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-04-28 21:55:25 7BCED5                        go-delta/[index_map.go]
+// :v: 2020-06-20 10:00:14 EE2BE8                        go-delta/[index_map.go]
 // -----------------------------------------------------------------------------
 
 package delta
@@ -9,7 +9,7 @@ const DebugIndex = false
 
 type chunk [MatchSize]byte
 
-// indexMap __
+// indexMap _ _
 type indexMap struct {
 	m map[chunk][]int
 } //                                                                    indexMap
@@ -52,7 +52,7 @@ func makeMap(data []byte) indexMap {
 		i += MatchSize
 		if DebugIndex {
 			dbgN++
-			if dbgN < 10E6 {
+			if dbgN < 10e6 {
 				continue
 			}
 			dbgN = 0
@@ -62,7 +62,7 @@ func makeMap(data []byte) indexMap {
 	return ret
 } //                                                                     makeMap
 
-// get __
+// get _ _
 func (ob *indexMap) get(key chunk) (locs []int, found bool) {
 	locs, found = ob.m[key]
 	return

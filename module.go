@@ -103,4 +103,4 @@ type thisMod struct {
 // ModReset restores all mocked functions to the original standard functions.
 func (ob *thisMod) Reset() { ob.Error = defaultErrorFunc }
 
-//end
+// end

@@ -26,4 +26,4 @@ func (ob *Delta) Dump() {
 	}
 } //                                                                        Dump
 
-//end
+// end

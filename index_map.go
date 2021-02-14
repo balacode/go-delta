@@ -68,4 +68,4 @@ func (ob *indexMap) get(key chunk) (locs []int, found bool) {
 	return
 } //                                                                         get
 
-//end
+// end

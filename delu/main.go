@@ -138,4 +138,4 @@ func makeDelta(sourceFile, targetFile, deltaFile string) {
 	}
 } //                                                                   makeDelta
 
-//end
+// end

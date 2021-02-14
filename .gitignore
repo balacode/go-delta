@@ -3,25 +3,25 @@
 #  :v: 2019-04-28 21:28:36 3825E6                         /go-delta/[.gitignore]
 #  -----------------------------------------------------------------------------
 
-# backups, drafts and temporary files
+## backups, drafts and temporary files
 *.go-bak
 *`*
 *tmp*
 
-# shell scripts
+## shell scripts
 *.bat
 
-# executable files
+## executable files
 /delu/delu
 /delu/delu.exe
 
-# log and debugging files
+## log and debugging files
 /build.log
 /cover.out
 /delu/build.log
 /run.log
 
-# sample files used to generate binary deltas
+## sample files used to generate binary deltas
 /day1.data
 /day1.zip
 /day2.data
@@ -31,4 +31,4 @@
 /test2.data
 /test2.zip
 
-#eof
+## end

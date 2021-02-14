@@ -78,4 +78,4 @@ func Load(data []byte) (Delta, error) {
 	return ret, nil
 } //                                                                        Load
 
-//end
+// end

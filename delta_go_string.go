@@ -41,4 +41,4 @@ func (ob Delta) GoString() string {
 	return buf.String()
 } //                                                                    GoString
 
-//end
+// end

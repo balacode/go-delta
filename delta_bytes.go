@@ -67,4 +67,4 @@ func (ob *Delta) Bytes() []byte {
 	return ret
 } //                                                                       Bytes
 
-//end
+// end

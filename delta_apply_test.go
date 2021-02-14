@@ -60,4 +60,4 @@ func Test_Delta_Apply_(t *testing.T) {
 	)
 } //                                                           Test_Delta_Apply_
 
-//end
+// end

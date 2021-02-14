@@ -98,4 +98,4 @@ func readData(filename string) []byte {
 	return ret
 } //                                                                    readData
 
-//end
+// end

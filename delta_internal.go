@@ -54,4 +54,4 @@ func (ob *Delta) write(sourceLoc, size int, data []byte) {
 		deltaPart{sourceLoc: sourceLoc, size: size, data: ar})
 } //                                                                       write
 
-//end
+// end

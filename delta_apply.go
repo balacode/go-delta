@@ -57,4 +57,4 @@ func (ob *Delta) Apply(source []byte) ([]byte, error) {
 	return buf.Bytes(), nil
 } //                                                                       Apply
 
-//end
+// end

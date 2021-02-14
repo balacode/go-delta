@@ -50,4 +50,4 @@ func (ob *Delta) TargetSize() int {
 	return ob.targetSize
 } //                                                                  TargetSize
 
-//end
+// end

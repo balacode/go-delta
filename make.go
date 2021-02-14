@@ -128,4 +128,4 @@ func longestMatch(a []byte, aLocs []int, b []byte, bLoc int) (loc, size int) {
 	return retLoc, retSize
 } //                                                                longestMatch
 
-//end
+// end

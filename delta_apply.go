@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
+// github.com/balacode/go-delta                        go-delta/[delta_apply.go]
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-04-28 21:39:43 BB789C                      go-delta/[delta_apply.go]
 // -----------------------------------------------------------------------------
 
 package delta

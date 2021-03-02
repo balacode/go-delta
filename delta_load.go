@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
+// github.com/balacode/go-delta                         go-delta/[delta_load.go]
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2019-04-28 21:39:43 F4FE39                       go-delta/[delta_load.go]
 // -----------------------------------------------------------------------------
 
 package delta

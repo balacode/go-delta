@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
+// github.com/balacode/go-delta                               go-delta/[func.go]
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2020-06-20 10:00:14 692FAB                             go-delta/[func.go]
 // -----------------------------------------------------------------------------
 
 package delta

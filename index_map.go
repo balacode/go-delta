@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
+// github.com/balacode/go-delta                          go-delta/[index_map.go]
 // (c) balarabe@protonmail.com                                      License: MIT
-// :v: 2020-06-20 10:00:14 EE2BE8                        go-delta/[index_map.go]
 // -----------------------------------------------------------------------------
 
 package delta

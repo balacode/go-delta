@@ -12,7 +12,7 @@ package delta
 import (
 	"bytes"
 	"fmt"
-	"io/ioutil"
+	"os"
 	"runtime"
 	"strings"
 	"testing"
@@ -90,7 +90,7 @@ func printTestName() {
 
 // readData reads 'filename' and returns its contents as an array of bytes.
 func readData(filename string) []byte {
-	ret, err := ioutil.ReadFile(filename)
+	ret, err := os.ReadFile(filename)
 	if err != nil {
 		PL("File reading error:", err)
 		return nil

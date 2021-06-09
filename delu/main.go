@@ -7,7 +7,6 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 
 	"github.com/balacode/go-delta"
@@ -58,14 +57,14 @@ func applyDelta(sourceFile, deltaFile, targetFile string) {
 	//
 	// read the source file into a byte array
 	var sourceAr []byte
-	sourceAr, err = ioutil.ReadFile(sourceFile)
+	sourceAr, err = os.ReadFile(sourceFile)
 	if err != nil {
 		printError("Failed reading", sourceFile, ":\n", err)
 		return
 	}
 	// read the delta file into a byte array
 	var deltaAr []byte
-	deltaAr, err = ioutil.ReadFile(deltaFile)
+	deltaAr, err = os.ReadFile(deltaFile)
 	if err != nil {
 		printError("Failed reading", deltaFile, ":\n", err)
 		return
@@ -83,7 +82,7 @@ func applyDelta(sourceFile, deltaFile, targetFile string) {
 		printError("Failed to apply delta to source:\n", err)
 	}
 	// save the target
-	err = ioutil.WriteFile(targetFile, targetAr, 0644)
+	err = os.WriteFile(targetFile, targetAr, 0644)
 	if err != nil {
 		printError("Failed saving", targetFile, ":\n", err)
 	}
@@ -115,14 +114,14 @@ func makeDelta(sourceFile, targetFile, deltaFile string) {
 	//
 	// read the source file into a byte array
 	var sourceAr []byte
-	sourceAr, err = ioutil.ReadFile(sourceFile)
+	sourceAr, err = os.ReadFile(sourceFile)
 	if err != nil {
 		printError("Failed reading", sourceFile, ":\n", err)
 		return
 	}
 	// read the target file into a byte array
 	var targetAr []byte
-	targetAr, err = ioutil.ReadFile(targetFile)
+	targetAr, err = os.ReadFile(targetFile)
 	if err != nil {
 		printError("Failed reading", targetFile, ":\n", err)
 		return
@@ -132,7 +131,7 @@ func makeDelta(sourceFile, targetFile, deltaFile string) {
 	deltaAr := d.Bytes()
 	//
 	// save the delta
-	err = ioutil.WriteFile(deltaFile, deltaAr, 0644)
+	err = os.WriteFile(deltaFile, deltaAr, 0644)
 	if err != nil {
 		printError("Failed saving", deltaFile, ":\n", err)
 	}
